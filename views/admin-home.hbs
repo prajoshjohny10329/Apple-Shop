@@ -1,0 +1,193 @@
+<!-- Page Content -->
+
+<div class="container-fluid px-3 ">
+  <div class="row PageNameDiv">
+    <h3 class="PageName">Dashboard</h3>
+  </div>
+
+  <div class="row PageSalesDiv">
+    <div class="row g-3 my-2">
+      <div class="col-xl-3">
+        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+          <div>
+            <h3 class="fs-2">{{adminDashboard.totalProduct}}</h3>
+            <p class="fs-5">Products</p>
+          </div>
+          <i class="fas fa-gift fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+        </div>
+      </div>
+
+      <div class="col-xl-3">
+        <div class="p-3 shadow-sm d-flex justify-content-around align-items-center rounded dashboard">
+          <div >
+            <h3 class="fs-2">₹ {{adminDashboard.totalRevenue}}</h3>
+            <p class="fs-5">Revenue</p>
+          </div>
+          <i class="fas fa-hand-holding-usd fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+        </div>
+      </div>
+
+      <div class="col-xl-3">
+        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+          <div>
+            <h3 class="fs-2">{{adminDashboard.totalOrders}}</h3>
+            <p class="fs-5">Orders</p>
+          </div>
+          <i class="fas fa-truck fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+        </div>
+      </div>
+
+      <div class="col-xl-3">
+        <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+          <div>
+            <h3 class="fs-2">{{adminDashboard.totalUsers}}</h3>
+            <p class="fs-5">users</p>
+          </div>
+          <i class="fas fa-chart-line fs-1 primary-text border rounded-full secondary-bg p-3"></i>
+        </div>
+      </div>
+      <div class="col-md-6  " >
+        <div class="categoryGraph">
+          <canvas id="myChart" style="width:100%;max-width:600px; background-color: rgb(255, 255, 255); border-radius: 10px; padding: 10px;"></canvas>
+        </div>
+      </div>
+      <div class="col-md-6 mb-5 " >
+        <div class="categoryGraph">
+          <canvas id="adminOrder" style="width:100%;max-width:600px; background-color: rgb(255, 255, 255); border-radius: 10px; padding: 10px;"></canvas>
+        </div>
+      </div>
+      
+      
+    </div>
+  </div>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script>
+  /// for category
+
+  let categoryArray = "{{categoryGraph.categoryArray}}"
+  categoryArray = categoryArray.split(',');
+  console.log(categoryArray)
+
+  /// for total product category vase
+
+  let totalProductArray = "{{categoryGraph.totalProductArray}}"
+  totalProductArray = totalProductArray.split(',');
+  let myNumericArray = totalProductArray.map(function (item) {
+    return parseInt(item, 10);
+  });
+
+  /// for total activedProduct category vase
+  let productActiveTrue = "{{categoryGraph.productActiveTrue}}"
+  productActiveTrue = productActiveTrue.split(',');
+  let activeTrueProduct = productActiveTrue.map(function (item) {
+    return parseInt(item, 10);
+  });
+
+  /// for total not actived Product category vase
+  let productActiveFalse = "{{categoryGraph.productActiveFalse}}"
+  productActiveFalse = productActiveFalse.split(',');
+  let activeFalseProduct = productActiveFalse.map(function (item) {
+    return parseInt(item, 10);
+  });
+
+
+
+  //chart
+
+  new Chart("myChart", {
+    type: "line",
+    data: {
+      labels: categoryArray,
+      datasets: [{
+        data: myNumericArray,
+        borderColor: "red",
+        fill: false
+      }, {
+        data: activeTrueProduct,
+        borderColor: "green",
+        fill: false
+      }, {
+        data: activeFalseProduct,
+        borderColor: "blue",
+        fill: false
+      }
+      ]
+    },
+    options: {
+      legend: { display: false }
+    }
+  });
+
+
+    /// for total activedProduct category vase
+      let cancel = "{{orderGraph.cancel}}"
+      cancel = cancel.split(',');
+      let cancelArray = cancel.map(function (item) {
+        return parseInt(item, 10);
+      });
+
+      let success = "{{orderGraph.success}}"
+      success = success.split(',');
+      let successArray = success.map(function (item) {
+        return parseInt(item, 10);
+      });
+
+      let total = "{{orderGraph.total}}"
+      total = total.split(',');
+      let totalArray = total.map(function (item) {
+        return parseInt(item, 10);
+      });
+      let base = "{{orderGraph.base}}"
+      base = base.split(',');
+      let baseArray = base.map(function (item) {
+        return parseInt(item, 10);
+      });
+
+
+
+
+  new Chart("adminOrder", {
+    type: "line",
+    data: {
+    labels: baseArray,
+    datasets: [{
+      fill: false,
+      lineTension: 3,
+      backgroundColor: "green",
+      borderColor: "rgba(20,0,255,0.1)",
+      data: successArray
+    },
+    {
+      fill: false,
+      lineTension: 2,
+      backgroundColor: "blue",
+      borderColor: "rgba(0,0,255,0.1)",
+      data: totalArray
+    },
+    {
+      fill: false,
+      lineTension: 1,
+      backgroundColor: "black",
+      borderColor: "rgb(255 0 0 )",
+      data: cancelArray
+    }
+    ]
+  },
+  options: {
+    legend: {display: false},
+    
+  }
+  });
+
+  
+  
+</script>
+{{!--
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script> --}}
+
+
+<!-- /#page-content-wrapper -->

@@ -1,0 +1,45 @@
+<div class="container-fluid px-1 mt-1 mb-1">
+    <div class="card px-4 mt-1 contentBox">
+        <div class="container-fluid px-3 mt-4 mb-4">
+            <h3 class="PageNameAdd mb-3">Add New Banner</h3>
+            <div class="row">
+                <div class="mt-4 ">
+                    <div style="color: red; text-align: center;" class="mt-3 mb-3" id="errorMessage">{{errorMessage}}
+                    </div>
+                    <form action="/admin/add-banner" method="post" enctype="multipart/form-data">
+
+                        <label for="">Banner image</label>
+                        <img class="bannerImage mt-3" alt="" id="firstImgView">
+                        <br>
+                        <br>
+                        <input type="file" id="bannerImage" name="bannerImage" class="form-control"
+                            onchange="firstImageView(event),validateBannerImage()"
+                            placeholder="pleas check the size is 1920X698 pixels">
+                        <span style="color: red;" id="imageError"></span>
+                        <br>
+                        <label class="mb-2">please select one of this category or All</label>
+                        <br>
+                        {{#each categoryList}}
+                        <input type="radio" name="BannerCategory" value="{{this.categoryName}}" required>
+                        <label >{{this.categoryName}}</label>
+                        <br>
+                        {{/each}}
+                        <input type="radio" name="BannerCategory" value="All" required>
+                        <label >All</label>
+                        <br>
+                        <br>
+                        <div class="submitButton">
+                            <button type="submit" class="formSubmitButton mt-5 "
+                                onclick="return validAddBanner()">Create New Category</button>
+                        </div>
+                        <div style="color: red; text-align: center;" class="mt-3" id="submitError"></div>
+                        <br>
+                    </form>
+                </div>
+            </div>
+        </div> <!-- card end// -->
+
+    </div>
+</div>
+
+<!-- /#page-content-wrapper -->

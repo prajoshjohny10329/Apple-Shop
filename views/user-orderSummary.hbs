@@ -1,0 +1,139 @@
+<div>
+  <div class="Product_detail_full mb-5 ">
+    <div class="container-fluid">
+        <div class="row marginFor">
+          <div class="col-lg-12 selectAddressDiv mt-2 mb-3">
+            <h4>Order Summary</h4>
+          </div>
+
+          <div class="selectFullDiv mb-3">
+            <div class="selectOptionDiv">
+              <a href="/select-address" class="completedDot leftMargin mt-3 ">1</a>
+              <a href="/order-summary" class="selectedDot mt-3 ">2</a>
+              <a href="/place-order" class="dot rightMargin mt-3">3</a>
+            </div>
+            <div class="selectOptionDiv ">
+              <p class="selectedOption">Address</p>
+              <p class="Option">Order summary</p>
+              <p class="Option">Payment</p>
+            </div>
+          </div>
+
+          <!-- #region -->
+          <div class="col-lg-12 AddressDiv mt-2 ">
+            <div class="innerDiv ml-2  mb-2">
+
+
+              <div class="addressTop">
+                <div class="nameHeadDIv">
+                  <p class="deliveryTo mt-3 ml-3">Delivery to :</p>
+                </div>
+                <div class="editButtonDiv">
+                    <a href="/select-address" class="changeAddress">Change</a>
+                </div>
+              </div>
+              <p class="nameAddress mb-1 ml-5">{{orderAddress.userAddress.userAddressName}}</p>
+              <p class="addressStyle ml-5">{{orderAddress.userAddress.userAddressPhone}}</p>
+              <p class="addressStyle ml-5">{{orderAddress.userAddress.userAddressHouseName}}</p>
+              <p class="addressStyle ml-5">{{orderAddress.userAddress.userAddressPlace}} ,
+                {{orderAddress.userAddress.userAddressCity}}
+              </p>
+              <p class="addressStyle ml-5">{{orderAddress.userAddress.userAddressDistrict}}</p>
+              <p class="addressStyle ml-5 ">{{orderAddress.userAddress.userAddressState}} -
+                {{orderAddress.userAddress.userAddressPincode}}</p>
+              {{#if orderAddress.userAddress.userAddressNearAddress}}
+              <p class="addressStyle ml-5">nearest Address : {{orderAddress.userAddress.userAddressNearAddress}}</p>
+              {{/if}}
+              <p class="addressStyle ml-5">Address Type: {{orderAddress.userAddress.userAddressType}}</p>
+              <p>'</p>
+            </div>
+          </div><br>
+
+          <!-- #region -->
+          <div class="row">
+            <div class="col-lg-8  full_cart_products mb-5 ">
+              {{#each cartProducts}}
+
+              <div class="container-fluid productdisplay mb-2 " style="width: 95%;">
+                <div class="row">
+
+                  <div class="col-md-4 cart_imag ">
+                    <img class="cartImage " src="{{this.product.productFirstImage}}" alt="">
+                  </div>
+                  <div class="col-md-8 product_de ">
+                    <div class="product_cart_title">
+                      <h4 class="cart_product_title mt-3">{{this.product.productDescription}}</h4>
+                      <hr>
+                    </div>
+                    <div class="productDet mt-1 mx-3 mb-4">
+                      <h2 class="lastPrice "> {{this.product.productLastPrice}}</h2>
+                      <div class="offerDiv">
+                        <p class="realPrice"> ₹ {{this.product.productPrice}}</p>
+                        <p class="offer">{{this.product.productOffer}} % offer</p>
+                      </div>
+                      <p class="freedelivary">Free Delivary</p>
+                      <span class="" >Quantity : {{this.quantity}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {{/each}}
+            </div>
+
+
+            {{#if cartProducts}}
+            <div class="col-lg-4  mb-2 totalcart ">
+              <div class="totalcart_div mt-2 mx-3">
+                <div class="space_div"></div>
+                <h5 class="title mt-3 mb-3">PRICE DETAILS</h5>
+                <div class="detailes m-3 mt-5">
+                  <div class="keyvalue mx-2 mt-2">
+                    <div class="key ">
+                      <p>Total Products</p>
+                    </div>
+                    <div class="value">
+                      <p id="totalProducts">{{totalProducts}}</p>
+                    </div>
+                  </div>
+                  {{!-- <div class="keyvalue mx-2">
+                    <div class="key ">
+                      <p>Bag Total</p>
+                    </div>
+                    <div class="value">
+                      <p>₹ 453454</p>
+                    </div>
+                  </div> --}}
+                  <div class="keyvalue mx-2">
+                    <div class="key ">
+                      <p>Total Discount</p>
+                    </div>
+                    <div class="value">
+                      <p>{{discount}}</p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="total mx-3">
+                    <div class="key ">
+                      <p>Total Amount</p>
+                    </div>
+                    <div class="value">
+                      <p>₹<span id="total"> {{total}}</span></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{/if}}
+          </div>
+          {{!--
+        </div> --}}
+
+        <!-- #region -->
+
+    </div>
+    <div class="col-lg-12">
+      <button class="deliverHereButton ml-1" onclick="location.href='/place-order';" >Continue To Payment</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,145 @@
+<!-- product seeing main body -->
+
+<div class="mycart_tittle mt-3 ">
+  <h4 class="title_cart mb-3">My Order List</h4>
+</div>
+{{#if myOrders}}
+{{else}}
+<div style="text-align: center;"> Orders list is empty</div>
+{{/if}}
+
+<div class="mainlistbody ">
+  <div class="container-fluid ">
+    <div class="row">
+      <div class="col-lg-12  full_cart_products mb-5 ">
+        {{#if myOrders}}
+        {{#each myOrders}}
+        <div class="container-fluid productdisplay mt-2 mb-2 " style="width: 95%;">
+          <div class="row">
+            {{#if this.currentOrderStatus.placed}}
+            <div class="selectFullDiv mb-3" id="container-2">
+              <div class="selectOptionDiv">
+                <div class="statusGroupDiv">
+                  <p class="completedStatusDot mt-3 ">1</p>
+                  <p>Placed</p>
+                </div>
+                <div class="statusGroupDiv">
+                  <p class="not mt-3 ">2</p>
+                  <p>Approved</p>
+                </div>
+                <div class="statusGroupDiv">
+                  <p class="not mt-3">3</p>
+                  <p>Shipping</p>
+                </div>
+                <div class="statusGroupDiv">
+                  <p class="not rightMargin mt-3">4</p>
+                  <p>Delivery</p>
+                </div>
+              </div>
+            </div>
+            {{/if}}
+
+            {{#if this.currentOrderStatus.approved}}
+            <div class="selectFullDiv mb-3" id="container-2">
+              <div class="selectOptionDiv">
+                <div class="statusGroupDiv">
+                  <p class="completedStatusDot mt-3 ">1</p>
+                  <p>Placed</p>
+                </div>
+                <div class="statusGroupDiv">
+                  <p class="completedStatusDot mt-3 ">2</p>
+                  <p>Approved</p>
+                </div>
+                <div class="statusGroupDiv">
+                  <p class="not mt-3">3</p>
+                  <p>Shipping</p>
+                </div>
+                <div class="statusGroupDiv">
+                  <p class="not rightMargin mt-3">4</p>
+                  <p>Delivery</p>
+                </div>
+              </div>
+            </div>
+            {{/if}}
+
+            {{#if this.currentOrderStatus.shipping}}
+            <div class="selectFullDiv mb-3" id="container-2">
+              <div class="selectOptionDiv">
+                <div class="statusGroupDiv">
+                  <p class="completedStatusDot mt-3 ">1</p>
+                  <p>Placed</p>
+                  <hr>
+                </div>
+                
+                <div class="statusGroupDiv">
+                  <p class="completedStatusDot mt-3 ">2</p>
+                  <p>Approved</p>
+                </div>
+                <div class="statusGroupDiv">
+                  <p class="completedStatusDot mt-3">3</p>
+                  <p>Shipping</p>
+                </div>
+                <div class="statusGroupDiv">
+                  <p class="not rightMargin mt-3">4</p>
+                  <p>Delivery</p>
+                </div>
+              </div>
+            </div>
+            {{/if}}
+
+            {{#if this.currentOrderStatus.delivery}}
+            <div class="selectFullDiv mb-3" id="container-2">
+              <div class="selectOptionDiv">
+                <div class="statusGroupDiv">
+                  <p class="completedStatusDot mt-3 ">1</p>
+                  <p>Placed</p>
+                </div>
+                <div class="statusGroupDiv">
+                  <p class="completedStatusDot mt-3 ">2</p>
+                  <p>Approved</p>
+                </div>
+                
+                <div class="statusGroupDiv">
+                  <p class="statusGroupDiv mt-3">3</p>
+                  <p>Shipping</p>
+                </div>
+                <div class="statusGroupDiv">
+                  <p class="statusGroupDiv rightMargin mt-3">4</p>
+                  <p>Delivery</p>
+                </div>
+              </div>
+            </div>
+            {{/if}}
+
+            <div class="col-md-8 product_de mt-2 ">
+              <div class="productDet mt-1 mx-3">
+                <p>Total products :{{this.orderObj.totalProducts}}</p>
+                <p>Total totalAmount :{{this.orderObj.totalAmount}}</p>
+                <p>order Status :{{this.orderObj.status}}</p>
+                <p>Order Date :{{this.orderObj.data}}</p>
+                <div class="cancelDiv">
+                  <button class="viewButton mb-3 ml-2" onclick="location.href='/view-orderProducts/{{this._id}}';">view
+                  Products</button>
+                {{#if this.currentOrderStatus.cancelled}}
+                {{else}}
+                     <form action="/cancel-order/" method="post" id="cancelOrder-{{this._id}}">
+                                <input type="text" value="{{this._id}}" name="cancelOrderId" hidden>
+                                <button class="cancelButton mb-3 ml-2" onclick="return showConfirmForm('Are you want to block this Order ?','cancelOrder-{{this._id}}')" type="submit" >Cancel Order</button>
+                                </form> 
+                {{/if}}
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        
+        {{/each}}
+        {{/if}}
+      </div>
+
+    </div>
+  </div>
+</div>

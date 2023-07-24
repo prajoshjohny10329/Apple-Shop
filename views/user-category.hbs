@@ -1,0 +1,44 @@
+
+  <!--  product seeing and main body-->
+
+    <div class="productCategory">
+    <a href="/dynamic/MacBook">Mac</a>
+    <a href="/dynamic/iPad">iPad</a>
+    <a href="/dynamic/iPhone">iPhone</a>
+    <a href="/dynamic/Apple Watch">Watches</a>
+    <a href="/dynamic/AirPods">AirPods</a>
+    </div>
+  <!-- product seeing main body -->
+  <div class="sortDiv">
+        <span class=" sortby ml-5">SORT BY</span>
+        <div class="listsort">
+          <a class=" item ml-4" href="">price--low to high</a>
+          <a class=" item ml-4" href="">price--high to low</a>
+          <a class=" item ml-4" href="">newest</a>
+        </div>
+      </div>
+    </div>
+  <div class="productPageMain m-4">
+    <div class="container-fluid">
+      <div class="row categoryCard">
+        {{#if products}}
+        {{#each products}}
+        <div class="ml-3 mt-2 mb-5">
+          <div class="card categorySingleCard" style="width: 18rem;">
+            <div class="categoryImageDiv" onclick="location.href='/view-product/{{this._id}}';"> 
+            <img src="{{this.productFirstImage}}" class="categoryImage"></div>
+            <div class="card-body">
+              <h5 class="card-title">{{this.productName}}</h5>
+              <p class="card-text">₹ {{this.productPrice}}</p>
+              <p style="color: green; font-weight: 500;">{{this.productOffer}} % offer</p>
+              <a href="/add-to-cart/{{this._id}}" class="btn btn-primary">ADD to Cart</a>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
+
+  

@@ -1,0 +1,139 @@
+<div class="mycart_tittle mt-3 ">
+  <h4 class="title_cart mb-3">My Cart List</h4>
+</div>
+<span class="container-fluid ml-3">
+  <button onclick="goBack()" class="backButton fa fa-arrow-left" ></button>
+</span>
+
+<div class="mainlistbody ">
+  {{#if cartProducts}}
+  {{else}}
+  <div style="text-align: center;"> cart is empty</div>
+  {{/if}}
+  <div class="container-fluid ">
+    <div class="row">
+      <div class="col-lg-8  full_cart_products mb-5 ">
+        {{#each cartProducts}}
+
+        <div class="container-fluid productdisplay mt-2 mb-2 " style="width: 95%;">
+          <div class="row">
+
+            <div class="col-md-4 cart_imag ">
+              <img class="cartImage " src="{{this.product.productFirstImage}}" alt="">
+            </div>
+            <div class="col-md-8 product_de ">
+              <div class="product_cart_title">
+                <h4 class="cart_product_title mt-3">{{this.product.productDescription}}</h4>
+                <hr>
+              </div>
+              <div class="productDet mt-1 mx-3">
+                <h2 class="lastPrice "> {{this.product.productLastPrice}}</h2>
+                <div class="offerDiv">
+                  <p class="realPrice"> ₹ {{this.product.productPrice}}</p>
+                  <p class="offer">{{this.product.productOffer}} % offer</p>
+                </div>
+                <p class="freedelivary">Free Delivary</p>
+
+                <button class="cart-item-count mr-3"
+                  onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',-1)">-</button>
+                <span id="{{this.product._id}}">{{this.quantity}}</span>
+
+                <button class="cart-item-count ml-3 "
+                  onclick="changeQuantity('{{this._id}}','{{this.product._id}}','{{../user._id}}',1)">+</button>
+                <button class="btn btn-danger mb-3"
+                  onclick="removeCartProduct('{{this._id}}','{{this.product._id}}')">Remove</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {{/each}}
+      </div>
+
+
+      {{#if cartProducts}}
+      <div class="col-lg-4  mb-2 totalcart ">
+        
+
+        <!-- #region -->
+
+        <div class="totalcart_div mt-2 mx-3">
+          <div class="space_div"></div>
+          <h5 class="title mt-3 mb-3 couponActivated">Add Coupon</h5>
+          <div class="couponDiv mt-2 couponActivated">
+            <form action="/post-coupon" method="post" id="coupon-form">
+              <input type="text" class="couponInput " name="couponCode" id="couponCode" >
+            
+          </div>
+          <div >
+            <img class="couponBannerImg" id="couponBannerId" src="" >
+           <p id="couponResponseId"></p>
+           <p id="couponOffer"></p>
+          </div>
+          <div id="errorMessage" class="mb-4" style="color: rgb(255, 0, 0); text-align: center;"></div>
+          <hr>
+          <div class="buydiv couponActivated">
+           <button type="submit" class="buybutton mb-3"> Add coupon</button>
+          </div>
+          
+          </form>
+        </div>
+
+           <!-- #region -->
+
+
+
+
+        <div class="totalcart_div mt-2 mx-3">
+          <div class="space_div"></div>
+          <h5 class="title mt-3 mb-3">PRICE DETAILS</h5>
+          <div class="detailes m-3 mt-5">
+            <div class="keyvalue mx-2 mt-2">
+              <div class="key ">
+                <p>Total Products</p>
+              </div>
+              <div class="value">
+                <p id="totalProducts">{{totalProducts}}</p>
+              </div>
+            </div>
+            {{!-- <div class="keyvalue mx-2">
+              <div class="key ">
+                <p>Bag Total</p>
+              </div>
+              <div class="value">
+                <p>₹ 453454</p>
+              </div>
+            </div> --}}
+            <div class="keyvalue mx-2">
+              <div class="key ">
+                <p>Total Discount</p>
+              </div>
+              <div class="value">
+                <p id="discount"></p>
+              </div>
+            </div>
+            <hr>
+            <div class="total mx-3">
+              <div class="key ">
+                <p>Total Amount</p>
+              </div>
+              <div class="value">
+                <p>₹ <span id="total"> {{totalAmount}}</span></p>
+              </div>
+              
+            </div>
+            <div class="buydiv ">
+              <a href="/select-address"><button class="buybutton mb-3">
+                  <i class="fa fa-bolt" style="font-size:15px">
+                  </i>&nbsp;&nbsp; Buy Now</button></a>
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</div>

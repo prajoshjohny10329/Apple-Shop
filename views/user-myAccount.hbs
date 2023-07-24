@@ -1,0 +1,91 @@
+<div id="firstHead" class="firstHead">
+  <button class="openButton" id="openBtn" onclick="openNav()">☰</button>
+  <h3 class="firstHeadTittle mt-4">My Account</h3>
+</div>
+
+
+<div id="mySidebar" class="sidebar">
+
+  <a class="closeBtn" onclick="closeNav()">×</a>
+  <div style="background-color: transparent;">
+    <div class="profileImageDiv">
+      <img style="width: 100px; background-color: transparent; " src="/images/profile .png" alt="">
+    </div>
+    <div class="userDataDiv">
+      <div style="height: 30px; background: none;"></div>
+      <p class="userName">{{user.Name}}</p>
+      <button onclick="location.href='/logout'" class="logoutButton">Logout</button>
+    </div>
+  </div>
+  <br>
+  <hr>
+  <a href="/my-account">My Profile</a>
+  <a href="/my-cart">My Cart</a>
+  <a href="/my-orders">My Orders</a>
+  <a href="/my-coupons">Coupons</a>
+  <a href="/my-wallet">Wallet</a>
+</div>
+
+<div id="main" style="height: auto;">
+  <h5 class="myProfileHead mt-2">My Profile Detailers</h5>
+  <div class="container-fluid mt-5">
+    <div class="mainBodyInMyAccount">
+      <div class="container-fluid mt-5">
+        <div class="row">
+          <div class="col-lg-6 mt-3">
+            <label>User Full Name :</label>
+            <input type="text" name="" value="{{user.Name}}" id="" class="my-account-form mb-2" disabled>
+          </div>
+          <br>
+          <div class="col-lg-6 mt-3">
+            <label>User Email Id :</label>
+            <input type="text" name="" id="" value="{{user.Email}}" class="my-account-form mb-2" disabled>
+            <br>
+          </div>
+          <div class="col-lg-6 mt-3">
+            <label>User Mobile :</label>
+            <input type="text" name="" id="" value="{{user.Mobile}}" class="my-account-form mb-5" disabled>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    
+
+    <div class="addressDiv">
+      <div class="container-fluid">
+        <h5 class="userAddress mt-5">User Address</h5>
+    <div class="newButton  mt-2 my-4 mr-3">
+      <a href="/add-address" class="btn btn-success"> Add new Address</a>
+    </div>
+        <div class="row">
+          {{#each userAddress}}
+          <div class="col-lg-6 singleDiv mt-2 mb-3">
+            <div class="innerDiv ml-2 mb-5">
+              <div class="addressTop">
+                <div class="nameHeadDIv">
+                  <p class="nameHead">{{this.userAddress.userAddressName}}</p>
+                </div>
+                <div class="editButtonDiv">
+                  <form action="/edit-address" method="post">
+                      <button type="submit" value="{{this._id}}" name="addressId" class="editButton">Edit</button>
+                  </form>
+                  
+                </div>
+              </div>
+              <p class="addressStyle ml-3">{{this.userAddress.userAddressPhone}}</p>
+              <p class="addressStyle ml-3">{{this.userAddress.userAddressHouseName}}</p>
+              <p class="addressStyle ml-3">{{this.userAddress.userAddressPlace}} , {{this.userAddress.userAddressCity}}
+              </p>
+              <p class="addressStyle ml-3">{{this.userAddress.userAddressDistrict}}</p>
+              <p class="addressStyle ml-3 mb-5">{{this.userAddress.userAddressState}} -
+                {{this.userAddress.userAddressPincode}}</p>
+            </div>
+          </div><br>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

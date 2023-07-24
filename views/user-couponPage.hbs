@@ -1,0 +1,58 @@
+<div id="firstHead" class="firstHead">
+  <button class="openButton" id="openBtn" onclick="openNav()">☰</button>
+  <h3 class="firstHeadTittle mt-4">My Coupon</h3>
+</div>
+
+<div id="mySidebar" class="sidebar">
+  <a class="closeBtn" onclick="closeNav()">×</a>
+  <div style="background-color: transparent;">
+    <div class="profileImageDiv">
+      <img style="width: 100px; background-color: transparent; " src="/images/profile .png" alt="">
+    </div>
+    <div class="userDataDiv">
+      <div style="height: 30px; background: none;"></div>
+      <p class="userName">{{user.Name}}</p>
+      <button onclick="location.href='/logout'" class="logoutButton">Logout</button>
+    </div>
+  </div>
+  <br>
+  <hr>
+  <a href="/my-account">My Profile</a>
+  <a href="/my-cart">My Cart</a>
+  <a href="/my-orders">My Orders</a>
+  <a href="/my-coupons">Coupons</a>
+  <a href="/my-wallet">Wallet</a>
+</div>
+
+<div id="main" style="height: auto;">
+  <div class="mainlistbody ">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12  full_cart_products mb-5 ">
+          <div class="container-fluid coupondisplay mt-2 mb-2 " style="width: 95%;">
+            <div class="row couponRow">
+              {{#each activeCoupons}}
+              <div class=" singleCouponDIv mt-2 mb-2">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-xl-7 couponImageDiv mt-3 mb-3 ">
+                      <img class="couponImage" src="{{this.couponBanner}}" alt="">
+                    </div>
+                    <div class="col-xl-2 couponButtonDiv">
+                      <p class="couponName">{{this.couponName}} {{this.couponOffer}} %</p>
+                    </div>
+                    <div class="col-xl-2 couponButtonDiv mt-2 mb-4">
+                      <button class="couponButton" onclick="copyCouponCode('{{this.couponCode}}')">Copy Coupon
+                        Code</button><br>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

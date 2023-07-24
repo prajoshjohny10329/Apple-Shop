@@ -1,0 +1,117 @@
+<!-- Page Content -->
+
+
+<div class="container-fluid px-3 mb-3">
+    <div class="adminContentBox">
+        <div class="mycart_tittle mt-3  mb-5">
+            <p>.</p>
+            <h4 class="title_cart mb-3 ">Order List</h4>
+        </div>
+        <div class="mainlistbody ">
+            <div class="container-fluid ">
+                <div class="row">
+                    <div class="col-xl-8   mb-5 ">
+                        {{#each currentOrder}}
+                        <div class="container-fluid productdisplay mt-2 mb-2 " style="width: 95%;">
+                            <div class="row mb-5">
+
+                                <div class="col-md-4 cart_imag ">
+                                    <img class="cartImage " src="{{this.product.productFirstImage}}" alt="">
+                                </div>
+                                <div class="col-md-8 product_de ">
+                                    <div class="product_cart_title">
+                                        <h4 class="cart_product_title mt-3">{{this.product.productDescription}}</h4>
+                                        <hr>
+                                    </div>
+
+                                    <div class="productDet mt-1 mx-3">
+                                        <h2 class="lastPrice">{{this.product.productPrice}}</h2>
+                                        <div class="offerDiv">
+                                            <p class="realPrice">{{this.product.productPrice}}</p>
+                                            <p class="offer">{{this.product.productOffer}} % offer</p>
+                                        </div>
+                                        <p class="freedelivary">Free Delivery</p>
+                                        <span>quantity {{this.quantity}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each }}
+                    </div>
+                    {{#if orderData}}
+
+                    <div class="col-xl-4  mb-2 totalcart ">
+                        <div class="totalcart_div mt-2 mx-3">
+                            <div class="space_div"></div>
+                            <h5 class="title mt-3 mb-3">Order Details</h5>
+                            <div class="detailes m-3 mt-5">
+                                <div class="keyvalue mx-2 mt-2">
+                                    <div class="key ">
+                                        <p>Total Products</p>
+                                    </div>
+                                    <div class="value">
+                                        <p>{{orderData.orderObj.totalProducts}}</p>
+                                    </div>
+                                </div>
+                                <div class="keyvalue mx-2">
+                                    <div class="key ">
+                                        <p>Total Amount</p>
+                                    </div>
+                                    <div class="value">
+                                        <p>₹ {{orderData.orderObj.totalAmount}}</p>
+                                    </div>
+                                </div>
+                                <div class="keyvalue mx-2">
+                                    <div class="key ">
+                                        <p>Payment Method</p>
+                                    </div>
+                                    <div class="value">
+                                        <p>{{orderData.orderObj.paymentMethod}}</p>
+                                    </div>
+                                </div>
+                                <div class="keyvalue mx-2">
+                                    <div class="key ">
+                                        <p>Date of Order</p>
+                                    </div>
+                                    <div class="value">
+                                        <p>{{orderData.orderObj.data}}</p>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="keyvalue mx-2">
+                                    <div class="key ">
+                                        <p>Delivery Address</p>
+                                    </div>
+                                    <div class="value">
+                                        {{#each orderData.orderObj.orderAddress }}
+                                        <p>{{this}}</p>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="total mx-2">
+                                    <div class="key ">
+                                        <p>Order Status</p>
+                                    </div>
+                                    <div class="value">
+                                        <p>{{orderData.orderObj.status}}</p>
+                                    </div>
+                                </div>
+                                {{#if orderStatus.cancelled}}
+                                <div class="buydiv ">
+                                    <form action="/admin/confirm-cancel" method="post" id="confirmCancel-{{orderData._id}}">
+                                        <input type="text" name="cancelOrderId" value="{{orderData._id}}" hidden>
+                                        <button class="buybutton mb-3" type="submit" onclick="return showConfirmForm('Are you want to confirm Delete this Order ?','confirmCancel-{{orderData._id}}')">Confirm Cancel</button></a>
+                                    </form>
+                                </div>
+                                {{/if}}
+
+                            </div>
+                        </div>
+                    </div>
+                    {{/if }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

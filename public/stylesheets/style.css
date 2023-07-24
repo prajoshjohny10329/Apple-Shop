@@ -1,0 +1,116 @@
+
+/*   for  form pages------------------------------------------------------------------------------*/
+
+.loader{
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.loader img{
+       width: 100px;
+     
+}
+.loader.hidden{
+  animation: fadeOut 1s;
+  animation-fill-mode: forwards;
+}
+@keyframes fadeOut{
+  100%{
+      opacity: 0;
+      visibility: hidden;
+  }
+}
+.login,
+.image {
+  min-height: 100vh;
+}
+
+.bg-image {
+  background-image: url('../images/form-page-background.jpg');
+  background-size: cover;
+  background-position: center center;
+}
+.second-part{
+    background-color: black;
+}
+.sendOTP{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.user_form_tittle  {
+  text-align: center;
+  font-size: 50px;
+  color: #7a9ecf;
+}
+.back_button{
+  background: none;
+  color: #b4b4b4;
+  font-size: 19px;
+  width: 35px;
+  height: 35px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #b4b4b4;
+  border-radius: 32px;
+  margin-left: 45%;
+  margin-top: 34px;
+}
+.error {
+  color: red;
+  font-size: 14px;
+}
+.form-group{
+  display: block;
+  color: white;
+
+}
+
+.inputgroup span{
+    font-size: 14px;
+    color: red;
+
+}
+.submiterr{
+  font-size: 14px;
+  color: red;
+  text-align: center;
+}
+.submit_button{
+  font-size: 18px;
+  font-weight: 700;
+  border: none;
+  width: 100%;
+  height: 37px;
+  background-color: #0a75ef;
+  color: white;
+  border-radius: 5px;
+}
+.Login_with_OTP_button{
+  font-size: 18px;
+  font-weight: 700;
+  border: none;
+  width: 100%;
+  height: 37px;
+  color: white;
+  border-radius: 5px;
+  background: #ff5700;
+}
+.submit_button:hover{
+  background-color: #064894;
+}
+.link_hover_form_down{
+  text-decoration: none;
+  color: blue;
+}
+.link_hover_form_down:hover{
+  color: rgb(0, 132, 255);
+}

@@ -1,0 +1,46 @@
+
+ <div class="container-fluid">
+        <div class="row no-gutter">
+            <!-- The image half -->
+            <div class="col-md-6 d-none d-md-flex bg-image"></div>
+    
+    
+            <!-- The content half -->
+            <div class="col-md-6 second-part">
+                <div class="login d-flex align-items-center py-5">
+    
+                    <!-- Demo content-->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-10  mx-auto">
+                                 <a href="/"><button class="back_button mb-2">X</button></a>
+
+                                <h3 class="user_form_tittle">OTP For New Admin!</h3>
+                                <p class="text-muted mb-4" style="text-align: center;">Enter OTP for succesfull Admin Signup .</p>
+                                 <div id="errorMessage" style="color: red; text-align: center;">{{errorMessage}}</div>
+                                 <div id="successMessage" class="mb-4" style="color: rgb(4, 213, 70); text-align: center;">{{successMessage}}</div>
+                                <form action="/admin/adminsignupOTP" method="post">
+                                    
+                                    <div class="form-group mb-4 inputgroup">
+                                        <label for="inputOTP">OTP</label>
+                                        <input id="inputOTP" name="userOTP" onkeyup="validateOTP()"  type="text" placeholder="Enter OTP"   class="form-control   shadow-sm px-4">
+                                        <span id="OTP-error"> </span>
+                                    </div>
+                                    <div class="form-group mb-2 inputgroup ">
+                                        <button type="submit" onclick="return validateSubmit_OTP()"  class="submit_button btn-block text-uppercase mb-2   ">Submit OTP</button>
+                                        <span class="submiterr" id="submit-error"></span>
+                                     </div>  
+                                    <div style="color: white;" class="text-center d-flex justify-content-center mt-4">
+                                          <p>Create New Account <a href="/" class="font-italic text-muted">
+                                           <u style="color: blue;">Sign Up</u></a></p>
+                                     </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div><!-- End -->
+    
+                </div>
+            </div><!-- End -->
+    
+        </div>
+    </div>

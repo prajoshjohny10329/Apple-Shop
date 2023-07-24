@@ -1,0 +1,75 @@
+<div id="firstHead" class="firstHead">
+  <button class="openButton" id="openBtn" onclick="openNav()">☰</button>
+  <h3 class="firstHeadTittle mt-4">My Wallet</h3>
+</div>
+
+<div id="mySidebar" class="sidebar">
+  <a class="closeBtn" onclick="closeNav()">×</a>
+  <div style="background-color: transparent;">
+    <div class="profileImageDiv">
+      <img style="width: 100px; background-color: transparent; " src="/images/profile .png" alt="">
+    </div>
+    <div class="userDataDiv">
+      <div style="height: 30px; background: none;"></div>
+      <p class="userName">{{user.Name}}</p>
+      <button onclick="location.href='/logout'" class="logoutButton">Logout</button>
+    </div>
+  </div>
+  <br>
+  <hr>
+  <a href="/my-account">My Profile</a>
+  <a href="/my-cart">My Cart</a>
+  <a href="/my-orders">My Orders</a>
+  <a href="/my-coupons">Coupons</a>
+  <a href="/my-wallet">Wallet</a>
+</div>
+
+<div id="main" style="height: auto;">
+  <div class="mainlistbody ">
+    <div class="container-fluid">
+      <div class="row " style="display: flex; justify-content: center;">
+        <div class="col-8  mb-2 totalcart mb-2 mt-5">
+        <div class="totalcart_div mt-2 mx-3">
+          <div class="space_div"></div>
+          <h5 class="title mt-3 mb-3">PRICE DETAILS</h5>
+          <div class="detailes m-3 mt-5">
+            <div class="keyvalue mx-2 mt-2">
+              <div class="key ">
+                <p>User Name </p>
+              </div>
+              <div class="value">
+                <p id="totalProducts">{{user.Name}}</p>
+              </div>
+            </div>
+            <div class="keyvalue mx-2">
+              <div class="key ">
+                <p>User Mobile No</p>
+              </div>
+              <div class="value">
+                <p>{{user.Mobile}}</p>
+              </div>
+            </div>
+            <hr>
+            <div class="total mx-3">
+              <div class="key ">
+                <p>Total wallet Amount</p>
+              </div>
+              <div class="value">
+                <p>₹<span id="total"> {{walletAmount}}</span></p>
+              </div>
+            </div>
+            <div class="buydiv ">
+              <a href=""><button class="buybutton mb-3">
+                  <i class="fa fa-bolt" style="font-size:15px">
+                  </i>&nbsp;&nbsp; ReFund</button></a>
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>

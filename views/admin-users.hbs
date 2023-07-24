@@ -1,0 +1,65 @@
+<!-- Page Content -->
+
+<div class="container-fluid px-3">
+
+    <div class="row mt-1" style="background-color: white;">
+        <h3 class="PageName mt-4 mb-2 ">All Users</h3>
+        <div class="newButton  mt-2 my-4 mr-3">
+            <a href="/admin/add-user" class="btn btn-success"> Create new User</a>
+        </div>
+        <hr>
+        <div class="card mt-4 mb-4">
+            <table class="table mt-4 display " id="productsTable">
+                <thead class="mt-4">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Gmail</th>
+                        <th>option</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each usersData}}
+                    <tr>
+                        <td scope="row">{{this.Name}}</td>
+                        <td>{{this.Email}}</td>
+
+                        <td>
+
+
+                            {{#if userStatus}}
+                            <form action="/admin/block-user" method="post" id="blockUser-{{this._id}}">
+                                <input type="text" value="{{this._id}}" name="userId" hidden>
+                                <button class="blockButton mb-3"
+                                    onclick="return showConfirmForm('Are you want to block  User {{this.Name}} ?','blockUser-{{this._id}}')"
+                                    type="submit">Block</button>
+                            </form>
+
+                            {{else}}
+                            <form action="/admin/unBlock-user" method="post" id="unBlockUser-{{this._id}}">
+                                <input type="text" value="{{this._id}}" name="userId" hidden>
+                                <button class="unBlockButton mb-3"
+                                    onclick="return showConfirmForm('Are you want to Un block  User {{this.Name}} ?','unBlockUser-{{this._id}}')"
+                                    type="submit">Un Block</button>
+                            </form>
+                            {{/if}}
+
+
+                        </td>
+
+                    </tr>
+                    {{/each}}
+
+                </tbody>
+            </table>
+            <script>
+
+                $(function () {
+                    $('#productsTable').DataTable();
+                });
+
+            </script>
+        </div>
+    </div>
+
+</div>
+</div>

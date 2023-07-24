@@ -1,0 +1,73 @@
+<!-- Page Content -->
+
+<div class="container-fluid px-3">
+    <h3 class="PageName mt-4 mb-2 ">All Orders</h3>
+    <div class="card mt-4 mb-4">
+        <table class="table mt-4 display " id="productsTable">
+            <thead class="mt-4">
+                <tr>
+                    <th scope="col">User Name</th>
+
+                    <th>Total Products</th>
+                    <th>Total Amount:</th>
+                    <th>status</th>
+                    <th>Order Date</th>
+                    <th>options</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each allOrders}}
+                <tr style="font-weight: 700;">
+                    <td scope="row">{{this.orderObj.orderAddress.userAddressName}}</td>
+                    <td>{{this.orderObj.totalProducts}}</td>
+                    <td>₹ {{this.orderObj.totalAmount}}</td>
+                    <td>{{this.orderObj.status}}</td>
+                    <td>{{this.orderObj.data}}</td>
+                    <td>
+
+
+                        <form action="/admin/view-order/" method="post" id="viewOrder-{{this._id}}">
+                            <input type="text" value="{{this._id}}" name="viewOrderId" hidden>
+                            <button class="viewButton mb-3 ml-2"
+                                onclick="return showConfirmForm('Are you want to see this Order ?','viewOrder-{{this._id}}')"
+                                type="submit">View Order</button>
+                        </form>
+
+
+
+
+                        {{#if this.currentOrderStatus.cancelled}}
+                        <form action="/admin/confirm-cancel/" method="post" id="cancelOrder-{{this._id}}">
+                            <input type="text" value="{{this._id}}" name="cancelOrderId" hidden>
+                            <button class="cancelButton mb-3 ml-2"
+                                onclick="return showConfirmForm('Are you want to block this Order ?','cancelOrder-{{this._id}}')"
+                                type="submit">Confirm Cancel</button>
+                        </form>
+                        {{else}}
+                        <form action="/admin/change-status/" method="post" id="editOrderStatus-{{this._id}}">
+                            <input type="text" value="{{this._id}}" name="editOrderId" hidden>
+                            <button class="editStatusButton mb-3 ml-2"
+                                onclick="return showConfirmForm('Are you want to edit status of this Order ?','editOrderStatus-{{this._id}}')"
+                                type="submit">Edit Status</button>
+                        </form>
+                        {{/if}}
+
+                    </td>
+
+                </tr>
+                {{/each}}
+
+            </tbody>
+        </table>
+        <script>
+
+            $(function () {
+                $('#productsTable').DataTable();
+            });
+
+        </script>
+    </div>
+</div>
+
+</div>
+</div>

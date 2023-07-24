@@ -1,0 +1,110 @@
+<!-- Page Content -->
+
+<div class="container-fluid px-3">
+  <div class="row mt-1" style="background-color: white;">
+    <h3 class="PageName mt-4 mb-2"> {{currentProduct.productName}}</h3>
+    <div class="newButton mt-2 my-4 mr-3 mr-2">
+      <a href="/admin/edit-product/{{currentProduct._id}}" class="btn btn-success ">Edit Full Product</a>
+    </div>
+    <div class="card mb-4 px-4">
+      <!--  product seeing and main body-->
+      <div class="viewOneProductMain">
+        <!-- mack  product -->
+        <div class="Product_detail_full ">
+          <div class="container-fluid mainProductContainer">
+            <div class="row">
+              <div class="col-xl-6">
+                <div class="frst_part mt-4 mb-4">
+                  <div class="image_div">
+                    <img src="{{currentProduct.productFirstImage}}" alt="">
+                  </div>
+                  <div class="productImages">
+                    {{#each currentProduct.productImagesURL}}
+                    <img class="imageViewOne ml-3" src="{{this}}" alt="">
+                    {{/each}}
+                  </div>
+                  <hr>
+                  <div>
+                    <label for="">Are you want to change product Offer/Stock ?</label><br>
+                    <input type="radio" name="radio" id="stockRadio" onchange="isRadioActive()"> product stock <br>
+                    <input type="radio" name="radio" id="offerRadio" onchange="isRadioActive()"> product offer
+                  </div>
+
+
+
+                  <div class="bigButton_div mb-3" id="ProductStockDiv">
+                    <p class="CurrentStock">Current stock : {{currentProduct.ProductStock}}</p>
+                    <form action="/admin/stock-changer" method="post">
+                      <div class="stockInput">
+                        <input type="text" name="productId" value="{{currentProduct._id}}" hidden>
+                        
+                        <input class="form-control" type="number" max="1000" value="{{currentProduct.ProductStock}}"
+                          min="1" name="productNewSTock">
+                      </div>
+                      <br>
+                      <button class="cart_button " type="reset">Reset</button>
+                      <button class="Buy_button" type="submit">Submit</button>
+                    </form>
+                  </div>
+
+
+
+                  <div class="bigButton_div mb-3" id="ProductOfferDiv">
+                    <p class="CurrentStock">Current Offer: {{currentProduct.productOffer}}</p>
+                    <form action="/admin/stock-changerfdddf" method="post">
+                      <div class="stockInput">
+                        <input type="text" name="productId" value="{{currentProduct._id}}" hidden>
+                        <input type="text" id="productPrice" value="{{currentProduct.productPrice}}" hidden>
+                        <input class="form-control"  type="number" max="100" min="1"
+                          value="{{currentProduct.productOffer}}" name="productNewOffer" id="currentOffer">
+                        <input max="100" min="1" disabled placeholder="{{currentProduct.productPrice}}" class="form-control" type="number" name="productLastPrice" id='productLastPrice'
+                          style="margin-left: 29px;"><br>
+                          <span style="color: red;" id="productStock_error">asassaas</span>
+                      </div>
+                      <br>
+                      <button class="cart_button " type="reset">Reset</button>
+                      <button class="Buy_button" type="submit">Submit</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <script>
+                
+              </script>
+
+
+
+
+
+              <div class="col-xl-6">
+                <div class="second_part mt-4">
+                  <h1 class="full_title">{{currentProduct.productDescription}}</h1>
+                  <div class="Rating_button_div">
+                    <button class="rating_button">4.1 <i class="fa fa-star "></i> </button>
+                    <hr class="mt-2">
+
+                  </div>
+                  <div class="Price_detailes_div ">
+                    <p class="specia_price mb-2 ">Special Price</p>
+                    <h1 class="total_price mb-2 ">₹ {{currentProduct.productLastPrice}}</h1>
+                    <div class="sub_price mb-2">
+                      <span class="real_price" >₹ {{currentProduct.productPrice}}</span>
+                      <span class="offer_rate">{{currentProduct.productOffer}} % off</span>
+                    </div>
+                    <p class="specia_price  mb-1 ">Free Delivery</p>
+                    <p class="daily_saver mb-2 ">Daily Sever</p>
+                    <hr class="mt-2">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+</div>

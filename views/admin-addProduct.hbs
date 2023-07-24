@@ -1,0 +1,593 @@
+
+    
+        <!-- Page Content -->
+
+
+            <div class="container-fluid px-1 mt-1 mb-5">
+                <div class="card px-4 mt-1">
+                    <div class="container-fluid px-3 mt-4 mb-4" >
+                         <h3 class="PageNameAdd mb-3">Add New Product</h3>
+                        <div class="row">
+                            <div class="mt-4 ">
+                                <form action="/admin/add-new-product" method="post" enctype="multipart/form-data">
+                                <label for="productName">Product Name</label>
+                                <input id="productName" type="text" name="productName" class="form-control" onkeyup="productNameChecker()" >
+                                <span style="color: red;" id="productName_error"></span>
+                                <br>
+
+                                <div class="row mt-1">
+                                    <div class="col-md-6">
+                                        <label for="productCategory">Category:</label>
+                                            <select id="productCategory" name="productCategory"  class="form-control"  onchange="showProductData(), categorySelected(),productCategoryOnchange()">
+                                                <option id="ChooseOption" value="">Select an option</option>
+                                                {{#each CategoryList}}
+                                                <option value="{{this.categoryName}}">{{this.categoryName}}</option>
+                                                {{/each}}
+                                            </select>
+                                            <span style="color: red;" id="categorySelect_error"></span>
+                                            <br>
+                                        <br>   
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <label for="">Price</label>
+                                        <input type="number" name="productPrice" id="productPrice" onkeyup="productPriceChecker()" class="form-control">
+                                        <span style="color: red;" id="productPrice_error"></span>
+                                        <br>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                   <div class="col-md-6">
+                                        <label for=""> Product Stock</label>
+                                        <input type="number" name="ProductStock"  id="productStock" onkeyup="productStockChecker()" class="form-control">
+                                        <span style="color: red;" id="productStock_error"></span>
+                                        <br>
+                                    </div>
+            
+                                    <div class="col-md-6">
+                                        <label for="">Offer %</label>
+                                        <input type="number" name="productOffer"  class="form-control" id="productOffer" onkeyup="productOfferChecker()" >
+                                        <span style="color: red;" id="productOffer_error"></span>
+                                        <br>
+                                    </div>
+
+                                     <div class="col-md-6">
+                                        <label for="">Warranty Months</label>
+                                        <input type="number" name="productWarranty"  class="form-control" id="productWarranty" onkeyup="productWarrantyChecker()" min="0" max="100">
+                                        <span style="color: red;" id="productWarranty_error"></span>
+                                        <br>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                    </div>
+ 
+                                    <div class="col-md-6">
+                                        <label  for="productDelivary">Delivery Method :</label>
+                                        <br>
+                                        <div class="mt-2 mx-4">
+                                            <input type="radio" name="productFreeDelivery"  value="true" required >  Free Delivery
+                                            <br>
+                                             <input type="radio" name="productFreeDelivery"  value="false" required >  No Free Delivery
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-6">
+                                        <label  for="productReplacement">Replacement Method</label>
+                                        <br>
+                                        <div class="mt-2 mx-4">
+                                            <input type="radio" name="productReplacement"  value="true" required >  Free Replacement 
+                                            <br>
+                                             <input type="radio" name="productReplacement"  value="false" required >  No Replacement 
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                {{!-- // show less --}}
+
+                                 <div class="row dynamicShowHideDiv">
+                                    <h5 class="AboutThisProduct mt-4 mb-5">Fill Product Details </h5>
+                                        <div class="col-lg-4">
+                                            <label for="">Product Brand :</label>
+                                            <input type="text" name="productBrand" value="Apple" class="form-control" readonly>
+                                            <br>
+                                        </div>
+                                        <div class=" col-lg-4">
+                                            <label for=""> Model Name :</label>
+                                            <input type="text" name="productModelName" class="form-control" required>
+                                            <br>
+                                        </div>
+                                        <div class=" col-lg-4">
+                                            <label for="">Color :</label>
+                                            <input list="productColor"  name="productColor" class="form-control" required>
+                                            <datalist  id="productColor">
+                                                <option value="White"></option>
+                                                <option value="Silver">
+                                                <option value="Grey">
+                                                <option value="Green">
+                                                <option value="Red">
+                                                <option value="Orange">
+                                                <option value="Blue">
+                                                <option value="Purple">
+                                                <option value="Mid Night">
+                                                <option value="Black">
+                                            </datalist>
+                                            <br>
+                                        </div>
+
+                                        {{!-- mack satrt --}}
+
+                                        <div class="col-lg-4 mackDiv">
+                                            <label >Mack Screen Size :</label>
+                                            <input step=".1" type="number" placeholder="inch" name="productScreenSize" class="form-control mackInput" required>
+                                            <br>
+                                        </div>
+
+                                        <div class=" col-lg-4 mackDiv">
+                                            <label>Mack CPU Model :</label>
+                                            <select name="productCPUModel" class="form-control mackInput" required>
+                                                <option value="Core M Family">Core M Family</option>
+                                                <option value="Apple M1">Apple M1</option>
+                                            </select>
+                                            <br>
+                                        </div>
+
+                                        <div class=" col-lg-4 mackDiv">
+                                            <label>Mack CPU Type :</label>
+                                            <select name="productCPU" class="form-control mackInput" required>
+                                                <option value="8 Core">8 core</option>
+                                                <option value="14 Core">14 core</option>
+                                                <option value="16 Core">16 core</option>
+                                            </select>
+                                            <br>
+                                        </div>
+
+                                        <div class=" col-lg-4 mackDiv">
+                                            <label>Mack GPU Type :</label>
+                                            <select name="productGPU" class="form-control mackInput" required>
+                                                <option value="8 Core">8 core</option>
+                                                <option value="14 Core">14 core</option>
+                                                <option value="16 Core">16 core</option>
+                                            </select>
+                                            <br>
+                                        </div>
+                                        <div class=" col-lg-4 mackDiv">
+                                            <label>Mack RAM Memory :</label>
+                                            <select name="productRAMMemory" class="form-control mackInput" required>
+                                                <option value="8 GB">8 GB</option>
+                                                <option value="16 GB">16 GB</option>
+                                                <option value="32 GB">32 GB</option>
+                                            </select>
+                                            <br>
+                                        </div>
+
+                                        <div class=" col-lg-4 mackDiv">
+                                            <label>Mack Hard Disk Size :</label>
+                                            <select name="productHardDiskSize" class="form-control mackInput" required>
+                                                <option value="256 GB">256 GB</option>
+                                                <option value="512 GB">512 GB</option>
+                                                <option value="1 TB">1 TB</option>
+                                            </select>
+                                            <br>
+                                        </div>
+
+                                        <div class=" col-lg-4 mackDiv">
+                                            <label> Mack chips :</label>
+                                            <select name="productMChips" class="form-control mackInput" required>
+                                                <option value="M1">M1</option>
+                                                <option value="M1 Pro">M1 Pro</option>
+                                                <option value="M1 Max">M1 Max</option>
+                                                <option value="M1 Ultra">M1 Ultra</option>
+                                                <option value="M2">M2</option>
+                                                <option value="M2 Pro">M2 Pro</option>
+                                                <option value="M2 Max">M2 Max</option>
+                                                <option value="M2 Ultra">M2 Ultra</option>
+                                            </select>
+                                            <br>
+                                        </div>
+                                        
+                                         <div class=" col-lg-4 mackDiv">
+                                            <label>Mack Operating System :</label>
+                                            <select name="productOperatingSystem" class="form-control mackInput" required>
+                                                <option value="macOS 12 Monterey">macOS 12 Monterey</option>
+                                                <option value="macOS 10.14 Mojav">macOS 10.14 Mojav</option>
+                                            </select>
+                                            <br>
+                                        </div>
+
+                                         <div class=" col-lg-4 mackDiv">
+                                            <label>Mack Memory Storage :</label><br>
+                                            <input  class="mackInput" type="checkbox" name="productInternalStorage" value="256 GB" required >
+                                            <label > 256 GB</label><br>
+                                            <input  class="mackInput" type="checkbox" name="productInternalStorage" value="512 GB" >
+                                            <label > 512 GB</label><br>
+                                            <input  class="mackInput" type="checkbox" name="productInternalStorage" value="512 GB" >
+                                            <label > 1 TB</label><br><br>
+                                            <br>
+                                        </div>
+
+                                        <div class="col-lg-4 mackDiv">
+                                            <label>Color Available In This Product :</label><br>
+                                            <input class="mackInput" type="checkbox" name="productAvailableColor" value="Black" required >
+                                            <label >Black</label><br>
+                                            <input  class="mackInput" type="checkbox" name="productAvailableColor" value="Green" >
+                                            <label >Green</label><br>
+                                            <input  class="mackInput" type="checkbox" name="productAvailableColor" value="Purple" >
+                                            <label >Purple</label><br>
+                                            <input  class="mackInput" type="checkbox" name="productAvailableColor" value="Gold" >
+                                            <label >Gold</label><br>
+                                            <input  class="mackInput" type="checkbox" name="productAvailableColor" value="Blue" >
+                                            <label >Blue</label><br>
+                                            <input  class="mackInput" type="checkbox" name="productAvailableColor" value="Grey" >
+                                            <label >Grey</label><br>
+                                            <input  class="mackInput" type="checkbox" name="productAvailableColor" value="Silver" >
+                                            <label >Silver</label><br>
+                                            <input  class="mackInput" type="checkbox" name="productAvailableColor" value="White" >
+                                            <label >White</label><br><br>
+                                            <br>
+                                        </div>
+
+                                        {{!-- for an error --}}
+
+                                        {{!-- <div style="display: none;" class=" col-lg-4">
+                                            <label>Operating System :</label>
+                                            <select name="productOperatingSystem" class="form-control " disabled>
+                                                <option value="macOS 12 Monterey">macOS 12 Monterey</option>
+                                                <option value="macOS 10.14 Mojav">macOS 10.14 Mojav</option>
+                                            </select>
+                                            <br>
+                                        </div> --}}
+
+                                        
+
+
+                                        {{!-- iphone start --}}
+
+                                        <div class="col-lg-4 iphoneDiv">
+                                            <label >iPhone Screen Size :</label>
+                                            <input step=".1" type="number" placeholder="inch" name="productScreenSize" class="form-control iphoneInput" required>
+                                            <br>
+                                        </div>
+
+                                        <div class=" col-lg-4  iphoneDiv">
+                                            <label>iPhone Hard Disk Size :</label>
+                                            <select name="productHardDiskSize" class="form-control iphoneInput" required>
+                                                <option value="128 GB">128 GB</option>
+                                                <option value="256 GB">256 GB</option>
+                                                <option value="512 GB">512 GB</option>
+                                            </select>
+                                            <br>
+                                        </div>
+
+                                         <div class=" col-lg-4 iphoneDiv">
+                                            <label>iPhone Cellular Technology :</label>
+                                            <select name="productCellular" class="form-control iphoneInput" required>
+                                                <option value="5G">5G</option>
+                                                <option value="4G">4G</option>
+                                                <option value="3G">3G</option>
+                                            </select>
+                                            <br>
+                                        </div>
+                                        
+
+                                         <div class=" col-lg-4 iphoneDiv">
+                                            <label>iPhone Camera Resolution :</label>
+                                            <select name="productCameraResolution" class="form-control iphoneInput" required>
+                                                <option value="128 mb">128 mb</option>
+                                                <option value="64 mb">64 mb</option>
+                                                <option value="48 mb">48 mb</option>
+                                                <option value="32 mb">32 mb</option>
+                                            </select>
+                                            <br>
+                                        </div>
+
+                                        <div class=" col-lg-4 iphoneDiv">
+                                            <label>iPhone Operating System :</label>
+                                            <select name="productOperatingSystem" class="form-control iphoneInput" required>
+                                                <option value="iOS">iOS</option> 
+                                                <option value="iOS">iPadOS</option> 
+                                            </select>
+                                            <br>
+                                        </div>
+
+
+                                         <div class=" col-lg-4 iphoneDiv">
+                                            <label>Memory Storage Available :</label><br>
+                                            <input class="iphoneInput" type="checkbox" name="productInternalStorage" value="128 GB" required >
+                                            <label > 128 GB</label><br>
+                                            <input  class="iphoneInput" type="checkbox" name="productInternalStorage" value="256 GB" >
+                                            <label > 256 GB</label><br>
+                                            <input  class="iphoneInput" type="checkbox" name="productInternalStorage" value="512 GB" >
+                                            <label > 512 GB</label><br><br>
+                                            <br>
+                                        </div>
+
+                                        <div class="col-lg-4 iphoneDiv">
+                                            <label>Color Available In This Product :</label><br>
+                                            <input class="iphoneInput" type="checkbox" name="productAvailableColor" value="Black" required >
+                                            <label >Black</label><br>
+                                            <input  class="iphoneInput" type="checkbox" name="productAvailableColor" value="Green" >
+                                            <label >Green</label><br>
+                                            <input  class="iphoneInput" type="checkbox" name="productAvailableColor" value="Deep Purple" >
+                                            <label >Deep Purple</label><br>
+                                            <input  class="iphoneInput" type="checkbox" name="productAvailableColor" value="Gold" >
+                                            <label >Gold</label><br>
+                                            <input  class="iphoneInput" type="checkbox" name="productAvailableColor" value="Blue" >
+                                            <label >Blue</label><br>
+                                            <input  class="iphoneInput" type="checkbox" name="productAvailableColor" value="Grey" >
+                                            <label >Grey</label><br>
+                                            <input  class="iphoneInput" type="checkbox" name="productAvailableColor" value="Silver" >
+                                            <label >Silver</label><br>
+                                            <input  class="iphoneInput" type="checkbox" name="productAvailableColor" value="White" >
+                                            <label >White</label><br><br>
+                                            <br>
+                                        </div>
+
+                                        {{!-- ipad start --}}
+
+                                        <div class="col-lg-4 ipadDiv">
+                                            <label >iPad Screen Size :</label>
+                                            <input step=".1" type="number" placeholder="inch" name="productScreenSize" class="form-control ipadInput" required>
+                                            <br>
+                                        </div>
+
+                                        <div class=" col-lg-4  ipadDiv">
+                                            <label>ipad Hard Disk Size :</label>
+                                            <select name="productHardDiskSize" class="form-control ipadInput" required>
+                                                <option value="128 GB">128 GB</option>
+                                                <option value="256 GB">256 GB</option>
+                                                <option value="512 GB">512 GB</option>
+                                                <option value="1 TB">1 TB</option>
+                                                <option value="2 TB">2 TB</option>
+                                            </select>
+                                            <br>
+                                        </div>
+
+                                         <div class="col-lg-4 ipadDiv">
+                                            <label>iPad Camera Resolution :</label>
+                                            <select name="productCameraResolution" class="form-control ipadInput" required>
+                                                <option value="128 mb">128 mb</option>
+                                                <option value="64 mb">64 mb</option>
+                                                <option value="48 mb">48 mb</option>
+                                                <option value="32 mb">32 mb</option>
+                                            </select>
+                                            <br>
+                                        </div>
+
+                                        <div class="col-lg-4 ipadDiv">
+                                            <label>iPad Operating System :</label>
+                                            <select name="productOperatingSystem" class="form-control ipadInput" required>
+                                                <option value="iOS">iOS</option> 
+                                                <option value="iOS">iPadOS</option> 
+                                            </select>
+                                            <br>
+                                        </div>
+
+                                    
+                                        <div class="col-lg-4 ipadDiv">
+                                            <label>iPad Cellular Technology :</label>
+                                            <select name="productCellularTechnology" class="form-control ipadInput" required>
+                                                <option value="4G">4G</option>
+                                                <option value="5G">5G</option>
+                                            </select>
+                                            <br>
+                                        </div>
+
+                                         <div class="col-lg-4 ipadDiv">
+                                            <label>AvailableMemory Storage :</label><br>
+                                            <input class="ipadInput" type="checkbox" name="productInternalStorage" value="128 GB" required >
+                                            <label > 128 GB</label><br>
+                                            <input  class="ipadInput" type="checkbox" name="productInternalStorage" value="256 GB" >
+                                            <label > 256 GB</label><br>
+                                            <input  class="ipadInput" type="checkbox" name="productInternalStorage" value="512 GB" >
+                                            <label > 512 GB</label><br>
+                                            <input  class="ipadInput" type="checkbox" name="productInternalStorage" value="1 TB" >
+                                            <label > 1 TB</label><br>
+                                            <input  class="ipadInput" type="checkbox" name="productInternalStorage" value="2 TB" >
+                                            <label > 2 TB</label><br><br>
+                                            <br>
+                                        </div>
+                                        <div class="col-lg-4 ipadDiv">
+                                            <label>Color Available In This Product :</label><br>
+                                            <input class="ipadInput" type="checkbox" name="productAvailableColor" value="Black"  >
+                                            <label >Black</label><br>
+                                            <input  class="ipadInput" type="checkbox" name="productAvailableColor" value="Green" >
+                                            <label >Green</label><br>
+                                            <input  class="ipadInput" type="checkbox" name="productAvailableColor" value="Purple" >
+                                            <label >Purple</label><br>
+                                            <input  class="ipadInput" type="checkbox" name="productAvailableColor" value="Gold" >
+                                            <label >Gold</label><br>
+                                            <input  class="ipadInput" type="checkbox" name="productAvailableColor" value="Blue" >
+                                            <label >Blue</label><br>
+                                            <input  class="ipadInput" type="checkbox" name="productAvailableColor" value="Grey" >
+                                            <label >Grey</label><br>
+                                            <input  class="ipadInput" type="checkbox" name="productAvailableColor" value="Silver" required>
+                                            <label >Silver</label><br>
+                                            <input  class="ipadInput" type="checkbox" name="productAvailableColor" value="White" >
+                                            <label >White</label><br><br>
+                                            <br>
+                                        </div>
+
+
+                                        <!-- iwatch -->
+
+                                        <div class="col-lg-4 iWatchDiv">
+                                            <label >Apple Watch Size :</label>
+                                            <select name="productScreenSize" class="form-control iWatchInput" required>
+                                                <option value="40mm - fits 130-200mm wrists">40mm - fits 130-200mm wrists</option>
+                                                <option value="44mm - fits 140-220mm wrists">44mm - fits 140-220mm wrists</option>
+                                               
+                                            </select>
+                                            <br>
+                                        </div>
+
+                                        <div class="col-lg-4 iWatchDiv">
+                                            <label >Apple Watch Generation :</label>
+                                             <select name="productGeneration" class="form-control iWatchInput" required>
+                                                <option value="1st Generation">1st Generation</option>
+                                                <option value="2nd Generation">2nd Generation</option>
+                                                <option value="3rd Generation">3rd Generation</option>
+                                            </select>
+                                            <br>
+                                        </div>
+
+                                         <div class="col-lg-4 iWatchDiv">
+                                            <label>iWatch Style :</label>
+                                            <select name="productWatchStyle" class="form-control iWatchInput" required>
+                                                <option value="Modern">Modern</option>
+                                                <option value="GPS">GPS</option>
+                                                <option value="GPS + CELLULAR">GPS + CELLULAR</option>
+                                            </select>
+                                            <br>
+                                        </div>
+
+                                        <div class="col-lg-4 iWatchDiv">
+                                            <label >Apple Watch Available Sizes</label><br>
+                                            <input class="iWatchInput" type="checkbox" name="productAvailableSize" value="40mm - fits 130 - 200mm wrists" required >
+                                            <label >40mm - fits 130 - 200mm wrists</label><br>
+                                            <input class="iWatchInput" type="checkbox" name="productAvailableSize" value="44mm - fits 140 - 220mm wrists" >
+                                            <label >44mm - fits 140 - 220mm wrists</label><br>
+                                            <br>
+                                        </div>
+
+                                        <div class="col-lg-4 iWatchDiv">
+                                            <label>Color Available In This Product :</label><br>
+                                            
+                                            <input class="iWatchInput" type="checkbox" name="productAvailableColor" value="Black" >
+                                            <label >Black</label><br>
+                                            <input  class="iWatchInput" type="checkbox" name="productAvailableColor" value="Green" >
+                                            <label >Green</label><br>
+                                            <input  class="iWatchInput" type="checkbox" name="productAvailableColor" value="Purple" >
+                                            <label >Purple</label><br>
+                                            <input  class="iWatchInput" type="checkbox" name="productAvailableColor" value="Red" >
+                                            <label >Red</label><br>
+                                            <input  class="iWatchInput" type="checkbox" name="productAvailableColor" value="Orange" >
+                                            <label >Orange</label><br>
+                                            <input  class="iWatchInput" type="checkbox" name="productAvailableColor" value="Gold" >
+                                            <label >Gold</label><br>
+                                            <input  class="iWatchInput" type="checkbox" name="productAvailableColor" value="Blue" >
+                                            <label >Blue</label><br>
+                                            <input  class="iWatchInput" type="checkbox" name="productAvailableColor" value="Grey" >
+                                            <label >Grey</label><br>
+                                            <input  class="iWatchInput" type="checkbox" name="productAvailableColor" value="Silver" >
+                                            <label >Silver</label><br>
+                                            <input  class="iWatchInput" type="checkbox" name="productAvailableColor" value="White" >
+                                            <label >White</label><br>
+                                            <input class="iWatchInput" type="checkbox" name="productAvailableColor" value="Mid Night" required >
+                                            <label >Mid Night</label><br><br>
+                                            <br>
+                                        </div>
+
+                                        <!-- i air pod Pod -->
+
+                                        
+
+                                        <div class="col-lg-4 airPodsDiv">
+                                            <label >AirPods Generation :</label>
+                                             <select name="productGeneration" class="form-control airPodsInput" required>
+                                                <option value="1st Generation">1st Generation</option>
+                                                <option value="2nd Generation">2nd Generation</option>
+                                                <option value="3rd Generation">3rd Generation</option>
+                                            </select>
+                                            <br>
+                                        </div>
+
+                                        <div class="col-lg-4 airPodsDiv">
+                                            <label >AirPod Compatible Type :</label>
+                                             <select name="productCompatibleType" class="form-control airPodsInput" required>
+                                                <option value="Headphones">Headphones</option>
+                                                <option value="In Ear">In Ear</option>
+                                            </select>
+                                            <br>
+                                        </div>
+
+                                        <div class="col-lg-4 airPodsDiv">
+                                            <label >AirPods FormFactor:</label>
+                                             <select name="productFormFactor" class="form-control airPodsInput" required>
+                                                <option value="In Ear">In Ear</option>
+                                                <option value="Over Ear">Over Ear</option>
+                                            </select>
+                                            <br>
+                                        </div>
+
+                                        <div class="col-lg-4 airPodsDiv">
+                                            <label >AirPods Connectivity Technology :</label>
+                                             <select name="productConnectivity" class="form-control airPodsInput" required>
+                                                <option value="Bluetooth">Bluetooth</option>
+                                                <option value="Wire">Wire Set</option>
+                                            </select>
+                                            <br>
+                                        </div>
+
+                                        <div class="col-lg-4 airPodsDiv">
+                                            <label>Color Available In This Product :</label><br>
+                                            <input class="airPodsInput" type="checkbox" name="productAvailableColor" value="Black">
+                                            <label >Black</label><br>
+                                            <input  class="airPodsInput" type="checkbox" name="productAvailableColor" value="Green" >
+                                            <label >Green</label><br>
+                                            <input  class="airPodsInput" type="checkbox" name="productAvailableColor" value="Purple" >
+                                            <label >Purple</label><br>
+                                            <input  class="airPodsInput" type="checkbox" name="productAvailableColor" value="Orange" >
+                                            <label >Orange</label><br>
+                                            <input  class="airPodsInput" type="checkbox" name="productAvailableColor" value="Gold" >
+                                            <label >Gold</label><br>
+                                            <input  class="airPodsInput" type="checkbox" name="productAvailableColor" value="Pink" >
+                                            <label >Pink</label><br>
+                                            <input  class="airPodsInput" type="checkbox" name="productAvailableColor" value="Blue" >
+                                            <label >Blue</label><br>
+                                            <input  class="airPodsInput" type="checkbox" name="productAvailableColor" value="Grey" >
+                                            <label >Grey</label><br>
+                                            <input  class="airPodsInput" type="checkbox" name="productAvailableColor" value="Silver" required >
+                                            <label >Silver</label><br>
+                                            <input  class="airPodsInput" type="checkbox" name="productAvailableColor" value="White" >
+                                            <label >White</label><br><br>
+                                            
+                                            <br>
+                                        </div>
+
+                                        <div class=" col-lg-12">
+                                            <label for="">Description :</label>
+                                            <input type="text" id="productDescription" name="productDescription" class="form-control" onkeyup="DescriptionChecker()">
+                                            <span style="color: red;" id="productDescription_error"></span>
+                                        </div>
+                                    </div>
+                                    <br>
+
+
+                                <h5 class="AboutThisProduct mt-3 mb-4">About This Item </h5>
+                                <div  id="inputContainer">
+                                    <br>
+                                </div>
+                                <button class="addDaynamicinput"  type="button" onclick="addInputField()">Add Input Field</button>
+                                <br>
+                                <br>
+                                <label for="">Product First Image</label>
+                                <img src="" style="width: 100px;" alt="" id="firstImgView">
+                                <br>
+                                <br>
+                                <input type="file" id="productFirstImage" name="productFirstImage" class="form-control" onchange="firstImageView(event),validateProductImages()" required>
+                                <br>
+                                <label for="">Product Images</label>
+                                {{!-- <img src="" style="width: 100px;" alt="" id="imgView"> --}}
+                                <span id="imgView">
+                                </span>
+                                <br>
+                                <br>
+                                <input type="file" name="productImages" id="productImages"   onchange="validateProductImages()"  class="form-control" multiple >
+                                 <span style="color: red;" id="productImages_error"></span>
+                                
+                                    <div class="submitButton">
+                                        <button onclick="return validateNewProductSubmit()"  type="submit" class="btn  btn-success mt-4 ">Create New Product</button>
+                                    </div>
+                                    <div style="color: red; text-align: center;" class="mt-3" id="submitError"></div>
+                                <br>
+                                </form>
+                        </div>
+                    </div>
+            </div> <!-- card end// -->
+
+            </div>
+        </div>
+
+    <!-- /#page-content-wrapper -->

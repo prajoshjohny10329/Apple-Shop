@@ -1,0 +1,70 @@
+<!-- Page Content -->
+<div class="container-fluid px-3">
+
+    <div class="row mt-1" style="background-color: white;">
+        <h3 class="PageName mt-4 mb-2 ">All Banners</h3>
+        <div class="newButton  mt-2 my-4 mr-3">
+            <a onclick="return aTagClick('Are you want to create New Banner ?','/admin/add-banner')" class="createNewButton mr-5"> Create new Banner</a>
+        </div>
+        <hr>
+        <div class="card mt-4 mb-4">
+            <table class="table mt-4 display " id="productsTable">
+                <thead class="mt-4">
+                    <tr>
+                        
+                        <th >Banner Image</th>
+                        <th >Banner Category</th>
+                        <th >option</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {{#each userBanners}}
+                    <tr>
+                        
+                        <td><img style="width: 350px;" src="{{this.bannerUrl}}" alt="image"> </td>
+            
+                        {{#if this.isActive}}
+                                <td scope="row">{{this.BannerCategory}} <p class="unBlocked"></p></td>
+                                {{else}}
+                                <td scope="row">{{this.productName}} <p class="blocked"></p></td>
+                                {{/if}}
+                        <td>
+                            
+                            {{#if isActive}}
+                                <form action="/admin/block-banner" method="post" id="blockBanner-{{this._id}}">
+                                <input type="text" value="{{this._id}}" name="bannerId" hidden>
+                                <button class="blockButton mb-3" onclick="return showConfirmForm('Are you want to block this Banner ?','blockBanner-{{this._id}}')" type="submit" >Block</button>
+                                </form> 
+                               
+                            {{else}}
+                                <form action="/admin/unBlock-banner" method="post" id="unBlockBanner-{{this._id}}">
+                                <input type="text" value="{{this._id}}" name="bannerId" hidden>
+                                <button class="unBlockButton mb-3" onclick="return showConfirmForm('Are you want to Un block this Banner ?','unBlockBanner-{{this._id}}')" type="submit">Un Block</button>
+                                </form>
+                            {{/if}}
+                             <form action="/admin/delete-banner" method="post" id="deleteBanner-{{this._id}}">
+                                <input type="text" value="{{this._id}}" name="bannerId" hidden>
+                                <button class="deleteButton " type="submit" onclick="return showConfirmForm('Are you want delete this Banner ?','deleteBanner-{{this._id}}')">Delete</button>
+                                </form>
+
+                        </td>
+                    
+
+                    </tr>
+                        {{/each}}
+        
+
+                </tbody>
+            </table>
+            <script>
+
+                $(function () {
+                    $('#productsTable').DataTable();
+                });
+                
+            </script>
+        </div>
+    </div>
+
+</div>
+</div>

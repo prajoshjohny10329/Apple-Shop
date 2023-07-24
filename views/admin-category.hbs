@@ -1,0 +1,60 @@
+
+        <!-- Page Content -->
+            <div class="container-fluid px-3">
+
+                <div class="row mt-1" style="background-color: white;">
+                    <h3 class="PageName mt-4 mb-2 ">All Category</h3>
+                    <div class="newButton  mt-2 my-4 mr-3">
+                        <a onclick="return aTagClick('Are you want to create New Category ?','/admin/add-category')" class="createNewButton mr-5"> Create new Category</a>
+                    </div>
+                    <hr>
+                    <div class="card mt-4 mb-4" >
+                        <table class="table mt-4 display " id="productsTable">
+                            <thead class="mt-4">
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    
+                                    <th>option</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each result}}
+                                <tr>
+                                    <td scope="row">{{this.categoryName}}</td>
+                                    <td>
+                                        
+                            {{#if CategoryStatus}}
+                                <form action="/admin/category-block" method="post" id="categoryBlock-{{this._id}}">
+                                <input type="text" value="{{this._id}}" name="categoryId" hidden>
+                                <button class="blockButton mb-3" onclick="return showConfirmForm('Are you want to block this Category ?','categoryBlock-{{this._id}}')" type="submit" >Block</button>
+                                </form> 
+                                
+                            {{else}}
+                                <form action="/admin/category-unBlock" method="post" id="categoryUnBlock-{{this._id}}">
+                                <input type="text" value="{{this._id}}" name="categoryId" hidden>
+                                <button class="unBlockButton mb-3" onclick="return showConfirmForm('Are you want to Un block this Category ?','categoryUnBlock-{{this._id}}')" type="submit">Un Block</button>
+                                </form>
+                            {{/if}}
+
+                                    </td>
+
+                                </tr>
+                                {{/each}}
+
+                            </tbody>
+                        </table>
+                        <script>
+
+                            $(function () {
+                                $('#productsTable').DataTable();
+                            });
+
+                        </script>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+

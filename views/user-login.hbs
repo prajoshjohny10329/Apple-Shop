@@ -1,0 +1,68 @@
+
+<div class="container-fluid">
+    <div class="row no-gutter">
+        <!-- The image half -->
+        <div class="col-md-6 d-none d-md-flex bg-image"></div>
+        <!-- The content half -->
+        <div class="col-md-6 second-part">
+
+            <div class="login d-flex align-items-center py-5">
+
+                <!-- Demo content-->
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-10 mx-auto">
+                              <a href="/"><button class="back_button fa fa-home mb-2"></button></a>
+                              
+
+                            <h3 class="user_form_tittle ">User Login !</h3>
+                            <p class="text-muted mb-4 " style="text-align: center;">Enter your email and password for
+                                login.</p>
+                            <div id="errorMessage" class="mb-4" style="color: red; text-align: center;">{{loggedError}}</div>
+                            <div id="successMessage" class="mb-4" style="color: rgb(4, 213, 70); text-align: center;">{{successMessage}}</div>
+                            <div id="warningMessage" class="mb-4" style="color: rgb(255, 153, 0); text-align: center;">{{warningMessage}}
+                            </div>
+                            <form action="login" method="post">
+                                <div class="form-group mb-4 inputgroup">
+                                    <label for="inputEmail">Email</label>
+                                    <input id="inputEmail" name="Email" onkeyup="validateEmail()" type="email"  class="form-control   shadow-sm px-4">
+                                    <span id="email-error"> </span>
+                                </div>
+                                <div class="form-group mb-2 inputgroup">
+                                    <label for="inputPassword">Password</label>
+                                    <input id="inputPassword" name="Password" onkeyup="validateLoginPassword()" type="password"  required=""class="form-control  shadow-sm px-4 text-primary">
+                                    <span id="password-error"> </span>
+                                </div>
+                                <div class="mb-3" >
+                                    <a class="forgottenpassword" href="/forgotPassword">forgot password</a>
+                                </div>
+                                <div class="form-group mb-2 inputgroup ">
+                                        <button type="submit" onclick="return validateLoginSubmit()"  class="submit_button btn-block text-uppercase mb-2   ">Login</button>
+                                        <span class="submiterr" id="submit-error"></span>
+                                </div> 
+
+                            </form>
+
+                                <div class=" mt-3 ">
+                                        <a style="text-decoration: none;" href="/loginwithOTP"><button  class="Login_with_OTP_button btn-block text-uppercase ">Login with OTP</button></a> 
+                                </div>  
+                                
+                                <div style="color: white;" class="text-center d-flex justify-content-center mt-4">
+                                    <p>Create New Account <a href="/signup" class="font-italic text-muted">
+                                            <u style="color: blue;">Sign Up</u></a></p>
+                                </div>
+                
+                                
+                            
+                           
+                        </div>
+                    </div>
+                </div><!-- End -->
+
+            </div>
+        </div><!-- End -->
+        
+    </div>
+</div>
+

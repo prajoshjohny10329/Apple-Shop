@@ -1,0 +1,69 @@
+
+ <div class="container-fluid">
+        <div class="row no-gutter">
+            <!-- The image half -->
+            <div class="col-md-6 d-none d-md-flex bg-image"></div>
+            <!-- The content half -->
+            <div class="col-md-6 second-part">
+                <div class="login d-flex align-items-center py-2">
+    
+                    <!-- Demo content-->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-10 mx-auto">
+                                <a href="/"><button class="back_button fa fa-home mb-2"></button></a>
+
+                                <h3 class="user_form_tittle ">Register Page!</h3>
+                                <p class="text-muted mb-2" style="text-align: center;">Enter your Details for Register.</p>
+                                <div id="errorMessage" class="mb-4"  style="color: red; text-align: center;">{{errorMessage}}</div>     
+                                <form action="signup" method="post">
+                                    <div>
+                                    </div>
+                                    <div class="form-group mb-2 inputgroup">
+                                        <label for="inputName">Name</label>
+                                        <input name="Name" id="inputName" onkeyup="validateName()" type="text" placeholder="fullname"  class="form-control   shadow-sm px-4">
+                                        <span id="name-error"> </span>
+                                    </div>
+                                    <div class="form-group mb-2 inputgroup">
+                                        <label for="inputEmail">Email</label>
+                                        <input name="Email" id="inputEmail" onkeyup="validateEmail()" type="email" placeholder="Email address"  class="form-control   shadow-sm px-4">
+                                        <span id="email-error"> </span>
+                                    </div>
+                                    <div class="form-group mb-2 inputgroup">
+                                        <label for="inputPassword">Password</label>
+                                        <input name="Password" id="inputPassword" onkeyup="validatePassword()" type="text" placeholder="Password"  class="form-control   shadow-sm px-4 text-primary">
+                                        <span id="password-error"> </span>
+                                    </div>
+                                    <div class="form-group mb-2 inputgroup">
+                                        <label for="inputconfirmPassword">Confirm password</label>
+                                        <input  id="inputconfirmPassword" type="text" onkeyup=" validateConfirm()"  placeholder="Password"  class="form-control   shadow-sm px-4 text-primary">
+                                        <span id="confirmpassword-error"> </span>
+                                    </div>
+                                    <div class="form-group mb-3 inputgroup">
+                                        <label for="inputMobile">Mobile No</label>
+                                        <input id="inputMobile" name="Mobile" type="text" onkeyup="validateMobile()" placeholder="Mobile No" class="form-control   shadow-sm px-4 text-primary">
+                                        <span id="mobile-error"> </span>
+                                    </div>      
+                                    <div class="form-group mb-2 inputgroup ">
+                                        <button type="submit" onclick="return validateSubmit()"  class="submit_button btn-block text-uppercase mb-2   ">Creat Account</button>
+                                        <span class="submiterr" id="submit-error"></span>
+                                    </div>                           
+                                    
+                                    <div style="color: white;" class="text-center d-flex justify-content-center mt-4">
+                                        <p>Alredy have an account <a href="/login" class="font-italic text-muted">
+                                                <u style="color: blue;">login</u></a></p>
+                                    </div>
+                                </form>
+                                
+                            </div>
+                        </div>
+                    </div><!-- End -->
+    
+                </div>
+            </div><!-- End -->
+
+            
+    
+        </div>
+    </div>
+

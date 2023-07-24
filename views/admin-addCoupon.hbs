@@ -1,0 +1,83 @@
+<!-- Page Content -->
+
+<div class="container-fluid px-1 mt-1 mb-5">
+    <div class="card px-4 mt-1">
+        <div class="container-fluid px-3 mt-4 mb-4">
+            <h3 class="PageNameAdd mb-3">Add New Coupon</h3>
+            <div class="row">
+                <div class="mt-4 ">
+                    <div style="color: red; text-align: center;" class="mt-3 mb-3" id="errorMessage">{{errorMessage}}
+                    </div>
+                    <form action="/admin/add-coupon" method="post" enctype="multipart/form-data">
+                </div>
+                <div class="col-lg-6">
+                    <label>Coupon Name</label>
+                    <input id="couponName" type="text" name="couponName" placeholder="eg: Christmas Coupon"
+                        class="form-control mt-2" onkeyup="couponNameChecker()">
+                    <span style="color: red;" id="couponName_error"></span> <br>
+                </div>
+
+                <div class="col-lg-6">
+                    <label>Coupon Code</label>
+                    <input id="couponCode" type="text" name="couponCode" placeholder="eg: 7MT3x7ev"
+                        class="form-control mt-2" onkeyup="couponCodeChecker()">
+                    <span style="color: red;" id="couponCode_error"></span>
+                </div>
+                <div class="generatorButtonDiv mt-2 ">
+                    <button type="button" class="couponGenerator" onclick="generatePassword(),couponCodeChecker()">Code
+                        Generator</button>
+                </div>
+                <div class="col-lg-6">
+                    <label>Coupon offer </label>
+                    <input id="couponOffer" type="number" name="couponOffer" placeholder="%offer" min="0" max="99"
+                        class="form-control mt-2" onkeyup="couponOfferChecker()">
+                    <span style="color: red;" id="couponOffer_error"></span><br>
+                </div>
+
+                <div class="col-lg-6">
+                    <label>Coupon Max Price</label>
+                    <input id="couponMaxPrice" type="number" name="couponMaxPrice" placeholder="₹ 1000"
+                        class="form-control mt-2" onkeyup="couponMaxPriceChecker()">
+                    <span style="color: red;" id="couponMaxPrice_error"></span>
+                </div>
+
+                <div class="col-lg-6">
+                    <label>Coupon Start Date</label>
+                    <input id="couponStartingDate" type="datetime-local" min="2023-06-25T00:00"
+                        name="couponStartingDate" class="form-control mt-2" onclick="couponDateChecker()" required>
+                    <span style="color: red;" id="couponStart_error"></span> <br>
+                </div>
+
+                <div class="col-lg-6">
+                    <label>Coupon Expiry Date</label>
+                    <input id="couponExpiryDate" type="datetime-local" min="2023-06-25T00:00" name="couponExpiryDate"
+                        class="form-control mt-2" onclick="couponDateChecker()" required>
+                    <span style="color: red;" id="couponExpiry_error"></span> <br>
+                </div>
+
+                <div class="col-lg-6">
+                    <label>Coupon Banner</label>
+                    <input id="couponBanner" type="file" name="couponBanner" class="form-control mt-2"
+                        onchange="couponImgViewFunction(event),validateCouponBanner()" required>
+                    <span style="color: red;" id="couponBanner_error"></span>
+                    <br>
+                </div>
+                <div class="col-lg-6">
+                    <label for="">Selected Coupon Banner</label><br>
+                    <img src="" style="width: 80%;" id="couponImgView">
+                </div>
+                <div class="submitButton">
+                    <button type="submit" class="btn  btn-success mt-5 " onclick="return validateCouponSubmit()">Create
+                        New Coupon</button>
+                </div>
+                <div style="color: red; text-align: center;" class="mt-3" id="submitError"></div>
+                <br>
+                </form>
+            </div>
+        </div>
+    </div> <!-- card end// -->
+
+</div>
+</div>
+
+<!-- /#page-content-wrapper -->

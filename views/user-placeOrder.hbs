@@ -1,0 +1,70 @@
+<div>
+  <div class="Product_detail_full ">
+    <div class="container-fluid">
+      <form action="" method="post" id="checkout-form">
+        <div class="row marginFor">
+          <div class=" col-lg-12 selectAddressDiv mt-2 mb-3">
+            <h4>Select Payment</h4>
+          </div>
+
+          <div class="selectFullDiv mb-3">
+            <div class="selectOptionDiv">
+              <a href="/select-address" class="completedDot leftMargin mt-3 ">1</a>
+              <a href="/order-summary" class="completedDot mt-3 ">2</a>
+              <a href="i#" class="selectedDot rightMargin mt-3">3</a>
+            </div>
+            <div class="selectOptionDiv ">
+              <p class="selectedOption">Address</p>
+              <p class="Option">Order summary</p>
+              <p class="Option">Payment</p>
+            </div>
+          </div>
+
+
+          <div class="col-md-6 AddressDiv mt-2 ">
+            <div class="innerDiv ml-2  mb-2">
+              <div class="addressTop">
+                <div class="nameHeadDIv">
+                  <p class="deliveryTo mt-3 ml-3">Delivery to :</p>
+                </div>
+                <div class="editButtonDiv">
+                    <a href="/select-address" class="changeAddress">Change</a>
+                </div>
+              </div>
+              <p class="nameAddress mb-1 ml-5">{{orderAddress.userAddress.userAddressName}}</p>
+              <p class="addressStyle ml-5">{{orderAddress.userAddress.userAddressPhone}}</p>
+              <p class="addressStyle ml-5">{{orderAddress.userAddress.userAddressHouseName}}</p>
+              <p class="addressStyle ml-5">{{orderAddress.userAddress.userAddressPlace}} ,
+                {{orderAddress.userAddress.userAddressCity}}
+              </p>
+              <p class="addressStyle ml-5">{{orderAddress.userAddress.userAddressDistrict}}</p>
+              <p class="addressStyle ml-5 ">{{orderAddress.userAddress.userAddressState}} -
+                {{orderAddress.userAddress.userAddressPincode}}</p>
+              {{#if orderAddress.userAddress.userAddressNearAddress}}
+              <p class="addressStyle ml-5">nearest Address : {{orderAddress.userAddress.userAddressNearAddress}}</p>
+              {{/if}}
+              <p class="addressStyle ml-5">Address Type: {{orderAddress.userAddress.userAddressType}}</p>
+              <p>'</p>
+            </div>
+          </div><br>
+          
+          <div class="col-md-4">
+            <div class="container mt-5 ml-5 checkout-div-place">
+              <h5>Total Amount <span class="ml-5" style="font-weight: 700; color: green;">₹ {{total}}</span></h5>
+              <hr>
+              <div class="payment-placrorder">
+                <p>Payment Method</p>
+                <label for="" class="radio-inline-placeOrder">
+                  <input type="radio" name="payment-method" value="COD" checked>COD
+                </label>
+                <label for="" class="radio-inline-placeOrder">
+                  <input type="radio" name="payment-method" value="Online" checked>Online payment
+                </label>
+                <button class="btn btn-primary float-right" type="submit">checkout</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
