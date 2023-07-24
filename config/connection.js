@@ -1,6 +1,6 @@
 const MongoClient=require('mongodb-legacy').MongoClient
 
-// connection 6
+// this is sample test
 
 const state={db:null}
 
