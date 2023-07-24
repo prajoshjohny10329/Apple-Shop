@@ -1,6 +1,7 @@
 const MongoClient=require('mongodb-legacy').MongoClient
 
-// connection
+// connection 6
+// connection 6
 const state={db:null}
 
 module.exports.connect=(done)=>{
@@ -13,7 +14,6 @@ module.exports.connect=(done)=>{
         state.db=data.db(dbName)
         done()
     })
-
 }
 
 module.exports.get=function(){
