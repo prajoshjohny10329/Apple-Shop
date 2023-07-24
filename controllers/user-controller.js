@@ -108,7 +108,7 @@ module.exports = {
 
   // Otp create for  create  new user
   getOTP: (req, res, next) => {
-    try {
+
       let successMessage = req.session.successMessage || "";
       let Otp_Number = "+91" + req.session.userDataForOTP.Mobile;
       res.render("user-signupOTP", { formLayout: true, successMessage });
@@ -120,9 +120,7 @@ module.exports = {
         .catch((e) => {
           console.log("Got an error postForgotOtp:", e.code, e.message);
         });
-    } catch (error) {
-      res.redirect("/error");
-    }
+
   },
   //  Otp verify for  create  new user
   postOTP: (req, res, next) => {

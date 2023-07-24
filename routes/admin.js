@@ -7,7 +7,7 @@ const middleware = require('../middlewares/middlewares');
 const adminController = require('../controllers/admin-controller');
 const cloudinary = require('../utils/cloudnary');
 
-
+///log
 
 router.get('/',middleware.adminIsLogged,adminController.getAdminLandingPage)
 
