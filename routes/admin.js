@@ -7,7 +7,7 @@ const middleware = require('../middlewares/middlewares');
 const adminController = require('../controllers/admin-controller');
 const cloudinary = require('../utils/cloudnary');
 
-///log
+//HI ME
 
 router.get('/',middleware.adminIsLogged,adminController.getAdminLandingPage)
 
@@ -122,8 +122,6 @@ router.post('/change-status/',middleware.adminMiddleware,adminController.changeS
 router.post('/change-order-status',middleware.adminMiddleware,adminController.postOrderStatus)
 
 router.post('/confirm-cancel',middleware.adminMiddleware,adminController.postConfirmCancel)
-
-
 
 //sales report
 
