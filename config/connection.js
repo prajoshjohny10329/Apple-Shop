@@ -1,5 +1,6 @@
 const MongoClient=require('mongodb-legacy').MongoClient
 
+// connection
 const state={db:null}
 
 module.exports.connect=(done)=>{
