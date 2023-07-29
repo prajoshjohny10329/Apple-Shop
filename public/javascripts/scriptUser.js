@@ -4,34 +4,9 @@ window.addEventListener("load",function(){
     loader.className += " hidden"
   })
 
-  try {
-    window.addEventListener('DOMContentLoaded', function() {
-      const openBtn = document.getElementById('openBtn');
-      if (!openBtn) {
-        console.log('Error: Element with id "openBtn" not found.');
-        return;
-      }
-    window.addEventListener('scroll', function() {
-        let scrollPosition = window.scrollY;
-        if (scrollPosition >= 50) {
-          openBtn.style.display = 'none';
-        } else {
-          openBtn.style.display = 'block';
-        }
-      });
-    });
-  } catch (error) {
-    console.log('scroll exception:');
-  }
-  
+
 
  ////order staust
-
-
-
-
-
-
 
   function goBack() {
   history.back();
@@ -411,14 +386,9 @@ function changeImage(src){
   singleImage.attr('src', src);
 }
 
+  //////// user address
 
-
-
-
-
-  ////////////// user address
-
-  var AndraPradesh = ["Anantapur","Chittoor","East Godavari","Guntur","Kadapa","Krishna","Kurnool","Prakasam","Nellore","Srikakulam","Visakhapatnam","Vizianagaram","West Godavari"];
+var AndraPradesh = ["Anantapur","Chittoor","East Godavari","Guntur","Kadapa","Krishna","Kurnool","Prakasam","Nellore","Srikakulam","Visakhapatnam","Vizianagaram","West Godavari"];
 var ArunachalPradesh = ["Anjaw","Changlang","Dibang Valley","East Kameng","East Siang","Kra Daadi","Kurung Kumey","Lohit","Longding","Lower Dibang Valley","Lower Subansiri","Namsai","Papum Pare","Siang","Tawang","Tirap","Upper Siang","Upper Subansiri","West Kameng","West Siang","Itanagar"];
 var Assam = ["Baksa","Barpeta","Biswanath","Bongaigaon","Cachar","Charaideo","Chirang","Darrang","Dhemaji","Dhubri","Dibrugarh","Goalpara","Golaghat","Hailakandi","Hojai","Jorhat","Kamrup Metropolitan","Kamrup (Rural)","Karbi Anglong","Karimganj","Kokrajhar","Lakhimpur","Majuli","Morigaon","Nagaon","Nalbari","Dima Hasao","Sivasagar","Sonitpur","South Salmara Mankachar","Tinsukia","Udalguri","West Karbi Anglong"];
 var Bihar = ["Araria","Arwal","Aurangabad","Banka","Begusarai","Bhagalpur","Bhojpur","Buxar","Darbhanga","East Champaran","Gaya","Gopalganj","Jamui","Jehanabad","Kaimur","Katihar","Khagaria","Kishanganj","Lakhisarai","Madhepura","Madhubani","Munger","Muzaffarpur","Nalanda","Nawada","Patna","Purnia","Rohtas","Saharsa","Samastipur","Saran","Sheikhpura","Sheohar","Sitamarhi","Siwan","Supaul","Vaishali","West Champaran"];
@@ -581,14 +551,9 @@ $("#inputState").change(function(){
 
 });
 
-// setTimeout(() => { document.getElementById("errorMessage").style.display ='none' }, 4000)
-
-/////payment
 
 function generateRazorpay(order) {
-  console.log('razpopyment');
-  console.log(order);
-  console.log(order.response.amount);
+
   var options = {
     "key": "rzp_test_Jvi1smZWyXoW4Z", // Enter the Key ID generated from the Dashboard
     "amount": order.response.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -659,7 +624,6 @@ function showConfirmForm(message,Id){
       document.body.removeChild(confirmBox)
   }
   function submitForm(Id){
-    console.log(Id)
     document.getElementById(Id).submit()
   }
 
@@ -716,3 +680,28 @@ function aTagClick(message,href) {
   return false
 
 }
+
+
+//my account
+
+try {
+  window.addEventListener('DOMContentLoaded', function() {
+    const openBtn = document.getElementById('openBtn');
+    if (!openBtn) {
+      console.log('Error: Element with id "openBtn" not found.');
+      return;
+    }
+  window.addEventListener('scroll', function() {
+      let scrollPosition = window.scrollY;
+      if (scrollPosition >= 50) {
+        openBtn.style.display = 'none';
+      } else {
+        openBtn.style.display = 'block';
+      }
+    });
+  });
+} catch (error) {
+  console.log('scroll exception:');
+}
+
+

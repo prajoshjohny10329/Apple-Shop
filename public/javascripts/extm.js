@@ -9,7 +9,7 @@
 	"use strict";
 	$.fn.extend({
 		extm: function extm(userOptions) {
-			console.log('extem calleled');
+			
 			//merge default and user options to 'options' var
 			var defaultOptions = {
 				zoomElement: false,

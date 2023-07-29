@@ -7,7 +7,7 @@ const middleware = require('../middlewares/middlewares');
 const adminController = require('../controllers/admin-controller');
 const cloudinary = require('../utils/cloudnary');
 
-//HI ME
+// admin
 
 router.get('/',middleware.adminIsLogged,adminController.getAdminLandingPage)
 
@@ -85,13 +85,15 @@ router.get('/block-products/:id',middleware.adminMiddleware,adminController.getB
 
 router.get('/unblock-product/:id',middleware.adminMiddleware,adminController.getUnBlockProducts)
 
-router.get('/edit-product/:id',middleware.adminMiddleware,adminController.getProductForEdit)
+router.get('/edit-product/:id',adminController.getProductForEdit)
 
-router.post('/edit-product/',middleware.adminMiddleware,adminController.postProductForEdit)
+router.post('/edit-product/',adminController.postProductForEdit)
 
 router.get('/view-single-product/:id',middleware.adminMiddleware,adminController.getProduct)
 
 router.post('/stock-changer',middleware.adminMiddleware,adminController.postProductStock)
+
+router.post('/offer-changer',middleware.adminMiddleware,adminController.postProductOffer)
 
 ///banners
 

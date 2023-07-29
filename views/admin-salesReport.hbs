@@ -50,7 +50,7 @@
                                             {{this.orderObj.orderAddress.userAddressName}}
                                         </td>
                                         <td>
-                                            {{this.date}}
+                                            {{this.orderObj.data}}
                                         </td>
                                         <td>
                                             {{this.orderObj.paymentMethod}}
@@ -80,9 +80,9 @@
 <script>
     $(function () {
         $('#productsTable').DataTable({
-            dom: 'Bfrtip',
+           
             buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
+                'copy', 'csv', 'excel'
             ]
         });
     });

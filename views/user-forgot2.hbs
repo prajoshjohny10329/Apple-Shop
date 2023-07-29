@@ -19,12 +19,14 @@
                                 <p class="text-muted mb-4" style="text-align: center;">Enter OTP to Change Password in Apple Shop .</p>
                                  <div id="errorMessage" style="color: red; text-align: center;">{{errorMessage}}</div>
                                  <div id="successMessage" class="mb-4" style="color: rgb(4, 213, 70); text-align: center;">{{successMessage}}</div>
+                                 <div id="timer"></div>
                                 <form action="/forgotPasswordOTP" method="post">
                                     
                                     <div class="form-group mb-4 inputgroup">
                                         <label for="inputOTP">OTP</label>
                                         <input id="inputOTP" name="userOTP" onkeyup="validateOTP()"  type="text" placeholder="Enter OTP"   class="form-control   shadow-sm px-4">
                                         <span id="OTP-error"> </span>
+                                        <div class="resendOtp"><a id="resendOtp" href=""></a></div>
                                     </div>
                                     <div class="form-group mb-2 inputgroup ">
                                         <button type="submit" onclick="return validateSubmit_OTP()"  class="submit_button btn-block text-uppercase mb-2   ">Submit OTP</button>
@@ -38,9 +40,15 @@
                             </div>
                         </div>
                     </div><!-- End -->
-    
                 </div>
             </div><!-- End -->
-    
         </div>
     </div>
+     <script>
+    window.onload = function() {
+        setTimeout(() => {
+       startTimer();
+    }, 6000);
+ 
+};
+</script>

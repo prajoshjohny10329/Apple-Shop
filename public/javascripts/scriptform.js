@@ -3,7 +3,7 @@ var emailError = document.getElementById('email-error')
 var passwordError = document.getElementById('password-error')
 var mobileError = document.getElementById('mobile-error')
 var submitError = document.getElementById('submit-error')
-var confirmPasswordError =document.getElementById('confirmpassword-error')
+var confirmPasswordError =document.getElementById('confirm-password-error')
 var OTPError = document.getElementById('OTP-error');
 var adminCodeError = document.getElementById('AdminCode-error')
 
@@ -13,7 +13,7 @@ var adminCodeError = document.getElementById('AdminCode-error')
 function  validateAdminSubmit(){
   if( !validateName() ||!validateEmail()||!validateMobile()||!validatePassword()||!validateConfirm()||!validateAdminCode()){
     submitError.style.display ='block';
-    submitError.innerHTML = 'please cheack and submit';
+    submitError.innerHTML = 'please check and submit';
     setTimeout(() => {
       submitError.style.display ='none';
     }, 3000);
@@ -63,11 +63,11 @@ function validateOTP(){
 
 function validateConfirm(){
   let password = document.getElementById('inputPassword').value;
-  let confirmPassword = document.getElementById('inputconfirmPassword').value;
-  let confirmInput = document.getElementById('inputconfirmPassword')
+  let confirmPassword = document.getElementById('inputConfirmPassword').value;
+  let confirmInput = document.getElementById('inputConfirmPassword')
 
   if(confirmPassword.length ==0 ){
-    confirmPasswordError.innerHTML = 'confirm pasword require';
+    confirmPasswordError.innerHTML = 'confirm password require';
     return false;
   }
   if(password != confirmPassword){
@@ -190,7 +190,7 @@ function validateMobile(){
 function  validateSubmit(){
   if( !validateName() ||!validateEmail()||!validateMobile()||!validatePassword()||!validateConfirm()){
     submitError.style.display ='block';
-    submitError.innerHTML = 'please cheack and submit';
+    submitError.innerHTML = 'please check and submit';
     setTimeout(() => {
       submitError.style.display ='none';
     }, 3000);
@@ -201,7 +201,7 @@ function  validateSubmit(){
 function  validateLoginSubmit(){
   if( !validateEmail()||!validateLoginPassword()){
     submitError.style.display ='block';
-    submitError.innerHTML = 'please cheack and submit';
+    submitError.innerHTML = 'please check and submit';
     setTimeout(() => {
       submitError.style.display ='none';
     }, 3000);
@@ -212,7 +212,7 @@ function  validateLoginSubmit(){
 function validateSubmit_OTP(){
     if( !validateOTP()){
       submitError.style.display ='block';
-      submitError.innerHTML = 'please cheack and submit';
+      submitError.innerHTML = 'please check and submit';
       setTimeout(() => {
         submitError.style.display ='none';
       }, 3000);
@@ -225,7 +225,7 @@ function validateForgot1(){
 
   if(!validateMobile()){
     submitError.style.display ='block';
-    submitError.innerHTML = 'please cheack and submit';
+    submitError.innerHTML = 'please check and submit';
     setTimeout(() => {
       submitError.style.display ='none';
     }, 3000);
@@ -238,7 +238,7 @@ function validateforgot3(){
 
   if( !validatePassword()||!validateConfirm()){
     submitError.style.display ='block';
-    submitError.innerHTML = 'please cheack and submit';
+    submitError.innerHTML = 'please check and submit';
     setTimeout(() => {
       submitError.style.display ='none';
     }, 3000);
@@ -249,7 +249,7 @@ function validateforgot3(){
 function validateLoginwithOtp1(){
   if( !validateMobile()){
     submitError.style.display ='block';
-    submitError.innerHTML = 'please cheack and submit';
+    submitError.innerHTML = 'please check and submit';
     setTimeout(() => {
       submitError.style.display ='none';
     }, 3000);
@@ -262,7 +262,7 @@ function validateAdminforgot(){
 
   if( !validateEmail()){
     submitError.style.display ='block';
-    submitError.innerHTML = 'please cheack and submit';
+    submitError.innerHTML = 'please check and submit';
     setTimeout(() => {
       submitError.style.display ='none';
     }, 3000);
@@ -287,6 +287,47 @@ window.addEventListener("load",function(){
   const loader = document.querySelector(".loader")
   loader.className += " hidden"
 })
+
+
+// function for otp Time
+
+function startTimer() {
+  const otpExpiryTime = 55; // Expiry time in seconds (e.g., 60 seconds)
+  let seconds = otpExpiryTime;
+
+  // Display initial timer value
+  document.getElementById("timer").innerText = formatTime(seconds);
+
+  // Update the timer every second
+  const timerInterval = setInterval(() => {
+    seconds--;
+    document.getElementById("timer").innerText = formatTime(seconds);
+
+    if (seconds === 0) {
+      clearInterval(timerInterval);
+      document.getElementById("timer").style.display = "none";
+      document.getElementById("resendOtp").style.display = "block";;
+
+    }
+    if (seconds <= 20) {
+      document.getElementById("timer").style.color = "#e2ff08"
+    }
+    if (seconds <= 10) {
+      document.getElementById("timer").style.color = "#ffc108"
+    }
+    if (seconds <= 3) {
+      document.getElementById("timer").style.color = "#ff0808"
+    }
+  }, 1000);
+}
+
+function formatTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes.toString().padStart(2, "0")}:${remainingSeconds
+    .toString()
+    .padStart(2, "0")}`;
+}
 
 
 //  script for button disabled

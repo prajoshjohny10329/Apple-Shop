@@ -16,22 +16,26 @@
                                  <a href="/"><button class="back_button fa fa-home mb-2"></button></a>
 
                                 <h3 class="user_form_tittle">OTP Page!</h3>
-                                <p class="text-muted mb-4" style="text-align: center;">Enter OTP for success creation AppleShop.</p>
+                                <p class="text-muted mb-4" style="text-align: center;">Enter OTP for success creation AppleShop Account.</p>
                                 <div id="errorMessage" style="color: red; text-align: center;">{{message}}</div>
                                 <div id="successMessage" class="mb-4" style="color: rgb(4, 213, 70); text-align: center;">{{successMessage}}</div>
+                                <div id="timer"></div>
                                 <form action="/otp" method="post">
                                     
-                                    <div class="form-group mb-4 inputgroup">
+                                    <div class="form-group  inputgroup">
                                         <label for="inputOTP">OTP</label>
                                         <input id="inputOTP" name="userOTP" onkeyup="validateOTP()"  type="text" placeholder="Enter OTP"   class="form-control   shadow-sm px-4">
                                         <span id="OTP-error"> </span>
+                                        <div class="resendOtp"><a id="resendOtp" href="/otp">resend Otp</a></div>
+                                        
+
                                     </div>
-                                    <div class="form-group mb-2 inputgroup ">
+                                    <div class="form-group  inputgroup ">
                                         <button type="submit" onclick="return validateSubmit_OTP()"  class="submit_button btn-block text-uppercase mb-2   ">Submit OTP</button>
                                         <span class="submiterr" id="submit-error"></span>
                                      </div>  
                                     <div style="color: white;" class="text-center d-flex justify-content-center mt-4">
-                                          <p>Creat New Account <a href="/signup" class="font-italic text-muted">
+                                          <p>Create New Account <a href="/signup" class="font-italic text-muted">
                                            <u style="color: blue;">Sign Up</u></a></p>
                                      </div>
                                 </form>
@@ -44,3 +48,12 @@
     
         </div>
     </div>
+ <script>
+    window.onload = function() {
+        setTimeout(() => {
+       startTimer();
+    }, 6000);
+ 
+};
+</script>
+

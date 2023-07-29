@@ -1,5 +1,4 @@
-// const { Number } = require("twilio/lib/twiml/VoiceResponse");
-// const { response } = require("../app");
+
 const { response } = require("../app");
 const adminHelper = require("../helper/admin-helper");
 const userHelper = require("../helper/user-helper");
@@ -7,10 +6,10 @@ const zHelper = require("../helper/z-helper");
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
+
 const client = require("twilio")(accountSid, authToken);
 
 module.exports = {
-  // only user page
   getLandingPage: async (req, res, next) => {
     try {
       const user = req.session.user;
@@ -108,11 +107,12 @@ module.exports = {
 
   // Otp create for  create  new user
   getOTP: (req, res, next) => {
-
+      console.log('otp called');
       let successMessage = req.session.successMessage || "";
+      console.log(successMessage);
       let Otp_Number = "+91" + req.session.userDataForOTP.Mobile;
+      console.log( req.session.userDataForOTP);
       res.render("user-signupOTP", { formLayout: true, successMessage });
-      req.session.successMessage = null;
       client.verify.v2
         .services(process.env.TWILIO_SERVICE_SID)
         .verifications.create({ to: Otp_Number, channel: "sms" })
@@ -120,8 +120,8 @@ module.exports = {
         .catch((e) => {
           console.log("Got an error postForgotOtp:", e.code, e.message);
         });
-
   },
+  
   //  Otp verify for  create  new user
   postOTP: (req, res, next) => {
     try {
@@ -135,6 +135,7 @@ module.exports = {
             userHelper.doSignup(req.session.userDataForOTP).then((response) => {
               if (response.status) {
                 req.session.loggedIn = true;
+                req.session.successMessage = "";
                 res.redirect("/");
               } else {
                 res.render("user-signup", { formLayout: true, response });
@@ -252,7 +253,9 @@ module.exports = {
             req.session.user = response.user;
             req.session.userDataForOTP = Mobile;
             let Otp_Number = "+91" + req.session.userDataForOTP;
-            res.render("user-login_otp2", { formLayout: true });
+            let last4 = Otp_Number.slice(-4);
+            let successMessage = "Otp is send your  Mobile ****" + last4;
+            res.render("user-login_otp2", { formLayout: true ,successMessage});
             client.verify.v2
               .services(process.env.TWILIO_SERVICE_SID)
               .verifications.create({ to: Otp_Number, channel: "sms" })
@@ -596,13 +599,16 @@ module.exports = {
       const cartCount = await userHelper.cartCount(req.session.user._id);
       let orderProducts = await userHelper.getOrderProducts(req.params.id);
       const orderData = await adminHelper.getOrderData(req.params.id);
-      res.render("use-viewOrders", {
+      const orderStatus = await zHelper.oneOrderStatus(orderData)
+      console.log(orderStatus);
+      res.render("user-viewOneOrder", {
         userLayout: true,
         loggedIn: true,
         user,
         cartCount,
         orderProducts,
         orderData,
+        orderStatus,
       });
     } catch (error) {
       console.log(error);
@@ -612,6 +618,15 @@ module.exports = {
   cancelOrder: async (req, res, next) => {
     try {
       await userHelper.cancelOrder(req.body.cancelOrderId);
+      res.redirect("/my-orders");
+    } catch (error) {
+      console.log(error);
+      res.redirect("/error");
+    }
+  },
+  returnOrder: async (req, res, next) => {
+    try {
+      await userHelper.returnOrder(req.body.returnOrderId);
       res.redirect("/my-orders");
     } catch (error) {
       console.log(error);

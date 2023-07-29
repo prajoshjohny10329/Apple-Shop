@@ -659,74 +659,151 @@
       
   }
 
-  .second_part{
-      background-color: #ffffff;
-      width: 100%;
-      height: 600px;
-      .full_title{
-          color: #000000;
-          background: none;
-          font-size: xx-large;  
-      }
-      .Rating_button_div{
-          width: 100%;
-          height: 50px;
-          background-color: #ffffff;
-      }
-      .rating_button{
-          border: none;
-          width: 55px;
-          height: auto;
-          background-color: #009d45;
-          color: white;
-          border-radius: 3px;
-          font-size: 17px;
-      }
-      .rating_button i{
-          font-size: 14px;
-      }
-      .Price_detailes_div{
-          width: 100%;
-          height: auto;
-          background-color: #ffffff;
-          .specia_price{
-              color: #009d45;
-              background: none;
-              font-size: 14px;
-              font-weight: 600;
-          }
-          .total_price{
-              color: #000000;
-              background: none;
-              font-size: 40px;
-              font-weight: 700;  
-          }
-          .sub_price{
-              width: 100%;
-              height: 20px;
-              background-color: #ffffff;
-              .real_price{
-                  color: grey;
-                  font-size: 14px;
-                  font-weight: 600;
-                  text-decoration: line-through;
-              }
-              .offer_rate{
-                  color: #009d45;
-                  font-size: 18px;
-                  font-weight: 700;
-                  margin-left: 20px;
-              }
-          }.daily_saver{
-              color: #000000;
-              background: none;
-              font-size: 14px;
-              font-weight: 700;
-          }
-      }
-  }
- 
+  .second_part {
+    background-color: #ffffff;
+    width: 100%;
+    height: 677px;
+    overflow-x: scroll;
+
+    .full_title {
+        color: #000000;
+        background: none;
+        font-size: xx-large;
+    }
+
+    .Rating_button_div {
+        width: 100%;
+        height: 50px;
+        background-color: #ffffff;
+    }
+
+    .rating_button {
+        border: none;
+        width: 55px;
+        height: auto;
+        background-color: #009d45;
+        color: white;
+        border-radius: 3px;
+        font-size: 17px;
+    }
+
+    .rating_button i {
+        font-size: 14px;
+    }
+
+    .Price_detailes_div {
+        width: 100%;
+        height: auto;
+        background-color: #ffffff;
+
+        .specia_price {
+            color: #009d45;
+            background: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .total_price {
+            color: #000000;
+            background: none;
+            font-size: 40px;
+            font-weight: 700;
+        }
+
+        .sub_price {
+            width: 100%;
+            height: 20px;
+            background-color: #ffffff;
+
+            .real_price {
+                color: grey;
+                font-size: 14px;
+                font-weight: 600;
+                text-decoration: line-through;
+            }
+
+            .offer_rate {
+                color: #009d45;
+                font-size: 18px;
+                font-weight: 700;
+                margin-left: 20px;
+            }
+        }
+
+        .daily_saver {
+            color: #000000;
+            background: none;
+            font-size: 14px;
+            font-weight: 700;
+        }
+    }
+    
+.productDetails {
+  width: 95%;
+  height: auto;
+  background-color: #ffffff;
+  font-weight: 500;
+  font-size: 12px;
 }
+
+.productDetailsPair {
+  height: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.ProductDetailsHead{
+  text-decoration: underline;
+  font-size: initial;
+  font-weight: 700;
+  color: grey;
+  
+}
+
+.productDetailsKey {
+  width: 35%;
+  height: auto;
+  background-color: #ffffff;
+}
+
+.productDetailsValue {
+  width: 65%;
+  height: auto;
+  background-color: #ffffff;
+}
+
+.keyStyle {
+  color: #000000;
+  background: none;
+  font-size: 14px;
+  font-weight: 700;
+}
+.productDescription{
+  color: #000000;
+  background: none;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+}
+.availableBox{
+  background: rgb(255, 255, 255);
+  height: auto;
+  width: auto;
+  padding: 3px 18px;
+  font-weight: 700;
+  color: black;
+  display: inline-block;
+  border-radius: 3px;
+  border: solid 2px rgb(132, 132, 132);
+}
+}
+
+}
+
+.second_part::-webkit-scrollbar {
+display: none;
+}
+ 
 .blocked{
   background-color: red;
   width: 10px;

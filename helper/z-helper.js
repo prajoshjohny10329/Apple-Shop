@@ -221,6 +221,8 @@ module.exports={
             currentOrderStatus.shipping = false
             currentOrderStatus.delivery = false
             currentOrderStatus.cancelled = false
+            currentOrderStatus.delivered = false
+            currentOrderStatus.return = false
   
             if(orderStatus =='Pending'){
               currentOrderStatus.Pending = true
@@ -236,6 +238,12 @@ module.exports={
             }
             else if(orderStatus =='Cancelled'){
               currentOrderStatus.cancelled = true
+            }
+            else if(orderStatus =='Delivered'){
+              currentOrderStatus.delivered = true
+            }
+            else if(orderStatus =='Return'){
+              currentOrderStatus.return = true
             }
             currentOrder.currentOrderStatus = currentOrderStatus
             result.push(currentOrder);
@@ -260,6 +268,8 @@ module.exports={
            currentOrderStatus.shipping = false
            currentOrderStatus.delivery = false
            currentOrderStatus.cancelled = false
+           currentOrderStatus.delivered = false
+           currentOrderStatus.return = false           
  
            if(orderStatus =='Pending'){
              currentOrderStatus.Pending = true
@@ -276,6 +286,12 @@ module.exports={
            else if(orderStatus =='Cancelled'){
              currentOrderStatus.cancelled = true
            }
+           else if(orderStatus =='Delivered'){
+            currentOrderStatus.delivered = true
+          }
+          else if(orderStatus =='Return'){
+            currentOrderStatus.return = true
+          }
  
          resolve(currentOrderStatus);
        } catch (error) {

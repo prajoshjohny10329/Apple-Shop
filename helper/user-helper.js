@@ -637,6 +637,17 @@ module.exports={
         })
     },
 
+    returnOrder:async(orderId)=>{
+        return new Promise(async (resolve,reject)=>{
+            try {
+                await  db.get().collection(collection.ORDER_COLLECTION).updateOne({_id:new ObjectId(orderId)},{ $set:{'orderObj.status': 'Return'}})
+                resolve()
+            } catch (error) {
+                console.log(error)
+            }
+        })
+    },
+
 
 
     getMyOrders:async(userId)=>{
@@ -652,7 +663,7 @@ module.exports={
     myOrders:(userId)=>{
         return new Promise(async (resolve,reject)=>{
           try {
-            let  myOrders = await db.get().collection(collection.ORDER_COLLECTION).find({"orderObj.userId": { $eq:new ObjectId(userId)}}).sort({ createdAt: -1 }).toArray()
+            let  myOrders = await db.get().collection(collection.ORDER_COLLECTION).find({"orderObj.userId": { $eq:new ObjectId(userId)}}).sort({"orderObj.data":-1}).toArray()
               resolve(myOrders)
           } catch (error) {
             console.log(error)

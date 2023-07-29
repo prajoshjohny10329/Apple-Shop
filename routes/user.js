@@ -7,6 +7,13 @@ const middleware = require("../middlewares/middlewares");
 
 const { render } = require("../app");
 
+
+router.get('/res',(req,res)=>{
+  
+  res.render("user-signupOTP",{formLayout: true})
+  
+})
+
 router.get("/", middleware.isLoggedIn, userController.getLandingPage); //home page
 
 router.get("/view-product/:id", userController.viewOneProduct); // view One Product
@@ -155,6 +162,12 @@ router.post(
   "/cancel-order",
   middleware.userMiddleware,
   userController.cancelOrder
+);
+
+router.post(
+  "/return-order",
+  middleware.userMiddleware,
+  userController.returnOrder
 );
 
 //coupon

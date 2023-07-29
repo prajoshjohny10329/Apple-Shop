@@ -19,9 +19,6 @@ function addToCart(proId) {
 function changeQuantity(cartId, proId, userId, count) {
   let quantity = parseInt(document.getElementById(proId).innerHTML);
   count = parseInt(count);
-  console.log("thi sis ajax");
-  console.log(userId);
-
   $.ajax({
     url: "/change-product-quantity",
     data: {
@@ -54,7 +51,6 @@ function changeQuantity(cartId, proId, userId, count) {
           location.reload("/cart"); // Reload the page after the user clicks "OK"
         });
       } else {
-        console.log(response);
         document.getElementById(proId).innerHTML = quantity + count;
         document.getElementById("total").innerHTML = response.total;
         document.getElementById("totalProducts").innerHTML = response.totalPro;
@@ -62,6 +58,8 @@ function changeQuantity(cartId, proId, userId, count) {
     },
   });
 }
+
+
 function removeCartProduct(cartId, proId) {
   $.ajax({
     url: "/remove-cart-product",
@@ -83,7 +81,7 @@ function removeCartProduct(cartId, proId) {
 }
 
 
-// placeorder
+// place order
 $("#checkout-form").submit((e) => {
   e.preventDefault();
   $.ajax({
@@ -92,7 +90,6 @@ $("#checkout-form").submit((e) => {
     data: $("#checkout-form").serialize(),
     success: (response) => {
       if (response.status) {
-        console.log('success');
         location.href = "/order-success";
         
       } else {
@@ -102,9 +99,8 @@ $("#checkout-form").submit((e) => {
   });
 });
 
-
+// order verifyPayment
 function verifyPayment(payment,order){
-  console.log('verify');
   $.ajax({
     url:'/verify-payment',
     data:{
@@ -114,19 +110,14 @@ function verifyPayment(payment,order){
     method:'post',
     success: (response) => {
       if(response.status){
-        console.log('success');
         location.href = "/order-success";
-      }
-      else{
-        console.log('not success');
       }
     }
   })
 
 }
 
-////coupon
-
+//coupon submit
 $("#coupon-form").submit((e) => {
   e.preventDefault();
   $.ajax({
@@ -135,7 +126,6 @@ $("#coupon-form").submit((e) => {
     data: $("#coupon-form").serialize(),
     success: (response) => {
       if (response.status) {
-        console.log(response.couponData);
         const total = document.getElementById("total").value;
         document.getElementById("discount").innerHTML = response.discount;
         document.getElementById("total").innerHTML = response.finalPrice;
@@ -153,10 +143,3 @@ $("#coupon-form").submit((e) => {
   });
 });
 
-// view on product
-
-
-
-///admin
-
-//blockBanner

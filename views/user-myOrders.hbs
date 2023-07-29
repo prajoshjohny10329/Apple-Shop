@@ -121,10 +121,16 @@
                   <button class="viewButton mb-3 ml-2" onclick="location.href='/view-orderProducts/{{this._id}}';">view
                   Products</button>
                 {{#if this.currentOrderStatus.cancelled}}
-                {{else}}
+                {{else if this.currentOrderStatus.return}}
+                {{else if this.currentOrderStatus.delivered}}
+                <form action="/return-order/" method="post" id="returnOrder-{{this._id}}">
+                                <input type="text" value="{{this._id}}" name="returnOrderId" hidden>
+                                <button class="returnButton mb-3 ml-2" onclick="return showConfirmForm('Are you want to return this Order ?','returnOrder-{{this._id}}')" type="submit" >Return Order</button>
+                                </form> 
+                {{else }}
                      <form action="/cancel-order/" method="post" id="cancelOrder-{{this._id}}">
                                 <input type="text" value="{{this._id}}" name="cancelOrderId" hidden>
-                                <button class="cancelButton mb-3 ml-2" onclick="return showConfirmForm('Are you want to block this Order ?','cancelOrder-{{this._id}}')" type="submit" >Cancel Order</button>
+                                <button class="cancelButton mb-3 ml-2" onclick="return showConfirmForm('Are you want to cancel this Order ?','cancelOrder-{{this._id}}')" type="submit" >Cancel Order</button>
                                 </form> 
                 {{/if}}
 

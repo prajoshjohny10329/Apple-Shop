@@ -339,21 +339,7 @@
                                         </div>
 
                                         {{/if}}
-
-                                        {{!-- for an error --}}
-
-                                        {{!-- <div style="display: none;" class=" col-lg-4">
-                                            <label>Operating System :</label>
-                                            <select name="productOperatingSystem" class="form-control " disabled>
-                                                <option value="macOS 12 Monterey">macOS 12 Monterey</option>
-                                                <option value="macOS 10.14 Mojav">macOS 10.14 Mojav</option>
-                                            </select>
-                                            <br>
-                                        </div> --}}
-
                                         
-
-
                                         {{!-- iphone start --}}
                                          {{#if category.iPhone}}
 
@@ -1076,15 +1062,17 @@
                                 <img src="{{productData.productFirstImage}}" style="width: 100px;" alt="" id="firstImgView">
                                 <br>
                                 <br>
-                                <input type="file" id="productFirstImage" name="productFirstImage" class="form-control" onchange="firstImageView(event),validateProductImages()" required>
+                                <input type="text" value="{{productData.productFirstImage}}"  name="productFirstImage"  hidden>
+                                <input type="file" id="productFirstImage"  name="changeFirstImage" class="form-control" onchange="firstImageView(event)">
                                 <br>
-                                <label for="">Product Images</label>
+                                <label for="">Product Images</label><br>
                                 {{!-- <img src="" style="width: 100px;" alt="" id="imgView"> --}}
                                 <span id="imgView">
                                     {{#each productData.productImagesURL}}
-                                    
-                                    <img src="{{this}}" style="width: 100px;"  >
-                                    <input type="file" id="productImagesURL" name="productImagesURL" class="form-control" onchange="firstImageView(event),validateProductImages()" required>
+                                    <img src="{{this}}" style="width: 100px;" id="id-{{this}}"  >
+                                    <input type="text" value="{{this}}"  name="productImagesURL"  hidden>
+                                    <input type="file" id="productImagesURL" name="changeImagesURL"  class="form-control" onchange="editImgViewFunction(event,'id-{{this}}'),validateEditImage('id-{{this}}','productImagesError-{{this}}')" ><br>
+                                    <span style="color: red;" id="productImagesError-{{this}}"></span>
                                      {{/each}}
                                 </span>
                                 <br>
@@ -1092,7 +1080,7 @@
                                  <span style="color: red;" id="productImages_error"></span>
                                 
                                     <div class="submitButton">
-                                        <button   type="submit" class="btn  btn-success mt-4 ">Create New Product</button>
+                                        <button   type="submit" class="btn  btn-success mt-4 ">Save edit</button>
                                     </div>
                                     <div style="color: red; text-align: center;" class="mt-3" id="submitError"></div>
                                 <br>

@@ -581,13 +581,34 @@ module.exports = {
   postProductStock: (productID, newStock) => {
     return new Promise(async (resolve, reject) => {
       try {
-        let newStock = parseInt(newStock);
+        newStock = parseInt(newStock);
+        console.log(newStock);
         await db
           .get()
           .collection(collection.PRODUCTS_COLLECTION)
           .updateOne(
             { _id: new ObjectId(productID) },
             { $set: { ProductStock: newStock } }
+          );
+        resolve();
+      } catch (error) {
+        console.log(error)
+      }
+    });
+  },
+
+  postProductOffer: (productID, newOffer,newLastPrice) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        console.log('product offer database');
+        newOffer = parseInt(newOffer);
+        newLastPrice = parseInt(newLastPrice);
+        await db
+          .get()
+          .collection(collection.PRODUCTS_COLLECTION)
+          .updateOne(
+            { _id: new ObjectId(productID) },
+            { $set: { productOffer: newOffer ,productLastPrice : newLastPrice} }
           );
         resolve();
       } catch (error) {

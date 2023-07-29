@@ -106,6 +106,7 @@ module.exports = {
       res.redirect("/admin/error");
     }
   },
+
   postAdminSignupOTP: (req, res, next) => {
     try {
       let adminData = req.session.adminData;
@@ -534,11 +535,7 @@ module.exports = {
     }
   },
   postProductForEdit: async (req, res, next) => {
-    try {
-    } catch (error) {
-      console.log(error);
-      res.redirect("/admin/error");
-    }
+
   },
   getProduct: async (req, res, next) => {
     try {
@@ -551,9 +548,29 @@ module.exports = {
   },
   postProductStock: async (req, res, next) => {
     try {
+      console.log('stock change');
       await adminHelper.postProductStock(
         req.body.productId,
         req.body.productNewSTock
+      );
+      const currentProduct = await adminHelper.getProductForEdit(
+        req.body.productId
+      );
+      res.render("admin-viewOneProduct", { adminLayout: true, currentProduct });
+    } catch (error) {
+      console.log(error);
+      res.redirect("/admin/error");
+    }
+  },
+
+  postProductOffer: async (req, res, next) => {
+    try {
+      console.log('offers change');
+      console.log(req.body);
+      await adminHelper.postProductOffer(
+        req.body.productId,
+        req.body.productNewOffer,
+        req.body.productLastPrice
       );
       const currentProduct = await adminHelper.getProductForEdit(
         req.body.productId

@@ -17,6 +17,42 @@ inputField.addEventListener("input", function(event) {
 }
 
 
+
+function newOfferSubmit(){
+  const currentOffer = document.getElementById('currentOffer').value
+  const productStockError= document.getElementById('productStock_error')
+
+  if(currentOffer.length == 0){
+    console.log('0 length');
+    productStockError.innerHTML = 'Product offer is required'
+    setTimeout(() => {
+      productStockError.innerHTML = ''
+    }, 3000);
+    return false
+  }
+  if(currentOffer <0){
+    console.log('1 less than');
+    productStockError.innerHTML = ' Less than zero value is not access for product offer '
+    setTimeout(() => {
+      productStockError.innerHTML = ''
+    }, 3000);
+    return false
+  }
+  if(currentOffer >99){
+    console.log('1 less than');
+    productStockError.innerHTML = ' Greater than 99 value is not access for product offer '
+    setTimeout(() => {
+      productStockError.innerHTML = ''
+    }, 3000);
+    return false
+  }
+
+  productStockError.innerHTML = ''
+  return true
+  
+}
+
+
 // admin  view on product is RadioButton Active
 
 try {
@@ -731,5 +767,14 @@ function aTagClick(message,href) {
   document.body.appendChild(confirmBox);
   return false
 
+}
+
+function changeImage(src){
+  var singleImage = $('#singleImage'); // Use jQuery to select the element
+  singleImage.attr('src', src);
+}
+
+function editImgViewFunction(event,id) {
+  document.getElementById(id).src = URL.createObjectURL(event.target.files[0])
 }
 

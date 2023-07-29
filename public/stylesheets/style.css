@@ -114,3 +114,19 @@
 .link_hover_form_down:hover{
   color: rgb(0, 132, 255);
 }
+
+#resendOtp{
+
+  display: none;
+}
+.resendOtp{
+  display: flex;
+  justify-content: flex-end;
+}
+#timer{
+  display: flex;
+  justify-content: center;
+  color: #2cff08;
+  font-size: larger;
+  font-weight: 600;
+}
