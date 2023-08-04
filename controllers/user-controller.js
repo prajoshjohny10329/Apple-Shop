@@ -584,8 +584,11 @@ module.exports = {
   //function for verify payment by online razorpay
   verifyPayment: async (req, res, next) => {
     try {
+      console.log("this.verifyPayment");
       await userHelper.verifyPayment(req.body);
       await userHelper.changeOrderStatus(req.body["order[response][receipt]"]);
+      let products = await userHelper.getCartProductList(req.session.user._id);
+      await userHelper.changeProductQuantity(products);
       await userHelper.removeCartForOrder(req.session.user._id);
       res.json({ status: true });
     } catch (error) {

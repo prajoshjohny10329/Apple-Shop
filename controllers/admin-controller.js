@@ -662,7 +662,8 @@ module.exports = {
       console.log('post confirm cancel');
       let walletAmount = 0;
       const orderData = await adminHelper.getOrderData(req.body.cancelOrderId);
-      console.log(orderData);
+      const products = orderData.orderObj.products
+      await adminHelper.changeProductQuantityCancel(products);
       if (orderData.orderObj.paymentMethod == "COD") {
         await adminHelper.sendOrderToCancel(orderData);
         await adminHelper.removeOrder(req.body.cancelOrderId);
@@ -670,12 +671,10 @@ module.exports = {
         walletAmount = orderData.orderObj.totalAmount;
         const userWallet = await adminHelper.getOneUserOneWallet(orderData.orderObj.userId);
         if (userWallet) {
-          console.log('update new wallet');
           walletAmount = walletAmount + userWallet.walletAmount;
           await adminHelper.updateWallet(walletAmount, userWallet._id);
           console.log(walletAmount);
         } else {
-          console.log('update new wallet');
           let insertData = {
             userId: orderData.orderObj.userId,
             walletAmount: orderData.orderObj.totalAmount,

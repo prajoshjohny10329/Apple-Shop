@@ -575,10 +575,11 @@ module.exports={
             console.log('productData');
             console.log(productData);
             for (let index = 0; index < productData.length; index++) {
-                console.log(productData[index].item);
-                
-                
+                let currentProductId = productData[index].item
+                let currentProductQuantity = - productData[index].quantity
+                await db.get().collection(collection.PRODUCTS_COLLECTION).updateOne({_id:new ObjectId(currentProductId)},{ $inc:{ProductStock:currentProductQuantity}})
             }
+            resolve()
         })
     },
 

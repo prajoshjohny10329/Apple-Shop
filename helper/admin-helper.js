@@ -9,7 +9,6 @@ const { AwsInstance } = require('twilio/lib/rest/accounts/v1/credential/aws');
 
 
 module.exports = {
-
   //show all users to the admin helper function
   getAllUsers: () => {
     return new Promise(async (res, rej) => {
@@ -21,7 +20,7 @@ module.exports = {
           .toArray();
         res(users);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -44,7 +43,8 @@ module.exports = {
                 resolve(response);
               } else {
                 response.status = false;
-                response.errorMessage = " Sorry! Access  failed case Invalid SID";
+                response.errorMessage =
+                  " Sorry! Access  failed case Invalid SID";
                 resolve(response);
               }
             });
@@ -54,42 +54,42 @@ module.exports = {
           resolve(response);
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
 
-  
   adminSIDforSignup: (adminData) => {
     return new Promise(async (resolve, reject) => {
-     try {
-       let response = {};
-       let adminHead = await db
-         .get()
-         .collection(collection.ADMIN_HEAD)
-         .findOne({});
-       response.Admin_Data = adminHead;
-       if (adminHead) {
-         bcrypt
-           .compare(adminData.Admin_SID, adminHead.Admin_SID)
-           .then((status) => {
-             if (status) {
-               response.status = true;
-               resolve(response);
-             } else {
-               response.status = false;
-               response.errorMessage = " Sorry! Access  failed case Invalid SID";
-               resolve(response);
-             }
-           });
-       } else {
-         response.errorMessage = " Sorry! Access  failed case Invalid SID";
-         response.status = false;
-         resolve(response);
-       }
-     } catch (error) {
-      console.log(error)
-     }
+      try {
+        let response = {};
+        let adminHead = await db
+          .get()
+          .collection(collection.ADMIN_HEAD)
+          .findOne({});
+        response.Admin_Data = adminHead;
+        if (adminHead) {
+          bcrypt
+            .compare(adminData.Admin_SID, adminHead.Admin_SID)
+            .then((status) => {
+              if (status) {
+                response.status = true;
+                resolve(response);
+              } else {
+                response.status = false;
+                response.errorMessage =
+                  " Sorry! Access  failed case Invalid SID";
+                resolve(response);
+              }
+            });
+        } else {
+          response.errorMessage = " Sorry! Access  failed case Invalid SID";
+          response.status = false;
+          resolve(response);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     });
   },
   emailCheck: (Admin_Email) => {
@@ -109,7 +109,7 @@ module.exports = {
           resolve(response);
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -130,7 +130,7 @@ module.exports = {
           resolve(response);
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -150,7 +150,7 @@ module.exports = {
             resolve(response);
           });
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -178,11 +178,12 @@ module.exports = {
             });
         } else {
           response.status = false;
-          response.errorMessage = "Sorry !Acces Failed Case of Invalid Email Id";
+          response.errorMessage =
+            "Sorry !Acces Failed Case of Invalid Email Id";
           resolve(response);
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -204,7 +205,7 @@ module.exports = {
           resolve(response);
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -229,7 +230,7 @@ module.exports = {
         response.status = true;
         resolve(response);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -245,7 +246,7 @@ module.exports = {
           );
         resolve();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -261,7 +262,7 @@ module.exports = {
           );
         resolve();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -275,7 +276,7 @@ module.exports = {
           .toArray();
         resolve(users);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -288,7 +289,7 @@ module.exports = {
           .findOne({ categoryName: { $regex: CategoryName, $options: "i" } });
         res(result);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -301,7 +302,7 @@ module.exports = {
           .insertOne({ categoryName: CategoryName, CategoryStatus: true });
         res(result);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -318,7 +319,7 @@ module.exports = {
           );
         res();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -335,7 +336,7 @@ module.exports = {
           );
         res();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -349,29 +350,29 @@ module.exports = {
           .toArray();
         res(CategoryList);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
   addProduct: (productData) => {
     return new Promise(async (res, rej) => {
- try {
-       productCategoryFull = await db
-         .get()
-         .collection(collection.CATEGORY_COLLECTION)
-         .findOne({ categoryName: productData.productCategory });
-       productData.productCategoryId = productCategoryFull._id;
-       await db
-         .get()
-         .collection(collection.PRODUCTS_COLLECTION)
-         .insertOne(productData);
-       res();
- } catch (error) {
-  console.log(error)
- }
+      try {
+        productCategoryFull = await db
+          .get()
+          .collection(collection.CATEGORY_COLLECTION)
+          .findOne({ categoryName: productData.productCategory });
+        productData.productCategoryId = productCategoryFull._id;
+        await db
+          .get()
+          .collection(collection.PRODUCTS_COLLECTION)
+          .insertOne(productData);
+        res();
+      } catch (error) {
+        console.log(error);
+      }
     });
   },
-  
+
   getAllProducts: () => {
     return new Promise(async (res, rej) => {
       try {
@@ -382,7 +383,7 @@ module.exports = {
           .toArray();
         res(products);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -398,7 +399,7 @@ module.exports = {
           );
         res();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -414,7 +415,7 @@ module.exports = {
           );
         res();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -427,7 +428,7 @@ module.exports = {
           .findOne({ _id: new ObjectId(productID) });
         res(product);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -445,15 +446,15 @@ module.exports = {
           );
         resolve();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
 
-  postProductOffer: (productID, newOffer,newLastPrice) => {
+  postProductOffer: (productID, newOffer, newLastPrice) => {
     return new Promise(async (resolve, reject) => {
       try {
-        console.log('product offer database');
+        console.log("product offer database");
         newOffer = parseInt(newOffer);
         newLastPrice = parseInt(newLastPrice);
         await db
@@ -461,11 +462,11 @@ module.exports = {
           .collection(collection.PRODUCTS_COLLECTION)
           .updateOne(
             { _id: new ObjectId(productID) },
-            { $set: { productOffer: newOffer ,productLastPrice : newLastPrice} }
+            { $set: { productOffer: newOffer, productLastPrice: newLastPrice } }
           );
         resolve();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -481,7 +482,7 @@ module.exports = {
           .toArray();
         resolve(getAllCoupons);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -494,7 +495,7 @@ module.exports = {
           .insertOne(couponData);
         resolve();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -511,7 +512,7 @@ module.exports = {
           );
         res();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -530,7 +531,7 @@ module.exports = {
           );
         res();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -546,7 +547,7 @@ module.exports = {
           .toArray();
         resolve(allOrders);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -558,10 +559,10 @@ module.exports = {
         const orderData = await db
           .get()
           .collection(collection.ORDER_COLLECTION)
-          .findOne({ _id: new ObjectId(orderId) })
+          .findOne({ _id: new ObjectId(orderId) });
         resolve(orderData);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -579,8 +580,28 @@ module.exports = {
           );
         resolve();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
+    });
+  },
+
+   //function for increment product quantity to confirm cancel
+  changeProductQuantityCancel: (productData) => {
+    return new Promise(async (resolve, reject) => {
+      console.log("productData");
+      console.log(productData);
+      for (let index = 0; index < productData.length; index++) {
+        let currentProductId = productData[index].item;
+        let currentProductQuantity = productData[index].quantity;
+        await db
+          .get()
+          .collection(collection.PRODUCTS_COLLECTION)
+          .updateOne(
+            { _id: new ObjectId(currentProductId) },
+            { $inc: { ProductStock: currentProductQuantity } }
+          );
+      }
+      resolve();
     });
   },
 
@@ -588,10 +609,13 @@ module.exports = {
   sendOrderToCancel: (orderData) => {
     return new Promise(async (resolve, reject) => {
       try {
-        await db.get().collection(collection.CANCEL_ORDER_COLLECTION).insertOne(orderData);
+        await db
+          .get()
+          .collection(collection.CANCEL_ORDER_COLLECTION)
+          .insertOne(orderData);
         resolve();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -599,49 +623,64 @@ module.exports = {
   //function for remove order when Admin submit confirm cancel
   removeOrder: (orderId) => {
     return new Promise(async (resolve, reject) => {
-     try {
-       await db.get().collection(collection.ORDER_COLLECTION).deleteOne({_id:new ObjectId(orderId)});
-       resolve();
-     } catch (error) {
-      console.log(error)
-     }
+      try {
+        await db
+          .get()
+          .collection(collection.ORDER_COLLECTION)
+          .deleteOne({ _id: new ObjectId(orderId) });
+        resolve();
+      } catch (error) {
+        console.log(error);
+      }
     });
-  }, 
-  
+  },
+
   //function for check user have already have a wallet
-  getOneUserOneWallet:(userId)=>{
+  getOneUserOneWallet: (userId) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const user = await db.get().collection(collection.WALLET_COLLECTION).findOne({userId:new ObjectId(userId)})
-        resolve(user)
+        const user = await db
+          .get()
+          .collection(collection.WALLET_COLLECTION)
+          .findOne({ userId: new ObjectId(userId) });
+        resolve(user);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    })
+    });
   },
 
   //function for is user have not wallet create new wallet
-  createNewWallet:(insertData)=>{
+  createNewWallet: (insertData) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const user = await db.get().collection(collection.WALLET_COLLECTION).insertOne(insertData)
-        resolve(user)
+        const user = await db
+          .get()
+          .collection(collection.WALLET_COLLECTION)
+          .insertOne(insertData);
+        resolve(user);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    })
+    });
   },
 
   //function for is user have wallet update amount on wallet
-  updateWallet:(walletAmount,walletId)=>{
+  updateWallet: (walletAmount, walletId) => {
     return new Promise(async (resolve, reject) => {
       try {
-        const user = await db.get().collection(collection.WALLET_COLLECTION).updateOne({_id:walletId},{$set:{walletAmount:walletAmount}})
-        resolve()
+        const user = await db
+          .get()
+          .collection(collection.WALLET_COLLECTION)
+          .updateOne(
+            { _id: walletId },
+            { $set: { walletAmount: walletAmount } }
+          );
+        resolve();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    })
+    });
   },
 
   //function for show all banners for the Admin panel
@@ -655,7 +694,7 @@ module.exports = {
           .toArray();
         resolve(banners);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -663,19 +702,19 @@ module.exports = {
   //function for create new banner
   postAddBanner: (userBannerData) => {
     return new Promise(async (resolve, reject) => {
-     try {
-       await db
-         .get()
-         .collection(collection.BANNER_COLLECTION)
-         .insertOne(userBannerData);
-       resolve();
-     } catch (error) {
-      console.log(error)
-     }
+      try {
+        await db
+          .get()
+          .collection(collection.BANNER_COLLECTION)
+          .insertOne(userBannerData);
+        resolve();
+      } catch (error) {
+        console.log(error);
+      }
     });
   },
 
-  //function for temporary block single/current banner 
+  //function for temporary block single/current banner
   blockBanner: (bannerId) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -686,15 +725,15 @@ module.exports = {
             { _id: new ObjectId(bannerId) },
             { $set: { isActive: false } }
           );
-  
+
         resolve();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
 
-  //function for unblock single/current banner 
+  //function for unblock single/current banner
   unBlockBanner: (bannerId) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -705,15 +744,15 @@ module.exports = {
             { _id: new ObjectId(bannerId) },
             { $set: { isActive: true } }
           );
-  
+
         resolve();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
 
-  //function for permanent delete single/current banner 
+  //function for permanent delete single/current banner
   deleteBanner: (bannerId) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -723,7 +762,7 @@ module.exports = {
           .deleteOne({ _id: new ObjectId(bannerId) });
         resolve();
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -738,21 +777,22 @@ module.exports = {
           .findOne({ _id: new ObjectId(bannerId) });
         resolve(bannerData);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
 
   //function for get sales report to Admin panel
   getSalesReport: (query) => {
-   
     return new Promise(async (resolve, reject) => {
       try {
         if (query.date) {
           let salesReport = await db
             .get()
             .collection(collection.ORDER_COLLECTION)
-            .find({ $and: [query.orderStatus, { "orderObj.data": query.date }] })
+            .find({
+              $and: [query.orderStatus, { "orderObj.data": query.date }],
+            })
             .toArray();
           resolve(salesReport);
         } else {
@@ -764,7 +804,7 @@ module.exports = {
           resolve(salesReport);
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -818,7 +858,7 @@ module.exports = {
             .count();
           productActiveFalse.push(count);
         }
-  
+
         let categoryGraph = {
           categoryArray,
           totalProductArray,
@@ -828,7 +868,7 @@ module.exports = {
         };
         resolve(categoryGraph);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
@@ -836,46 +876,57 @@ module.exports = {
   //function for order graph to Admin dashboard
   orderGraph: () => {
     return new Promise(async (resolve, reject) => {
-        try {
-          let cancel = [0]
-          let success = [0]
-          let base = [0]
-          let total = [0]
-          let successOrder = await db.get().collection(collection.ORDER_COLLECTION).find({"orderObj.status": "Placed"}).toArray()
-          for (let index = 0; index < successOrder.length; index++) {
-              success.push(successOrder[index].orderObj.totalAmount);
-          }
-          let cancelOrder = await db.get().collection(collection.ORDER_COLLECTION).find({"orderObj.status": "Cancelled"}).toArray()
-          for (let index = 0; index < cancelOrder.length; index++) {
-              cancel.push(cancelOrder[index].orderObj.totalAmount);
-          }
-          let totalOrder = await db.get().collection(collection.ORDER_COLLECTION).find().toArray()
-          for (let index = 0; index < totalOrder.length; index++) {
-              total.push(totalOrder[index].orderObj.totalAmount);
-          }
-          for (let index = 0; index < totalOrder.length; index++) {
-              base.push(index);
-          }
-  
-          if(cancel.length ==1){
-                  cancel.push(0);
-                  cancel.push(5000);
-          }
-          if(success.length ==1){
-                  success.push(0);
-                  success.push(5000);
-          }
-          let orderGraph={
-              cancel,
-              success,
-              base,
-              total
-          }
-          resolve(orderGraph)
-        } catch (error) {
-          console.log(error)
+      try {
+        let cancel = [0];
+        let success = [0];
+        let base = [0];
+        let total = [0];
+        let successOrder = await db
+          .get()
+          .collection(collection.ORDER_COLLECTION)
+          .find({ "orderObj.status": "Placed" })
+          .toArray();
+        for (let index = 0; index < successOrder.length; index++) {
+          success.push(successOrder[index].orderObj.totalAmount);
         }
-    
+        let cancelOrder = await db
+          .get()
+          .collection(collection.ORDER_COLLECTION)
+          .find({ "orderObj.status": "Cancelled" })
+          .toArray();
+        for (let index = 0; index < cancelOrder.length; index++) {
+          cancel.push(cancelOrder[index].orderObj.totalAmount);
+        }
+        let totalOrder = await db
+          .get()
+          .collection(collection.ORDER_COLLECTION)
+          .find()
+          .toArray();
+        for (let index = 0; index < totalOrder.length; index++) {
+          total.push(totalOrder[index].orderObj.totalAmount);
+        }
+        for (let index = 0; index < totalOrder.length; index++) {
+          base.push(index);
+        }
+
+        if (cancel.length == 1) {
+          cancel.push(0);
+          cancel.push(5000);
+        }
+        if (success.length == 1) {
+          success.push(0);
+          success.push(5000);
+        }
+        let orderGraph = {
+          cancel,
+          success,
+          base,
+          total,
+        };
+        resolve(orderGraph);
+      } catch (error) {
+        console.log(error);
+      }
     });
   },
 
@@ -916,12 +967,12 @@ module.exports = {
             },
           ])
           .toArray();
-          if(totalRevenue.length==0){
-            totalRevenue=0
-          }else{
-            totalRevenue = totalRevenue[0].totalAmountSum;
-          }
-        
+        if (totalRevenue.length == 0) {
+          totalRevenue = 0;
+        } else {
+          totalRevenue = totalRevenue[0].totalAmountSum;
+        }
+
         const adminDashboard = {
           totalProduct,
           totalOrders,
@@ -930,9 +981,8 @@ module.exports = {
         };
         resolve(adminDashboard);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     });
   },
-
 };

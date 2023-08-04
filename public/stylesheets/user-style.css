@@ -246,6 +246,7 @@ product categorypart */
     text-decoration: none;
     font-size: 17px;
     box-shadow: -1px 4px 3px 0px grey;
+    overflow-x: scroll;
 }
 
 .product_category a {
