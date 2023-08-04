@@ -4,9 +4,7 @@
 
     <div class="row mt-1" style="background-color: white;">
         <h3 class="PageName mt-4 mb-2 ">All Users</h3>
-        <div class="newButton  mt-2 my-4 mr-3">
-            <a href="/admin/add-user" class="btn btn-success"> Create new User</a>
-        </div>
+
         <hr>
         <div class="card mt-4 mb-4">
             <table class="table mt-4 display " id="productsTable">
@@ -14,16 +12,18 @@
                     <tr>
                         <th scope="col">Name</th>
                         <th scope="col">Gmail</th>
-                        <th>option</th>
+                        <th scope="col">Mobile</th>
+                        <th scope="col">option</th>
                     </tr>
                 </thead>
                 <tbody>
                     {{#each usersData}}
                     <tr>
                         <td scope="row">{{this.Name}}</td>
-                        <td>{{this.Email}}</td>
+                        <td scope="row">{{this.Email}}</td>
+                        <td scope="row">{{this.Mobile}}</td>
 
-                        <td>
+                        <td scope="row">
 
 
                             {{#if userStatus}}

@@ -30,7 +30,6 @@ module.exports= {
     },
 
     //delete url with Image
-
     deleteCloudImage:(bannerId)=>{
         return new Promise(async (resolve, reject) => {
             try {

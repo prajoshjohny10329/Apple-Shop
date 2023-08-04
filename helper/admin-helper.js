@@ -10,7 +10,7 @@ const { AwsInstance } = require('twilio/lib/rest/accounts/v1/credential/aws');
 
 module.exports = {
 
-
+  //show all users to the admin helper function
   getAllUsers: () => {
     return new Promise(async (res, rej) => {
       try {
@@ -25,156 +25,7 @@ module.exports = {
       }
     });
   },
-  deleteUser: (userID) => {
-    return new Promise((res, rej) => {
-      try {
-        db.get()
-          .collection(collection.USER_COLLECTION)
-          .deleteOne({ _id: new ObjectId(userID) })
-          .then((response) => {
-            console.log(response);
-            res(response);
-          });
-      } catch (error) {
-        console.log(error)
-      }
-    });
-  },
-  getUser: (userID) => {
-    return new Promise((res, rej) => {
-      try {
-        db.get()
-          .collection(collection.USER_COLLECTION)
-          .findOne({ _id: new ObjectId(userID) })
-          .then((user) => {
-            res(user);
-          });
-      } catch (error) {
-        console.log(error)
-      }
-    });
-  },
-  updateUser: (userID, userDetails) => {
 
-
-    return new Promise((res, rej) => {
-      try {
-        db.get()
-          .collection(collection.USER_COLLECTION)
-          .updateOne(
-            { _id: new ObjectId(userID) },
-            {
-              $set: {
-                Name: userDetails.Name,
-                Email: userDetails.Email,
-                Mobile: userDetails.Mobile,
-              },
-            }
-          )
-          .then((response) => {
-            res(response);
-          });
-      } catch (error) {
-        console.log(error)
-      }
-    });
-  },
-
-  deleteProduct: (userID) => {
-    return new Promise((res, rej) => {
-      try {
-        db.get()
-          .collection(collection.PRODUCT_COLLECTION)
-          .deleteOne({ _id: new ObjectId(userID) })
-          .then((response) => {
-            console.log(response);
-            res(response);
-          });
-      } catch (error) {
-        console.log(error)
-      }
-    });
-  },
-  getProduct: (userID) => {
-    return new Promise((res, rej) => {
-      try {
-        db.get()
-          .collection(collection.PRODUCT_COLLECTION)
-          .findOne({ _id: new ObjectId(userID) })
-          .then((user) => {
-            res(user);
-          });
-      } catch (error) {
-        console.log(error)
-      }
-    });
-  },
-  updateProduct: (productID, productDetails) => {
-    return new Promise((res, rej) => {
-      try {
-        db.get()
-          .collection(collection.PRODUCT_COLLECTION)
-          .updateOne(
-            { _id: new ObjectId(productID) },
-            {
-              $set: {
-                productName: productDetails.productName,
-                productCategory: productDetails.productCategory,
-                productPrice: productDetails.productPrice,
-                productDescription: productDetails.productPrice,
-              },
-            }
-          )
-          .then((response) => {
-            res(response);
-          });
-      } catch (error) {
-        console.log(error)
-      }
-    });
-  },
-  addUsersbyadmin: (userData) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        let response = {};
-        let user = await db
-          .get()
-          .collection(collection.USER_COLLECTION)
-          .findOne({ Email: userData.Email });
-        if (user) {
-          response.status = false;
-          response.message = "login failed case of email";
-          resolve(response);
-        } else {
-          response.status = true;
-          userData.Password = await bcrypt.hash(userData.Password, 10);
-          db.get()
-            .collection(collection.USER_COLLECTION)
-            .insertOne(userData)
-            .then((resp) => {
-              resolve(response);
-            });
-        }
-      } catch (error) {
-        console.log(error)
-      }
-    });
-  },
-  addAdmin: (adminData) => {
-    return new Promise(async (resolve, rej) => {
-      try {
-        adminData.Admin_SID = await bcrypt.hash(adminData.Admin_SID, 10);
-        db.get()
-          .collection(collection.ADMIN_HEAD)
-          .insertOne(adminData)
-          .then((data) => {
-            resolve(data.insertedId);
-          });
-      } catch (error) {
-        console.log(error)
-      }
-    });
-  },
   adminSIDCheck: (adminData) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -207,6 +58,8 @@ module.exports = {
       }
     });
   },
+
+  
   adminSIDforSignup: (adminData) => {
     return new Promise(async (resolve, reject) => {
      try {
@@ -662,6 +515,8 @@ module.exports = {
       }
     });
   },
+
+  //
   unBlockCoupon: (CouponID) => {
     return new Promise(async (res, rej) => {
       try {
@@ -680,8 +535,7 @@ module.exports = {
     });
   },
 
-  ////orders
-
+  //function for get all orders to admin panel
   getAllOrders: () => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -696,6 +550,8 @@ module.exports = {
       }
     });
   },
+
+  //function for show order data to Admin panel
   getOrderData: (orderId) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -709,6 +565,8 @@ module.exports = {
       }
     });
   },
+
+  //function for admin change order status
   changeOrderStatus: (orderId, orderStatus) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -725,6 +583,8 @@ module.exports = {
       }
     });
   },
+
+  //function for insert cancel Order when Admin submit confirm cancel
   sendOrderToCancel: (orderData) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -735,6 +595,8 @@ module.exports = {
       }
     });
   },
+
+  //function for remove order when Admin submit confirm cancel
   removeOrder: (orderId) => {
     return new Promise(async (resolve, reject) => {
      try {
@@ -745,7 +607,8 @@ module.exports = {
      }
     });
   }, 
-  ///wallet 
+  
+  //function for check user have already have a wallet
   getOneUserOneWallet:(userId)=>{
     return new Promise(async (resolve, reject) => {
       try {
@@ -757,6 +620,7 @@ module.exports = {
     })
   },
 
+  //function for is user have not wallet create new wallet
   createNewWallet:(insertData)=>{
     return new Promise(async (resolve, reject) => {
       try {
@@ -767,6 +631,8 @@ module.exports = {
       }
     })
   },
+
+  //function for is user have wallet update amount on wallet
   updateWallet:(walletAmount,walletId)=>{
     return new Promise(async (resolve, reject) => {
       try {
@@ -778,8 +644,7 @@ module.exports = {
     })
   },
 
-
-  ///banners
+  //function for show all banners for the Admin panel
   getAllBanners: () => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -794,6 +659,8 @@ module.exports = {
       }
     });
   },
+
+  //function for create new banner
   postAddBanner: (userBannerData) => {
     return new Promise(async (resolve, reject) => {
      try {
@@ -808,6 +675,7 @@ module.exports = {
     });
   },
 
+  //function for temporary block single/current banner 
   blockBanner: (bannerId) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -825,6 +693,8 @@ module.exports = {
       }
     });
   },
+
+  //function for unblock single/current banner 
   unBlockBanner: (bannerId) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -842,6 +712,8 @@ module.exports = {
       }
     });
   },
+
+  //function for permanent delete single/current banner 
   deleteBanner: (bannerId) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -855,6 +727,8 @@ module.exports = {
       }
     });
   },
+
+  //function for show single/current banner details
   getSingleBannerData: (bannerId) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -868,7 +742,8 @@ module.exports = {
       }
     });
   },
-  ///sales report
+
+  //function for get sales report to Admin panel
   getSalesReport: (query) => {
    
     return new Promise(async (resolve, reject) => {
@@ -894,7 +769,7 @@ module.exports = {
     });
   },
 
-  //get product graph
+  //function for category graph to Admin dashboard
   categoryForGraph: () => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -957,6 +832,8 @@ module.exports = {
       }
     });
   },
+
+  //function for order graph to Admin dashboard
   orderGraph: () => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -981,15 +858,12 @@ module.exports = {
           }
   
           if(cancel.length ==1){
-  
                   cancel.push(0);
                   cancel.push(5000);
           }
           if(success.length ==1){
-    
                   success.push(0);
                   success.push(5000);
-  
           }
           let orderGraph={
               cancel,
@@ -1005,6 +879,7 @@ module.exports = {
     });
   },
 
+  //function for get total products,revenue,orders,users Admin dashboard
   getAdminDashboard: () => {
     return new Promise(async (resolve, reject) => {
       try {

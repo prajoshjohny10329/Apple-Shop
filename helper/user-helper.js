@@ -207,6 +207,7 @@ module.exports={
                     response.user = user
                     newPassword = await bcrypt.hash(newPassword,10)
                     db.get().collection(collection.USER_COLLECTION).updateOne({_id: user._id},{$set:{Password: newPassword}})
+                    response.user = user
                     response.status = true
                     resolve(response) 
             } catch (error) {
@@ -571,9 +572,11 @@ module.exports={
     },
     changeProductQuantity:(productData)=>{
         return new Promise(async (resolve, reject) => {
-            try {
-                resolve()
-            } catch (error) {
+            console.log('productData');
+            console.log(productData);
+            for (let index = 0; index < productData.length; index++) {
+                console.log(productData[index].item);
+                
                 
             }
         })
@@ -826,8 +829,6 @@ module.exports={
             try {
                 const result = {}
                 const resultProducts = await db.get().collection(collection.PRODUCTS_COLLECTION).find({$or:[{ productName: { $regex: search, $options: "i" } },{ productCategory: { $regex: search, $options: "i" } }]})
-                    // .where("productCategory")
-                    // .in([...productCategory])
                     .sort(sortBy)
                     .skip(page * limit)
                     .limit(limit)
@@ -838,7 +839,6 @@ module.exports={
                     productName: { $regex: search, $options: "i" }
     
                 })
-    
                 result.resultProducts = resultProducts
                 result.resultCount = resultCount
                 result.page = page + 1

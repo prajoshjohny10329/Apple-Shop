@@ -32,15 +32,12 @@
                                 onclick="return showConfirmForm('Are you want to see this Order ?','viewOrder-{{this._id}}')"
                                 type="submit">View Order</button>
                         </form>
-
-
-
-
+                        
                         {{#if this.currentOrderStatus.cancelled}}
                         <form action="/admin/confirm-cancel/" method="post" id="cancelOrder-{{this._id}}">
                             <input type="text" value="{{this._id}}" name="cancelOrderId" hidden>
                             <button class="cancelButton mb-3 ml-2"
-                                onclick="return showConfirmForm('Are you want to block this Order ?','cancelOrder-{{this._id}}')"
+                                onclick="return showConfirmForm('Are you want to cancel confirm this Order ?','cancelOrder-{{this._id}}')"
                                 type="submit">Confirm Cancel</button>
                         </form>
                         {{else}}

@@ -170,6 +170,7 @@ module.exports = {
         if (response.status) {
           req.session.user = response.user;
           req.session.forgotPasswordOTP = req.body;
+          console.log(req.body);
           let Otp_Number = "+91" + req.session.forgotPasswordOTP.Mobile;
           let last4 = Otp_Number.slice(-4);
           let successMessage = "Otp is send your  Mobile ****" + last4;
@@ -187,6 +188,7 @@ module.exports = {
         }
       });
     } catch (error) {
+      console.log(error);
       res.redirect("/error");
     }
   },
@@ -212,6 +214,8 @@ module.exports = {
           console.log("Got an error postForgotOtp:", e.code, e.message);
         });
     } catch (error) {
+      console.log(error);
+     
       res.redirect("/error");
     }
   },
@@ -219,11 +223,12 @@ module.exports = {
   // user forgot password after verify change password
   postForgot3: (req, res, next) => {
     try {
-      const userMobile = req.session.forgotPasswordOTP.Mobile;
+      let userMobile = req.session.forgotPasswordOTP.Mobile;
       const newPassword = req.body.Password;
-      userHelper.changePassword(userMobile, newPassword).then((response) => {
+      userHelper.changePassword(userMobile,newPassword).then((response) => {
         if (response.status) {
           req.session.loggedIn = true;
+          req.session.user = response.user;
           res.redirect("/");
         }
       });
@@ -306,7 +311,7 @@ module.exports = {
     }
   },
 
-  // user view One Product
+  //function for view single product to user
   viewOneProduct: async (req, res, next) => {
     try {
       const product = await userHelper.viewOneProduct(req.params.id);
@@ -328,6 +333,8 @@ module.exports = {
       res.redirect("/error");
     }
   },
+
+  //function for product add to cart
   addToCart: (req, res, next) => {
     try {
       userHelper.addToCart(req.params.id, req.session.user._id);
@@ -338,6 +345,7 @@ module.exports = {
     }
   },
 
+  //function for get user cart page
   userCart: async (req, res, next) => {
     try {
       const user = req.session.user;
@@ -370,6 +378,7 @@ module.exports = {
     }
   },
 
+  //function for user get all cart in user Account
   userMyCart: async (req, res, next) => {
     try {
       const user = req.session.user;
@@ -401,6 +410,7 @@ module.exports = {
     }
   },
 
+  //function for check product quantity is less than cart quantity
   cartQuantityChange: async (req, res, next) => {
     try {
       const quantity = parseInt(req.body.quantity);
@@ -424,6 +434,7 @@ module.exports = {
     }
   },
 
+  //function for remove product on the cart list
   removeProductCart: (req, res, next) => {
     try {
       userHelper.removeCart(req.body).then((response) => {
@@ -435,6 +446,7 @@ module.exports = {
     }
   },
 
+  //function for select delivery address to buy order 
   getSelectAddress: async (req, res, next) => {
     try {
       const user = req.session.user;
@@ -453,6 +465,7 @@ module.exports = {
     }
   },
 
+  //function for submit delivery address to buy order 
   postSelectAddress: async (req, res, next) => {
     try {
       const orderAddress = await userHelper.getSingleAddress(
@@ -467,6 +480,7 @@ module.exports = {
     }
   },
 
+  //function for render order summary before payment
   getOrderSummary: async (req, res, next) => {
     try {
       const user = req.session.user;
@@ -497,6 +511,7 @@ module.exports = {
     }
   },
 
+  //function for submit order summary
   getPlaceOrder: async (req, res, next) => {
     try {
       const user = req.session.user;
@@ -522,6 +537,8 @@ module.exports = {
       res.redirect("/error");
     }
   },
+
+  //function for submit PlaceOrder
   postPlaceOrder: async (req, res, next) => {
     try {
       const user = req.session.user;
@@ -564,6 +581,7 @@ module.exports = {
     }
   },
 
+  //function for verify payment by online razorpay
   verifyPayment: async (req, res, next) => {
     try {
       await userHelper.verifyPayment(req.body);
@@ -575,6 +593,7 @@ module.exports = {
     }
   },
 
+  //function for render order success page
   getOrderSuccess: async (req, res, next) => {
     try {
       const user = req.session.user;
@@ -591,8 +610,7 @@ module.exports = {
     }
   },
 
-  ///view order
-
+  //function for user to view on order
   getOrderProducts: async (req, res, next) => {
     try {
       const user = req.session.user;
@@ -615,6 +633,8 @@ module.exports = {
       res.redirect("/error");
     }
   },
+
+  //function for user to cancel order
   cancelOrder: async (req, res, next) => {
     try {
       await userHelper.cancelOrder(req.body.cancelOrderId);
@@ -624,6 +644,8 @@ module.exports = {
       res.redirect("/error");
     }
   },
+
+  //function for user to return order
   returnOrder: async (req, res, next) => {
     try {
       await userHelper.returnOrder(req.body.returnOrderId);
@@ -634,6 +656,7 @@ module.exports = {
     }
   },
 
+  //function for user see all orders
   getMyOrders: async (req, res, next) => {
     try {
       const user = req.session.user;
@@ -652,6 +675,8 @@ module.exports = {
       res.redirect("/error");
     }
   },
+
+  
   getDynamicCategory: async (req, res, next) => {
     try {
       let products = await userHelper.getDynamicCategory(req.params.category);
@@ -670,6 +695,8 @@ module.exports = {
       res.redirect("/error");
     }
   },
+
+  //function for user to get user account
   getMyAccount: async (req, res, next) => {
     try {
       const user = req.session.user;
@@ -689,6 +716,8 @@ module.exports = {
       res.redirect("/error");
     }
   },
+
+  //function for user to create new address
   getAddAddress: async (req, res, next) => {
     try {
       const user = req.session.user;
@@ -706,6 +735,8 @@ module.exports = {
       res.redirect("/error");
     }
   },
+
+  //function for user to submit new address
   postAddAddress: async (req, res, next) => {
     try {
       await userHelper.postAddAddress(req.session.user._id, req.body);
@@ -715,6 +746,8 @@ module.exports = {
       res.redirect("/error");
     }
   },
+
+  //function for user to edit current address
   getEditAddAddress: async (req, res, next) => {
     try {
       const user = req.session.user;
@@ -739,6 +772,8 @@ module.exports = {
       res.redirect("/error");
     }
   },
+
+  //function for user to submit edited current address
   postEditAddress: async (req, res, next) => {
     try {
       await userHelper.postEditAddress(req.session.userAddressId, req.body);
@@ -749,25 +784,7 @@ module.exports = {
     }
   },
 
-  ///coupon
-  postCouponCode: async (req, res, next) => {
-    try {
-      const response = await userHelper.couponCode(req.body.couponCode);
-      if (response.status) {
-        req.session.couponDiscount = 1000;
-        let total = req.session.total;
-        response.finalPrice = total - 1000;
-        response.discount = 1000;
-        res.json(response);
-      } else {
-        res.json(response);
-      }
-    } catch (error) {
-      console.log(error);
-      res.redirect("/error");
-    }
-  },
-
+  //function for user to show valid  coupons
   getCoupons: async (req, res, next) => {
     try {
       const user = req.session.user;
@@ -786,7 +803,28 @@ module.exports = {
     }
   },
 
-  // wallet
+  //function for post coupon code
+  postCouponCode: async (req, res, next) => {
+    try {
+      const response = await userHelper.couponCode(req.body.couponCode);
+      if (response.status) {
+        req.session.couponDiscount = 1000;
+        let total = req.session.total;
+        response.finalPrice = total - 1000;
+        response.discount = 1000;
+        res.json(response);
+      } else {
+        res.json(response);
+      }
+    } catch (error) {
+      console.log(error);
+      res.redirect("/error");
+    }
+  },
+
+
+
+  //function for user to show user wallet
   getWallet: async (req, res, next) => {
     try {
       const user = req.session.user;
@@ -803,12 +841,12 @@ module.exports = {
     }
   },
 
-  // search
+  //function for user to show user 
   getSearch: async (req, res, next) => {
     try {
       const page = parseInt(req.query.page) - 1 || 0;
-      const limit = parseInt(req.query.limit) || 15;
-      const search = req.query.search || "";
+      const limit = parseInt(req.query.limit) || 12;
+      let search = req.query.search || "";
       let sort = req.query.sort || "productPrice";
       let productCategory = req.query.productCategory || "All";
 

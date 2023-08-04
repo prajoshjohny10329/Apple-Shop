@@ -106,8 +106,7 @@ router.post(
   userController.postEditAddress
 );
 
-/// order routes
-
+// order routes
 router.get(
   "/select-address",
   middleware.userMiddleware,

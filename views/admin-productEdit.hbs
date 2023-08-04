@@ -122,7 +122,7 @@
                                             <br>
                                         </div>
 
-                                        {{!-- mack satrt --}}
+                                        {{!-- mack start --}}
                                         {{#if category.MacBook}}
 
                                         <div class="col-lg-4 mackDiv">
@@ -1065,8 +1065,7 @@
                                 <input type="text" value="{{productData.productFirstImage}}"  name="productFirstImage"  hidden>
                                 <input type="file" id="productFirstImage"  name="changeFirstImage" class="form-control" onchange="firstImageView(event)">
                                 <br>
-                                <label for="">Product Images</label><br>
-                                {{!-- <img src="" style="width: 100px;" alt="" id="imgView"> --}}
+                                <label >Product Images</label><br>
                                 <span id="imgView">
                                     {{#each productData.productImagesURL}}
                                     <img src="{{this}}" style="width: 100px;" id="id-{{this}}"  >

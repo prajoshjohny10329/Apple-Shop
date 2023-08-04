@@ -61,7 +61,6 @@ module.exports={
               let colorChecker = {}
               let storageChecker = {}
               let sizeChecker = {}
-              
               colorChecker.Black = false
               colorChecker.Green = false
               colorChecker.Purple = false
@@ -76,18 +75,14 @@ module.exports={
               colorChecker.Silver = false
               colorChecker.White = false
               colorChecker.MidNight = false
-              //checking color
               storageChecker.GB128= false
               storageChecker.GB256= false
               storageChecker.GB512= false
               storageChecker.TB1= false
               storageChecker.TB2= false
-              //size checker
               sizeChecker.mm40= false
               sizeChecker.mm44= false
   
-              //checking start
-              //checkin end
               if(productData.productAvailableColor){
                 if (productData.productAvailableColor.includes('Black')) {
                   colorChecker.Black = true
@@ -325,21 +320,20 @@ module.exports={
       
     },
 
-    //admin
-    productGraphDestructuring : (products,category)=>{
+    couponsDestructure: (coupons)=>{
       return new Promise((resolve, reject) => {
        try {
-         let result = {}
-         for (let i = 0; i < category.length; i++) {
-           const currentCategory = category[i];
-           console.log(currentCategory);
-           resolve()
-         }
+          for (let index = 0; index < coupons.length; index++) {
+            let currentCoupon = coupons[index]
+            currentCoupon.couponStartingDate = currentCoupon.couponStartingDate.substring(0, 10);
+            currentCoupon.couponExpiryDate = currentCoupon.couponExpiryDate.substring(0, 10);
+          }
+          resolve(coupons)
        } catch (error) {
-        
+        console.log(error);
        }
       })
-    }
+    },
 
  
 

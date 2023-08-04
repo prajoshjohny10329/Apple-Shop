@@ -7,7 +7,7 @@ const middleware = require('../middlewares/middlewares');
 const adminController = require('../controllers/admin-controller');
 const cloudinary = require('../utils/cloudnary');
 
-// admin
+//last
 
 router.get('/',middleware.adminIsLogged,adminController.getAdminLandingPage)
 
@@ -17,7 +17,7 @@ router.get('/admin-logout',adminController.postAdminLogOut)
 
 router.get('/adminSignup',adminController.getAdminSignup)
 
-router.post('/adminSignup',adminController.PostAdminSignup)
+router.post('/adminSignup',adminController.postAdminSignup)
 
 router.post('/adminsignupOTP',adminController.postAdminSignupOTP)
 
@@ -37,18 +37,14 @@ router.post('/adminForgotOTP',adminController.postAdminForgotOTP)
 
 router.post('/adminChangePassword',adminController.postAdminChangePassword)
 
-
-
-
+//admin user routes
 router.get('/users',middleware.adminMiddleware,adminController.getAdminAllUsers)
 
 router.post('/block-user',middleware.adminMiddleware,adminController.PostAdminBlock)
 
 router.post('/unBlock-user',middleware.adminMiddleware,adminController.PostAdminUnBlock)
 
-
-//
-
+//admin category routes
 router.get('/category',middleware.adminMiddleware,adminController.getCategory)
 
 router.get('/add-category',middleware.adminMiddleware,adminController.getAddCategory)
@@ -59,7 +55,7 @@ router.post('/category-block',middleware.adminMiddleware,adminController.getCate
 
 router.post('/category-unBlock',middleware.adminMiddleware,adminController.getCategoryUnBlock)
 
-// coupon
+//admin coupon routes
 router.get('/coupon',middleware.adminMiddleware,adminController.getCoupon)
 
 router.get('/add-coupon',middleware.adminMiddleware,adminController.getAddCoupon)
@@ -70,11 +66,7 @@ router.post('/coupon-block',middleware.adminMiddleware,adminController.getCoupon
 
 router.post('/coupon-unBlock',middleware.adminMiddleware,adminController.getCouponUnBlock)
 
-
-
-
-
-
+//admin product routes
 router.get('/add-new-product',middleware.adminMiddleware,adminController.getAddProduct)
 
 router.post('/add-new-product',middleware.adminMiddleware,adminController.postAddNewProduct)
@@ -95,8 +87,7 @@ router.post('/stock-changer',middleware.adminMiddleware,adminController.postProd
 
 router.post('/offer-changer',middleware.adminMiddleware,adminController.postProductOffer)
 
-///banners
-
+//admin banners routes
 router.get('/all-banners',middleware.adminMiddleware,adminController.getBanners)
 
 router.get('/add-banner',middleware.adminMiddleware,adminController.getAddBanner)
@@ -109,12 +100,7 @@ router.post('/unBlock-banner',middleware.adminMiddleware,adminController.postUnB
 
 router.post('/delete-banner',middleware.adminMiddleware,adminController.postDeleteBanner)
 
-
-
-
-
-///order
-
+//admin order routes
 router.get('/all-orders',middleware.adminMiddleware,adminController.getOrders)
 
 router.post('/view-order',middleware.adminMiddleware,adminController.viewOneOrder)
@@ -125,10 +111,10 @@ router.post('/change-order-status',middleware.adminMiddleware,adminController.po
 
 router.post('/confirm-cancel',middleware.adminMiddleware,adminController.postConfirmCancel)
 
-//sales report
-
+//admin sales routes
 router.get("/sales-report",middleware.adminMiddleware,adminController.salesReport);
 
+//admin error routes
 router.get("/error", adminController.getError);
 
 

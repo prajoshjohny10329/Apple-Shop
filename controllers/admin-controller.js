@@ -1,16 +1,17 @@
-// const { format } = require("morgan");
-// const { response } = require("../app");
+
 const adminHelper = require("../helper/admin-helper");
 const userHelper = require("../helper/user-helper");
 const zHelper = require("../helper/z-helper");
-const cloudinary = require("../utils/cloudnary");
 const cloudinaryHelper = require("../helper/cloudinary-helper");
+const cloudinary = require("../utils/cloudnary");
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require("twilio")(accountSid, authToken);
 
 module.exports = {
+
+  //function for get admin Dashboard
   getAdminLandingPage: async (req, res, next) => {
     try {
       const categoryGraph = await adminHelper.categoryForGraph();
@@ -27,6 +28,8 @@ module.exports = {
       res.redirect("/admin/error");
     }
   },
+
+  //function for admin submit email and password to admin login
   postAdminLogin: (req, res, next) => {
     try {
       const adminData = req.body;
@@ -44,6 +47,8 @@ module.exports = {
       res.redirect("/admin/error");
     }
   },
+
+  //function for get page create new admin profile
   getAdminSignup: (req, res, next) => {
     try {
       res.render("admin-signup", { formLayout: true });
@@ -52,7 +57,9 @@ module.exports = {
       res.redirect("/admin/error");
     }
   },
-  PostAdminSignup: async (req, res, next) => {
+
+  //function for submit data to create new admin profile
+  postAdminSignup: async (req, res, next) => {
     try {
       let adminData = req.body;
       await adminHelper.adminSIDforSignup(adminData).then((response) => {
@@ -107,6 +114,7 @@ module.exports = {
     }
   },
 
+  //function to check otp for new admin create
   postAdminSignupOTP: (req, res, next) => {
     try {
       let adminData = req.session.adminData;
@@ -140,6 +148,8 @@ module.exports = {
       res.redirect("/admin/error");
     }
   },
+
+  //function for submit admin logout
   postAdminLogOut: (req, res, next) => {
     try {
       req.session.admin = false;
@@ -149,6 +159,7 @@ module.exports = {
       res.redirect("/admin/error");
     }
   },
+
   getAdminUsers: (req, res, next) => {
     try {
       adminHelper.getAllUsers().then((usersData) => {
@@ -159,6 +170,7 @@ module.exports = {
       res.redirect("/admin/error");
     }
   },
+
   getAdminSID: (req, res, next) => {
     try {
       res.render("admin-sid1", { formLayout: true });
@@ -197,9 +209,7 @@ module.exports = {
   postAdminSidOTP: (req, res, next) => {
     try {
       let OtpCode = req.body;
-
       let Otp_Verify_Number = req.session.Otp_Number;
-
       client.verify.v2
         .services(process.env.TWILIO_SERVICE_SID)
         .verificationChecks.create({ to: Otp_Verify_Number, code: OtpCode })
@@ -386,7 +396,8 @@ module.exports = {
 
   getCoupon: async (req, res, next) => {
     try {
-      const coupons = await adminHelper.getAllCoupons();
+      let coupons = await adminHelper.getAllCoupons();
+      coupons = await zHelper.couponsDestructure(coupons)
       res.render("admin-coupon", { adminLayout: true, coupons });
     } catch (error) {
       console.log(error);
@@ -612,6 +623,8 @@ module.exports = {
       res.redirect("/admin/error");
     }
   },
+
+  //admin see full order and option for change status function
   changeStatus: async (req, res, next) => {
     try {
       const currentOrder = await userHelper.getOrderProducts(
@@ -628,6 +641,8 @@ module.exports = {
       res.redirect("/admin/error");
     }
   },
+
+  //admin submit change order status function
   postOrderStatus: async (req, res, next) => {
     try {
       await adminHelper.changeOrderStatus(
@@ -641,26 +656,31 @@ module.exports = {
     }
   },
 
+  //admin submit order confirm  cancel function
   postConfirmCancel: async (req, res, next) => {
     try {
+      console.log('post confirm cancel');
       let walletAmount = 0;
       const orderData = await adminHelper.getOrderData(req.body.cancelOrderId);
+      console.log(orderData);
       if (orderData.orderObj.paymentMethod == "COD") {
         await adminHelper.sendOrderToCancel(orderData);
         await adminHelper.removeOrder(req.body.cancelOrderId);
       } else {
         walletAmount = orderData.orderObj.totalAmount;
-        const userWallet = await adminHelper.getOneUserOneWallet(
-          orderData.orderObj.userId
-        );
+        const userWallet = await adminHelper.getOneUserOneWallet(orderData.orderObj.userId);
         if (userWallet) {
+          console.log('update new wallet');
           walletAmount = walletAmount + userWallet.walletAmount;
           await adminHelper.updateWallet(walletAmount, userWallet._id);
+          console.log(walletAmount);
         } else {
+          console.log('update new wallet');
           let insertData = {
             userId: orderData.orderObj.userId,
             walletAmount: orderData.orderObj.totalAmount,
           };
+          console.log(insertData);
           await adminHelper.createNewWallet(insertData);
         }
         await adminHelper.sendOrderToCancel(orderData);
@@ -673,7 +693,7 @@ module.exports = {
     }
   },
 
-  ///Banners
+  // show all banners for admin function
   getBanners: async (req, res, next) => {
     try {
       const userBanners = await adminHelper.getAllBanners();
@@ -684,6 +704,7 @@ module.exports = {
     }
   },
 
+  //admin get page for add new banner function
   getAddBanner: async (req, res, next) => {
     try {
       const categoryList = await adminHelper.getCategoryList();
@@ -694,7 +715,7 @@ module.exports = {
     }
   },
 
-  //post addBanner
+  //admin submit new banner for  user side 
   postAddBanner: async (req, res, next) => {
     try {
       const cloudResult = await cloudinaryHelper.uploadBannerImage(
@@ -714,6 +735,7 @@ module.exports = {
     }
   },
 
+  //admin block banner for user side function
   postBlockBanner: async (req, res, next) => {
     try {
       await adminHelper.blockBanner(req.body.bannerId);
@@ -724,6 +746,7 @@ module.exports = {
     }
   },
 
+  //admin unblock banner for user side function
   postUnBlockBanner: async (req, res, next) => {
     try {
       await adminHelper.unBlockBanner(req.body.bannerId);
@@ -734,6 +757,7 @@ module.exports = {
     }
   },
 
+  //admin delete banner  function
   postDeleteBanner: async (req, res, next) => {
     try {
       const bannerData = await adminHelper.getSingleBannerData(
@@ -747,6 +771,7 @@ module.exports = {
     }
   },
 
+  //Admin sales report function with query
   salesReport: async (req, res) => {
     try {
       const { start, end } = req.query;
@@ -797,6 +822,7 @@ module.exports = {
     }
   },
 
+  //error page rendering function
   getError: (req, res, next) => {
     try {
       res.render("error", { formLayout: true });
