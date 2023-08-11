@@ -9,7 +9,8 @@ const { AwsInstance } = require('twilio/lib/rest/accounts/v1/credential/aws');
 
 
 module.exports = {
-  //show all users to the admin helper function
+
+  //function for admin controllers to get all users
   getAllUsers: () => {
     return new Promise(async (res, rej) => {
       try {
@@ -25,6 +26,7 @@ module.exports = {
     });
   },
 
+  //function for admin controllers to check  admin SID
   adminSIDCheck: (adminData) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -59,6 +61,7 @@ module.exports = {
     });
   },
 
+  //function for admin controllers to check is admin SID
   adminSIDforSignup: (adminData) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -92,6 +95,8 @@ module.exports = {
       }
     });
   },
+
+  //function for admin controllers to check existing email
   emailCheck: (Admin_Email) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -113,6 +118,8 @@ module.exports = {
       }
     });
   },
+
+  //function for admin controllers to check existing mobile
   mobileCheck: (Admin_Mobile) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -134,6 +141,8 @@ module.exports = {
       }
     });
   },
+
+  //function for admin controllers to create new admin
   createNewAdmin: (adminData) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -154,6 +163,8 @@ module.exports = {
       }
     });
   },
+
+  //function for admin controllers to is admin for login
   adminLogin: (adminData) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -187,6 +198,8 @@ module.exports = {
       }
     });
   },
+
+  //function for admin controllers to check existing email
   AdminEmailCheck: (Admin_Email) => {
     return new Promise(async (resolve, reject) => {
       try {
@@ -209,6 +222,8 @@ module.exports = {
       }
     });
   },
+
+  //function for admin controllers to change password
   adminChangePassword: (adminData) => {
     return new Promise(async (resolve, reject) => {
       try {
