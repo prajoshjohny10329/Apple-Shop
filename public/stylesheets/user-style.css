@@ -1,3 +1,5 @@
+/* -------------------style sheet for all Admin pages ---------   */
+
 * {
     padding: 0;
     margin: 0;
@@ -247,6 +249,10 @@ product categorypart */
     font-size: 17px;
     box-shadow: -1px 4px 3px 0px grey;
     overflow-x: scroll;
+}
+
+.product_category::-webkit-scrollbar {
+    display: none;
 }
 
 .product_category a {
@@ -537,6 +543,7 @@ product categorypart */
                 color: white;
                 font-weight: 700;
                 margin-left: 3%;
+                box-shadow: 1px 2px 3px grey;
             }
 
             .Buy_button {
@@ -544,10 +551,19 @@ product categorypart */
                 height: 50px;
                 border: none;
                 border-radius: 3px;
-                background-color: orange;
+                background-color: rgb(255, 140, 0);
                 color: white;
                 font-weight: 700;
                 margin-left: 3%;
+                box-shadow: 1px 2px 3px grey;
+            }
+            .cart_button:hover{
+                background-color: rgb(44, 190, 0);
+                color: white;
+            }
+            .Buy_button:hover{
+                background-color: rgb(44, 190, 0);
+                color: white;
             }
 
         }
@@ -727,7 +743,7 @@ product categorypart */
 
 .mainlistbody {
     height: auto;
-    background-color: red;
+    background-color: rgb(255, 255, 255);
     overflow: hidden;
 }
 
@@ -741,6 +757,10 @@ product categorypart */
     /* for Firefox */
     margin-top: 34px;
     height: 450px;
+}
+.emptyCartButtonsDiv{
+    display: flex;
+    justify-content: center;
 }
 
 .full_cart_products::-webkit-scrollbar {
@@ -1305,17 +1325,18 @@ label.radio-inline-placeOrder {
 .editButton {
     height: 24px;
     border: none;
-    background: blue;
+    background: rgb(0, 0, 149);
     width: 59px;
     border-radius: 7px;
     color: white;
     font-weight: 700;
     margin-right: 11px;
     margin-top: 10px;
+    box-shadow: 0px 4px 7px 0px #858585;
 }
 
 .editButton:hover {
-    background: rgb(29, 143, 1);
+    background: rgb(0, 0, 214);
 }
 
 .editButton:focus {
@@ -1402,6 +1423,27 @@ label.radio-inline-placeOrder {
     font-weight: 700;
     text-decoration: underline;
 }
+
+
+.aFormSubmitButton {
+    width: auto;
+    text-decoration: none;
+    background: #000250;
+    padding: 9px;
+    border-radius: 8px;
+    height: auto;
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+    border: none;
+    box-shadow: 0px 4px 7px 0px #858585;
+  }
+  
+  .aFormSubmitButton:hover {
+    color: white;
+    background: #02049b;
+    text-decoration: none;
+  }
 
 .submitButton {
     display: flex;

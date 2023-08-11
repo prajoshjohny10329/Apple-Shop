@@ -125,7 +125,7 @@ module.exports = {
         .verificationChecks.create({ to: Otp_Verify_Number, code: OtpCode })
         .then((verification_check) => {
           if (verification_check.status == "approved") {
-            adminHelper.creatNewAdmin(adminData).then((response) => {
+            adminHelper.createNewAdmin(adminData).then((response) => {
               if (response.status) {
                 req.session.admin = true;
                 res.redirect("/admin");
@@ -414,13 +414,14 @@ module.exports = {
   },
   postAddCoupon: async (req, res, next) => {
     try {
-      const couponBanner = await cloudinaryHelper.uploadSingleImage(
-        req.files.couponBanner
-      );
+      
+      const cloudResult = await cloudinaryHelper.uploadSingleImage( req.files.couponBanner);
+
       const couponData = await zHelper.couponDataDestructure(
         req.body,
-        couponBanner
+        cloudResult
       );
+      console.log(couponData);
       await adminHelper.AddCoupon(couponData);
       res.redirect("/admin/coupon");
     } catch (error) {
@@ -445,6 +446,20 @@ module.exports = {
       res.redirect("/admin/coupon");
     } catch (error) {
       console.log(error);
+      res.redirect("/admin/error");
+    }
+  },
+
+  postDeleteCoupon: async (req, res, next) => {
+    try {
+      const couponData = await adminHelper.getSingleCouponData(
+        req.body.deleteCouponID
+      );
+      console.log(couponData);
+      await cloudinaryHelper.deleteCloudImage(couponData.couponImageId);
+      await adminHelper.deleteCoupon(req.body.deleteCouponID);
+      res.redirect("/admin/coupon");
+    } catch (error) {
       res.redirect("/admin/error");
     }
   },
@@ -496,12 +511,14 @@ module.exports = {
       productData.productFirstImage = productFirstImage;
       productData.productImagesURL = productImagesURL;
       await adminHelper.addProduct(productData);
-      res.render("/admin/products");
+      res.redirect("/admin/products");
     } catch (error) {
       console.log(error);
       res.redirect("/admin/error");
     }
   },
+
+  //function for admin to get all products 
   getAllProducts: async (req, res, next) => {
     try {
       const products = await adminHelper.getAllProducts();
@@ -511,27 +528,51 @@ module.exports = {
       res.redirect("/admin/error");
     }
   },
-  getBlockProduct: async (req, res, next) => {
+
+  //function for admin to block product temporary
+  blockProduct: async (req, res, next) => {
     try {
-      await adminHelper.blockProduct(req.params.id);
+      await adminHelper.blockProduct(req.body.blockProductId);
       res.redirect("/admin/products");
     } catch (error) {
       console.log(error);
       res.redirect("/admin/error");
     }
   },
-  getUnBlockProducts: async (req, res, next) => {
+
+  //function for admin to un block product temporary
+  unBlockProducts: async (req, res, next) => {
     try {
-      await adminHelper.unBlockProduct(req.params.id);
+      await adminHelper.unBlockProduct(req.body.unBlockProductId);
       res.redirect("/admin/products");
     } catch (error) {
       console.log(error);
       res.redirect("/admin/error");
     }
   },
-  getProductForEdit: async (req, res, next) => {
+
+  //function for admin to delete product permanently
+  postDeleteProduct: async (req, res, next) => {
     try {
-      const productData = await adminHelper.getProductForEdit(req.params.id);
+      const productData = await adminHelper.getProductForEdit(req.body.deleteProductID);
+      let productImages = []
+      productImages.push(productData.productImagesURL)
+      productImages.push(productData.productFirstImage)
+      const imageArray = productImages.flat();
+      await cloudinaryHelper.deleteCloudImages(imageArray);
+      await adminHelper.deleteProduct(req.body.deleteProductID);
+      res.redirect("/admin/products");
+    } catch (error) {
+      res.redirect("/admin/error");
+    }
+  },
+
+  //function for admin to get edit product product permanently
+  productForEdit: async (req, res, next) => {
+    try {
+      const productData = await adminHelper.getProductForEdit(req.body.editProductId);
+      console.log(productData);
+      req.session.productId = productData._id
       const category = await zHelper.getCategory(productData.productCategory);
       const checkers = await zHelper.Checkers(productData);
       res.render("admin-productEdit", {
@@ -545,12 +586,40 @@ module.exports = {
       res.redirect("/admin/error");
     }
   },
-  postProductForEdit: async (req, res, next) => {
 
+  //function for admin to submit edit product permanently
+  postProductForEdit: async (req, res, next) => {
+    let productData = await zHelper.destructingProductData(req.body);
+    if(req.files){
+      if(req.files.changeFirstImage){
+        console.log('first image');
+        let firstImagePath = req.files.changeFirstImage.tempFilePath
+        console.log(firstImagePath);
+        const firstImageResponse = await cloudinaryHelper.uploadProductImage(firstImagePath)
+        productData.productFirstImage = firstImageResponse.imageURL
+        productData.productFirstImageId = firstImageResponse.imageId
+      }
+      if(req.files.changeImagesURL){
+       console.log('images');
+        const imagePath = await zHelper.formatChangeImagesPath(req.files.changeImagesURL)
+        const cloudResponse = await cloudinaryHelper.uploadEditImages(imagePath)
+        productData.productImagesURL = cloudResponse.imageURL
+        productData.productImagesId = cloudResponse.imageId
+      }
+      await adminHelper.updateEditProduct(req.session.productId,productData)
+    }
+    else{
+      console.log('files not exist');
+      await adminHelper.updateEditProduct(req.session.productId,productData)
+    }
+    res.redirect("/admin/products");
+    
   },
+
+  //function for admin to view single product permanently
   getProduct: async (req, res, next) => {
     try {
-      const currentProduct = await adminHelper.getProductForEdit(req.params.id);
+      const currentProduct = await adminHelper.getProductForEdit(req.body.viewProductId);
       res.render("admin-viewOneProduct", { adminLayout: true, currentProduct });
     } catch (error) {
       console.log(error);
@@ -770,13 +839,17 @@ module.exports = {
     }
   },
 
+  
+
   //Admin sales report function with query
   salesReport: async (req, res) => {
     try {
+      let queryMessage = 'This report is based on all delivered order until now'
       const { start, end } = req.query;
       const query = {};
       query.orderStatus = { "orderObj.status": "Delivered" };
       if (start || end) {
+        queryMessage = 'This report is based on all delivered orders from '+ start.slice(0, 10) + ' to '+ end.slice(0, 10) 
         query.date = {};
         if (start) {
           query.date.$gte = new Date(start);
@@ -785,7 +858,9 @@ module.exports = {
           query.date.$lte = new Date(end);
         }
       }
+      console.log(queryMessage);
       let salesReport = await adminHelper.getSalesReport(query);
+      salesReport = await zHelper.salesReportDestructure(salesReport)
       let totalRevenue = 0;
       const months = [
         "JAN",
@@ -812,6 +887,7 @@ module.exports = {
       }
       res.render("admin-salesReport", {
         adminLayout: true,
+        queryMessage,
         salesReport,
         totalRevenue,
       });

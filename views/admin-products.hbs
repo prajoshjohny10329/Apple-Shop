@@ -1,73 +1,91 @@
-        <!-- Page Content -->
+<!-- Page Content -->
 
-        <div class="container-fluid px-3">
+<div class="container-fluid px-3">
 
-            <div class="row mt-1" style="background-color: white;">
-                <h3 class="PageName mt-4 mb-2"> ALL Products</h3>
-                <div class="newButton mt-2 my-4 mr-3">
-                    <a href="/admin/add-new-product" class="createNewButton">Create new Product </a>
-                </div>
-                <div class="card mb-4 px-4">
-                    <table class="table mt-4 display " id="productsTable">
-                        <thead>
-                            <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">category</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Offer</th>
-                                <th scope="col">Stock</th>
-                                <th scope="col">Operations</th>
-                                
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#each products}}
-                            <tr style="font-weight: 700;">
-                                {{#if this.productActiveStatus}}
-                                <td scope="row">{{this.productName}} <p class="unBlocked"></p></td>
-                                {{else}}
-                                <td scope="row">{{this.productName}} <p class="blocked"></p></td>
-                                {{/if}}
-                                
-                                <td><img style="width: 50px;" src="{{this.productFirstImage}}" alt="image"></td>
-                                <td>{{this.productCategory }}</td>
-                                <td>₹ {{this.productPrice}}/-</td>
-                                <td style="color: green;">{{this.productOffer}}%</td>
-                                <td>{{this.ProductStock}}</td>
-                                {{!-- //thumlineimage --}}
-                                {{!-- <td><img style="width: 50px;" href="{{this.productFirstImage}}.jpg" alt="image"></td> --}}
-                                
-                                {{!-- <td>{{this.password}}</td> --}}
-
-                                <td>
-                                    <a href="/admin/view-single-product/{{this._id}}" class="btn btn-primary">view</a>
-                                    <a href="/admin/edit-product/{{this._id}}" class="btn btn-primary">edit</a>
-                                    {{#if productActiveStatus}}
-                                    <a href="/admin/block-products/{{this._id}}" class=" btn btn-danger"
-                                        onclick="return confirm('are you sure to  {{this.productName}}')">Block</a>
-                                    {{else}}
-                                    <a href="/admin/unblock-product/{{this._id}}" class=" btn btn-success"
-                                        onclick="return confirm('are you sure to delete  {{this.productName}}')">Unlock</a>
-                                    {{/if}}
-
-                                </td>
-
-                            </tr>
-                            {{/each}}
-
-                        </tbody>
-                    </table>
-                    <script>
-
-                        $(function () {
-                            $('#productsTable').DataTable();
-                        });
-
-                    </script>
-                </div>
-            </div>
-
+    <div class="row mt-1" style="background-color: white;">
+        <h3 class="PageName mt-4 mb-2"> ALL Products</h3>
+        <div class="newButton mt-2 my-4 mr-3">
+            <a href="/admin/add-new-product" class="aFormSubmitButton">Create new Product </a>
         </div>
+        <div class="card mb-4 px-4">
+            <table class="table mt-4 display " id="productsTable">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">category</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Offer</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">Operations</th>
 
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each products}}
+                    <tr style="font-weight: 700;">
+                        {{#if this.productActiveStatus}}
+                        <td scope="row">{{this.productName}} <p class="unBlocked"></p>
+                        </td>
+                        {{else}}
+                        <td scope="row">{{this.productName}} <p class="blocked"></p>
+                        </td>
+                        {{/if}}
+
+                        <td><img style="width: 50px;" src="{{this.productFirstImage}}" alt="image"></td>
+                        <td>{{this.productCategory }}</td>
+                        <td>₹ {{this.productPrice}}/-</td>
+                        <td style="color: green;">{{this.productOffer}}%</td>
+                        <td>{{this.ProductStock}}</td>
+                        <td>
+
+                            <form action="/admin/view-single-product" method="post" id="viewProduct-{{this._id}}">
+                                <input type="text" value="{{this._id}}" name="viewProductId" hidden>
+                                <button class="blockButton mt-2 "
+                                    onclick="return showConfirmForm('Are you want to view this Product ?','viewProduct-{{this._id}}')"
+                                    type="submit">View</button>
+                            </form>
+
+                            <form action="/admin/edit-product" method="post" id="editProduct-{{this._id}}">
+                                <input type="text" value="{{this._id}}" name="editProductId" hidden>
+                                <button class="blockButton mt-2 "
+                                    onclick="return showConfirmForm('Are you want to edit this Product ?','editProduct-{{this._id}}')"
+                                    type="submit">Edit</button>
+                            </form>
+
+                            {{#if productActiveStatus}}
+
+                            <form action="/admin/block-product" method="post" id="blockProduct-{{this._id}}">
+                                <input type="text" value="{{this._id}}" name="blockProductId" hidden>
+                                <button class="deleteButton mt-2 mb-2"
+                                    onclick="return showConfirmForm('Are you want to block this Product ?','blockProduct-{{this._id}}')"
+                                    type="submit">Block</button>
+                            </form>
+                            {{else}}
+                            <form action="/admin/unblock-product" method="post" id="unBlockProduct-{{this._id}}">
+                                <input type="text" value="{{this._id}}" name="unBlockProductId" hidden>
+                                <button class="unBlockButton mt-2 mb-2"
+                                    onclick="return showConfirmForm('Are you want to un block this Product ?','unBlockProduct-{{this._id}}')"
+                                    type="submit">Block</button>
+                            </form>
+                            {{/if}}
+
+
+                        </td>
+
+                    </tr>
+                    {{/each}}
+
+                </tbody>
+            </table>
+            <script>
+
+                $(function () {
+                    $('#productsTable').DataTable();
+                });
+
+            </script>
+        </div>
+    </div>
+
+</div>

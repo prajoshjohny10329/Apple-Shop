@@ -14,10 +14,14 @@ router.get('/res',(req,res)=>{
   
 })
 
-router.get("/", middleware.isLoggedIn, userController.getLandingPage); //home page
+//user common routes
+router.get("/", middleware.isLoggedIn, userController.getLandingPage);
 
-router.get("/view-product/:id", userController.viewOneProduct); // view One Product
+router.get("/view-product/:id", userController.viewOneProduct);
 
+router.get("/search", userController.getSearch);
+
+///only valid user routes
 router.get("/login", middleware.userIsLoggedIn, userController.getLogin);
 
 router.post("/login", middleware.userIsLoggedIn, userController.postLogin);
@@ -72,9 +76,12 @@ router.post(
   userController.postLoginWithOTP2
 );
 
-///only valid user area
-
-router.get("/my-orders", middleware.userMiddleware, userController.getMyOrders);
+// user Account routes
+router.get(
+  "/my-orders", 
+  middleware.userMiddleware, 
+  userController.getMyOrders
+  );
 
 router.get(
   "/my-account",
@@ -148,9 +155,7 @@ router.get(
   middleware.userMiddleware,
   userController.getOrderSuccess
 );
-
-/// my order
-
+//user order routes
 router.get(
   "/view-orderProducts/:id",
   middleware.userMiddleware,
@@ -169,7 +174,12 @@ router.post(
   userController.returnOrder
 );
 
-//coupon
+//user coupon routes
+router.get(
+  "/my-coupons", 
+  middleware.userMiddleware, 
+  userController.getCoupons
+);
 
 router.post(
   "/post-coupon",
@@ -177,21 +187,31 @@ router.post(
   userController.postCouponCode
 );
 
-router.get("/my-coupons", middleware.userMiddleware, userController.getCoupons);
+//user wallet routes
+router.get(
+  "/my-wallet", 
+  middleware.userMiddleware, 
+  userController.getWallet
+);
 
-//wallet
+//user cart routes
+router.get(
+  "/cart", 
+  middleware.userMiddleware, 
+  userController.userCart
+);
 
-router.get("/my-wallet", middleware.userMiddleware, userController.getWallet);
-
-router.get("/my-cart", middleware.userMiddleware, userController.userMyCart);
+router.get(
+  "/my-cart", 
+  middleware.userMiddleware, 
+  userController.userMyCart
+);
 
 router.get(
   "/add-to-cart/:id",
   middleware.userMiddleware,
   userController.addToCart
 );
-
-router.get("/cart", middleware.userMiddleware, userController.userCart);
 
 router.post(
   "/change-product-quantity",
@@ -205,11 +225,10 @@ router.post(
   userController.removeProductCart
 );
 
-router.get("/search", userController.getSearch);
-
+//user logout route
 router.get("/logout", middleware.userMiddleware, userController.userLogOut);
 
-//error
+//user error route
 router.get("/error", userController.getError);
 
 

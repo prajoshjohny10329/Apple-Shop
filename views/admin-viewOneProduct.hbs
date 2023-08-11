@@ -2,9 +2,23 @@
 
 <div class="container-fluid px-3">
   <div class="row mt-1" style="background-color: white;">
-    <h3 class="PageName mt-4 mb-2"> {{currentProduct.productName}}</h3>
-    <div class="newButton mt-2 my-4 mr-3 mr-2">
-      <a href="/admin/edit-product/{{currentProduct._id}}" class="btn btn-success ">Edit Full Product</a>
+    <h3 class="PageNameAdd mt-5 mb-2"> {{currentProduct.productName}}</h3>
+    <div class="newButton mt-2  mr-3 mr-2">
+
+      <form action="/admin/edit-product" method="post" id="editProduct-{{currentProduct._id}}">
+        <input type="text" value="{{currentProduct._id}}" name="editProductId" hidden>
+        <button class="aFormEditButton mt-2 "
+          onclick="return showConfirmForm('Are you want to edit this Product ?','editProduct-{{currentProduct._id}}')"
+          type="submit">Edit Full Product</button>
+      </form>
+    </div>
+    <div class="newButton mt-2 mb-3 mr-3 mr-2">
+      <form action="/admin/delete-product" method="post" id="deleteProduct-{{currentProduct._id}}">
+        <input type="text" value="{{currentProduct._id}}" name="deleteProductID" hidden>
+        <button class="aFormDeleteButton" type="submit"
+          onclick="return showConfirmForm('Are you want delete this product permanently ?','deleteProduct-{{currentProduct._id}}')">Delete
+          Product</button>
+      </form>
     </div>
     <div class="card mb-4 px-4">
       <!--  product seeing and main body-->
@@ -20,9 +34,9 @@
                   </div>
                   <div class="productImages">
                     <img class="imageViewOne ml-3" src="{{currentProduct.productFirstImage}}"
-                onclick="changeImage('{{currentProduct.productFirstImage}}')" alt="">
+                      onclick="changeImage('{{currentProduct.productFirstImage}}')" alt="">
                     {{#each currentProduct.productImagesURL}}
-                    <img class="imageViewOne ml-3" src="{{this}}" onclick="changeImage('{{this}}')"  alt="">
+                    <img class="imageViewOne ml-3" src="{{this}}" onclick="changeImage('{{this}}')" alt="">
                     {{/each}}
                   </div>
                   <hr>
@@ -32,331 +46,394 @@
                     <input type="radio" name="radio" id="offerRadio" onchange="isRadioActive()"> product offer
                   </div>
 
-
-
                   <div class="bigButton_div mb-3" id="ProductStockDiv">
                     <p class="CurrentStock">Current stock : {{currentProduct.ProductStock}}</p>
                     <form action="/admin/stock-changer" method="post">
                       <div class="stockInput">
                         <input type="text" name="productId" value="{{currentProduct._id}}" hidden>
-                        
                         <input class="form-control" type="number" max="1000" value="{{currentProduct.ProductStock}}"
                           min="1" name="productNewSTock">
                       </div>
                       <br>
-                      <button class="cart_button " type="reset">Reset</button>
-                      <button class="Buy_button" type="submit">Submit</button>
+                      <button class="changeClearButton" type="reset">Reset</button>
+                      <button class="changeSubmitButton" type="submit">Submit</button>
                     </form>
                   </div>
 
-
-
                   <div class="bigButton_div mb-3" id="ProductOfferDiv">
-                    <p class="CurrentStock">Current Offer: {{currentProduct.productOffer}}</p>
+                    <p class="CurrentStock">Current Offer: {{currentProduct.productOffer}}%</p>
                     <form action="/admin/offer-changer" method="post">
                       <div class="stockInput">
                         <input type="text" name="productId" value="{{currentProduct._id}}" hidden>
                         <input type="text" id="productPrice" value="{{currentProduct.productPrice}}" hidden>
-                        <input class="form-control"  type="number"  
-                          value="{{currentProduct.productOffer}}" name="productNewOffer" id="currentOffer">
-                        <input  readonly placeholder="{{currentProduct.productLastPrice}}" class="form-control" type="number" name="productLastPrice" id='productLastPrice'
-                          style="margin-left: 29px;"><br>
+                        <input class="form-control" type="number" value="{{currentProduct.productOffer}}"
+                          name="productNewOffer" id="currentOffer" max="99" min="0">
+                        <input readonly placeholder="{{currentProduct.productLastPrice}}" class="form-control"
+                          type="number" name="productLastPrice" id='productLastPrice' style="margin-left: 29px;"><br>
                       </div>
                       <br>
-                      <div style="color: red; text-align: center;" id="productStock_error"></div>
-                      <br>
-                      <button class="cart_button " type="reset">Reset</button>
-                      <button class="Buy_button" type="submit" onclick="return newOfferSubmit()">Submit</button>
+                      <div style="color: red; text-align: center;" id="productOfferError"></div>
+                      <button class="changeClearButton " type="reset">Reset</button>
+                      <button class="changeSubmitButton" type="submit" onclick="return newOfferSubmit()">Submit</button>
                     </form>
                   </div>
                 </div>
               </div>
 
               <div class="col-xl-6">
-          <div class="second_part mt-4">
-            <h1 class="full_title">{{currentProduct.productDescription}}</h1>
-            <div class="Rating_button_div">
-              <button class="rating_button">4.1 <i class="fa fa-star "></i> </button>
-              <hr class="mt-2">
+                <div class="second_part mt-4">
+                  <h1 class="full_title">{{currentProduct.productDescription}}</h1>
+                  <div class="Rating_button_div">
+                    <button class="rating_button">4.1 <i class="fa fa-star "></i> </button>
+                    <hr class="mt-2">
+                  </div>
 
-            </div>
-            <div class="Price_detailes_div ">
-              <p class="specia_price mb-2 ">Special Price</p>
-              <h1 class="total_price mb-2 ">₹ {{currentProduct.productLastPrice}}</h1>
-              <div class="sub_price mb-2">
-                <span class="real_price">₹ {{currentProduct.productPrice}}</span>
-                <span class="offer_rate">{{currentProduct.productOffer}} % off</span>
+                  <div class="Price_detailes_div ">
+                    <p class="specia_price mb-2 ">Special Price</p>
+                    <h1 class="total_price mb-2 ">₹ {{currentProduct.productLastPrice}}</h1>
+                    <div class="sub_price mb-2">
+                      <span class="real_price">₹ {{currentProduct.productPrice}}</span>
+                      <span class="offer_rate">{{currentProduct.productOffer}} % off</span>
+                    </div>
+                    <p class="specia_price  mb-1 ">Free Delivery</p>
+                    <p class="daily_saver mb-2 ">Daily Sever</p>
+                    <hr class="mt-2">
+                  </div>
+
+
+                  <div class="productDetails mb-3">
+
+                    <div class="productDetailsPair mt-4 mb-2">
+                      <p class="ProductDetailsHead">Product Detail's For Admin</p>
+                    </div>
+
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product Offer </p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{currentProduct.productOffer}}</P>
+                      </div>
+                    </div>
+
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product Real Price</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">₹ {{currentProduct.productPrice}} /-</P>
+                      </div>
+                    </div>
+
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product Last Price</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">₹ {{currentProduct.productLastPrice}} /-</P>
+                      </div>
+                    </div>
+
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product Stock</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{currentProduct.ProductStock}}</P>
+                      </div>
+                    </div>
+
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product Free Delivery </p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productFreeDelivery}}</P>
+                      </div>
+                    </div>
+
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product Replacement</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productReplacement}}</P>
+                      </div>
+                    </div>
+
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product Active Status </p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productActiveStatus}}</P>
+                      </div>
+                    </div>
+
+                  </div>
+                  <hr>
+
+                  <div class="productDetails mb-3">
+                    <div class="productDetailsPair mt-4 mb-3">
+                    </div>
+                    {{#if currentProduct.productBrand}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product Brand</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productBrand}}</P>
+                      </div>
+                    </div>
+                    {{/if}}
+
+                    {{#if currentProduct.productModelName}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">product Model Name</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productModelName}}</P>
+                      </div>
+                    </div>
+                    {{/if}}
+
+                    {{#if currentProduct.productColor}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">product Color</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productColor}}</P>
+                      </div>
+                    </div>
+                    {{/if}}
+
+
+                    {{#if currentProduct.productGeneration}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product Generation</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productGeneration}}</P>
+                      </div>
+                    </div>
+                    {{/if}}
+
+                    {{#if currentProduct.productFormFactor}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product FormFactor</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productFormFactor}}</P>
+                      </div>
+                    </div>
+                    {{/if}}
+
+                    {{#if currentProduct.productConnectivity}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product Connectivity</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productConnectivity}}</P>
+                      </div>
+                    </div>
+                    {{/if}}
+
+                    {{#if currentProduct.productScreenSize}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product ScreenSize</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productScreenSize}} </P>
+                      </div>
+                    </div>
+                    {{/if}}
+
+                    {{#if currentProduct.productHardDiskSize}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product Memory Space</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productHardDiskSize}}</P>
+                      </div>
+                    </div>
+                    {{/if}}
+
+
+                    {{#if currentProduct.productCPUModel}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product CPU Model</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productCPUModel}}</P>
+                      </div>
+                    </div>
+                    {{/if}}
+
+
+                    {{#if currentProduct.productCPU}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product CPU</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productCPU}}</P>
+                      </div>
+                    </div>
+                    {{/if}}
+
+
+                    {{#if currentProduct.productGPU}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product GPU</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productGPU}}</P>
+                      </div>
+                    </div>
+                    {{/if}}
+
+                    {{#if currentProduct.productRAMMemory}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product RAM Memory</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productRAMMemory}}</P>
+                      </div>
+                    </div>
+                    {{/if}}
+
+                    {{#if currentProduct.productMChips}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product Chip Type</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productMChips}}</P>
+                      </div>
+                    </div>
+                    {{/if}}
+
+                    {{#if currentProduct.productOperatingSystem}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product Operating System</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productOperatingSystem}}</P>
+                      </div>
+                    </div>
+                    {{/if}}
+
+                    {{#if currentProduct.productCameraResolution}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product Camera Resolution</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productCameraResolution}}</P>
+                      </div>
+                    </div>
+                    {{/if}}
+
+                    {{#if currentProduct.productCellular}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product Cellular</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productCellular}}</P>
+                      </div>
+                    </div>
+                    {{/if}}
+
+                    {{#if currentProduct.productGeneration}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product Generation</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productGeneration}}</P>
+                      </div>
+                    </div>
+                    {{/if}}
+
+                    {{#if currentProduct.productWatchStyle}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Product Watch Style</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        <P class="keyStyle">{{ currentProduct.productWatchStyle}}</P>
+                      </div>
+                    </div>
+                    {{/if}}
+
+                    {{#if currentProduct.productAvailableColor}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Available Colors</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        {{#each currentProduct.productAvailableColor}}
+                        <P class="availableBox">{{this}}</P>
+                        {{/each}}
+                      </div>
+                    </div>
+                    {{/if}}
+
+                    {{#if currentProduct.productAvailableSize}}
+                    <div class="productDetailsPair">
+                      <div class="productDetailsKey">
+                        <p class="keyStyle">Available Size</p>
+                      </div>
+                      <div class="productDetailsValue">
+                        {{#each currentProduct.productAvailableSize}}
+                        <P class="availableBox">{{this}}</P>
+                        {{/each}}
+                      </div>
+                    </div>
+                    {{/if}}
+                  </div>
+                  <hr>
+
+                  {{!-- product description --}}
+                  <div class="productDetails mb-5">
+                    <div class="productDetailsPair mt-4 mb-2">
+                      <p class="ProductDetailsHead">Product Description</p>
+                    </div>
+                    <P class="productDescription mb-3">{{ currentProduct.productDescription}}</P>
+                  </div>
+                  <hr>
+
+                  {{#if currentProduct.productAllAbout}}
+                  <div class="productDetails mb-5">
+                    <div class="productDetailsPair mt-4 mb-2">
+                      <p class="ProductDetailsHead">About this Product</p>
+                    </div>
+                    {{#each currentProduct.productAllAbout}}
+                    <li class="keyStyle mb-3">{{this}}</li>
+                    {{/each}}
+                  </div>
+                  <hr>
+                  {{/if}}
+
+
+                </div>
               </div>
-              <p class="specia_price  mb-1 ">Free Delivery</p>
-              <p class="daily_saver mb-2 ">Daily Sever</p>
-              <hr class="mt-2">
-            </div>
-            <div class="productDetails mb-3">
-              <div class="productDetailsPair mt-4 mb-3">
-                
-              </div>
-              {{#if currentProduct.productBrand}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">Product Brand</p>
-                </div>
-                <div class="productDetailsValue">
-                  <P class="keyStyle">{{ currentProduct.productBrand}}</P>
-                </div>
-              </div>
-              {{/if}}
-
-              {{#if currentProduct.productModelName}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">product Model Name</p>
-                </div>
-                <div class="productDetailsValue">
-                  <P class="keyStyle">{{ currentProduct.productModelName}}</P>
-                </div>
-              </div>
-              {{/if}}
-
-              {{#if currentProduct.productColor}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">product Color</p>
-                </div>
-                <div class="productDetailsValue">
-                  <P class="keyStyle">{{ currentProduct.productColor}}</P>
-                </div>
-              </div>
-              {{/if}}
-
-
-              {{#if currentProduct.productGeneration}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">Product Generation</p>
-                </div>
-                <div class="productDetailsValue">
-                  <P class="keyStyle">{{ currentProduct.productGeneration}}</P>
-                </div>
-              </div>
-              {{/if}}
-
-              {{#if currentProduct.productFormFactor}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">Product FormFactor</p>
-                </div>
-                <div class="productDetailsValue">
-                  <P class="keyStyle">{{ currentProduct.productFormFactor}}</P>
-                </div>
-              </div>
-              {{/if}}
-
-              {{#if currentProduct.productConnectivity}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">Product Connectivity</p>
-                </div>
-                <div class="productDetailsValue">
-                  <P class="keyStyle">{{ currentProduct.productConnectivity}}</P>
-                </div>
-              </div>
-              {{/if}}
-
-              {{#if currentProduct.productScreenSize}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">Product ScreenSize</p>
-                </div>
-                <div class="productDetailsValue">
-                  <P class="keyStyle">{{ currentProduct.productScreenSize}} </P>
-                </div>
-              </div>
-              {{/if}}
-
-              {{#if currentProduct.productHardDiskSize}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">Product Memory Space</p>
-                </div>
-                <div class="productDetailsValue">
-                  <P class="keyStyle">{{ currentProduct.productHardDiskSize}}</P>
-                </div>
-              </div>
-              {{/if}}
-
-
-              {{#if currentProduct.productCPUModel}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">Product CPU Model</p>
-                </div>
-                <div class="productDetailsValue">
-                  <P class="keyStyle">{{ currentProduct.productCPUModel}}</P>
-                </div>
-              </div>
-              {{/if}}
-
-
-              {{#if currentProduct.productCPU}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">Product CPU</p>
-                </div>
-                <div class="productDetailsValue">
-                  <P class="keyStyle">{{ currentProduct.productCPU}}</P>
-                </div>
-              </div>
-              {{/if}}
-
-
-              {{#if currentProduct.productGPU}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">Product GPU</p>
-                </div>
-                <div class="productDetailsValue">
-                  <P class="keyStyle">{{ currentProduct.productGPU}}</P>
-                </div>
-              </div>
-              {{/if}}
-
-              {{#if currentProduct.productRAMMemory}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">Product RAM Memory</p>
-                </div>
-                <div class="productDetailsValue">
-                  <P class="keyStyle">{{ currentProduct.productRAMMemory}}</P>
-                </div>
-              </div>
-              {{/if}}
-
-              {{#if currentProduct.productMChips}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">Product Chip Type</p>
-                </div>
-                <div class="productDetailsValue">
-                  <P class="keyStyle">{{ currentProduct.productMChips}}</P>
-                </div>
-              </div>
-              {{/if}}
-
-              {{#if currentProduct.productOperatingSystem}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">Product Operating System</p>
-                </div>
-                <div class="productDetailsValue">
-                  <P class="keyStyle">{{ currentProduct.productOperatingSystem}}</P>
-                </div>
-              </div>
-              {{/if}}
-
-              {{#if currentProduct.productCameraResolution}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">Product Camera Resolution</p>
-                </div>
-                <div class="productDetailsValue">
-                  <P class="keyStyle">{{ currentProduct.productCameraResolution}}</P>
-                </div>
-              </div>
-              {{/if}}
-
-              {{#if currentProduct.productCellular}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">Product Cellular</p>
-                </div>
-                <div class="productDetailsValue">
-                  <P class="keyStyle">{{ currentProduct.productCellular}}</P>
-                </div>
-              </div>
-              {{/if}}
-
-              {{#if currentProduct.productGeneration}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">Product Generation</p>
-                </div>
-                <div class="productDetailsValue">
-                  <P class="keyStyle">{{ currentProduct.productGeneration}}</P>
-                </div>
-              </div>
-              {{/if}}
-
-              {{#if currentProduct.productWatchStyle}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">Product Watch Style</p>
-                </div>
-                <div class="productDetailsValue">
-                  <P class="keyStyle">{{ currentProduct.productWatchStyle}}</P>
-                </div>
-              </div>
-              {{/if}}
-
-              {{#if currentProduct.productAvailableColor}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">Available Colors</p>
-                </div>
-                <div class="productDetailsValue">
-                  {{#each currentProduct.productAvailableColor}}
-                  <P class="availableBox">{{this}}</P>
-                  {{/each}}
-                </div>
-              </div>
-              {{/if}}
-
-              {{#if currentProduct.productAvailableSize}}
-              <div class="productDetailsPair">
-                <div class="productDetailsKey">
-                  <p class="keyStyle">Available Size</p>
-                </div>
-                <div class="productDetailsValue">
-                  {{#each currentProduct.productAvailableSize}}
-                  <P class="availableBox">{{this}}</P>
-                  {{/each}}
-                </div>
-              </div>
-              {{/if}}
-
-
-              
-            </div>
-            <hr>
-
-            {{!-- product description --}}
-
-            <div class="productDetails mb-5">
-              <div class="productDetailsPair mt-4 mb-2">
-                <p class="ProductDetailsHead">Product Description</p>
-              </div>
-              <P class="productDescription mb-3">{{ currentProduct.productDescription}}</P>
-            </div>
-            <hr>
-            
-             <div class="productDetails mb-5">
-              <div class="productDetailsPair mt-4 mb-2">
-                <p class="ProductDetailsHead">About this item</p>
-              </div>
-              {{#each currentProduct.productAllAbout}}
-              <li class="keyStyle mb-3">{{this}}</li>
-              {{/each}}
-            </div>
-            <hr>
-
-          </div>
-        </div>
             </div>
           </div>
         </div>
       </div>
-
-
     </div>
   </div>
-
 </div>

@@ -23,7 +23,7 @@
                                     <div class="form-group mb-2 inputgroup">
                                         <div class="form-group mb-3 inputgroup">
                                         <label for="inputAdminCode">SID</label>
-                                        <input id="inputAdminCode" name="Admin_SID" type="text" onkeyup="validateAdminCode()" placeholder="Admin Code" class="form-control   shadow-sm px-4 text-primary">
+                                        <input id="inputAdminCode" name="Admin_SID" type="text" onkeyup="validateAdminSID()" placeholder="Admin Code" class="form-control   shadow-sm px-4 text-primary">
                                         <span id="AdminCode-error"> </span>
                                     </div> 
                                         <label for="inputName">Name</label>
@@ -52,8 +52,8 @@
                                     </div>
                                      
                                     <div class="form-group mb-2 inputgroup ">
-                                        <button type="submit" onclick="return validateSubmit()"  class="submit_button btn-block text-uppercase mb-2   ">Create Account</button>
-                                        <span class="submiterr" id="submit-error"></span>
+                                        <button type="submit" onclick="return validateSubmitAdmin()"  class="submit_button btn-block text-uppercase mb-2   ">Create Account</button>
+                                        <span class="submitError" id="submit-error"></span>
                                     </div>                           
                                     
                                     <div style="color: white;" class="text-center d-flex justify-content-center mt-4">

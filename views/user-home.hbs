@@ -4,12 +4,12 @@
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img class="w-100" src="{{banners.[0].bannerUrl}}" alt="First slide">
+          <img class="w-100" style="min-height: 250px;" src="{{banners.[0].bannerUrl}}" alt="First slide">
         </div>
         {{#each banners}}
         {{#unless @first}}
         <div class="carousel-item">
-          <img class="d-block w-100" src="{{this.bannerUrl}}" alt="Second slide">
+          <img class="d-block w-100" style="min-height: 250px;" src="{{this.bannerUrl}}" alt="Second slide">
         </div>
         {{/unless}}
         {{/each}}

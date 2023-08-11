@@ -26,20 +26,28 @@
 
 <div id="main" style="height: auto;">
   <div class="mainlistbody ">
+    {{#if activeCoupons}}
+    {{else}}
+    <div class="mt-5 text-center"> Not activated coupons now ! try latter</div>
+    <div class="emptyCartButtonsDiv mb-3">
+      <button onclick="location.href='/'" class="shoppingButtons mt-5  mb-3">Continue Shopping</button>
+    </div>
+    {{/if}}
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-12  full_cart_products mb-5 ">
           <div class="container-fluid coupondisplay mt-2 mb-2 " style="width: 95%;">
             <div class="row couponRow">
+
               {{#each activeCoupons}}
               <div class=" singleCouponDIv mt-2 mb-2">
                 <div class="container-fluid">
                   <div class="row">
                     <div class="col-xl-7 couponImageDiv mt-3 mb-3 ">
-                      <img class="couponImage" src="{{this.couponBanner}}" alt="">
+                      <img class="couponImage" src="{{this.couponImageUrl}}" alt="">
                     </div>
                     <div class="col-xl-2 couponButtonDiv">
-                      <p class="couponName">{{this.couponName}} {{this.couponOffer}} %</p>
+                      <p class="couponName">{{this.couponName}} {{this.couponOffer}}%</p>
                     </div>
                     <div class="col-xl-2 couponButtonDiv mt-2 mb-4">
                       <button class="couponButton" onclick="copyCouponCode('{{this.couponCode}}')">Copy Coupon

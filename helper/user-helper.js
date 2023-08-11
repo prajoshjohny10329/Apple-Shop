@@ -13,7 +13,7 @@ const instance = new Razorpay({
 
 module.exports={ 
 
-    //get products for user home page
+    //function for user-controller get all active products
     getUserHomeProducts: () =>{
         return new  Promise(async(resolve,rej) => {
             try {
@@ -29,6 +29,8 @@ module.exports={
             }
         })
     },
+
+    //function for user-controller get all active banners
     getActiveBanners: () =>{
         return new Promise(async (resolve, reject) => {
             try {
@@ -40,6 +42,7 @@ module.exports={
         })
     },
 
+    //function for user controller get user cart count
     cartCount: (userId) =>{
         return new Promise (async (resolve,reject) =>{
             try {
@@ -56,6 +59,7 @@ module.exports={
         })
     },
 
+    //function for user controller check email id check
     emailCheck:(Email)=>{
         return new Promise(async(resolve,reject)=>{
             try {
@@ -63,7 +67,7 @@ module.exports={
                 let user = await db.get().collection(collection.USER_COLLECTION).findOne({Email:Email})
                 if(user){
                     response.status = false
-                    response.message = " Sorry! This  Email address alredy exists "
+                    response.message = " Sorry! This  Email address already exists "
                     resolve(response)
                 }
                 else{
@@ -76,6 +80,8 @@ module.exports={
             }
             })
     },
+
+    //function for user controller check mobile number check
     mobileCheck:(Mobile)=>{
         return new Promise(async(resolve,reject)=>{
            try {
@@ -84,7 +90,7 @@ module.exports={
              if(mobile_current){
                  response.user = mobile_current
                  response.status = true
-                 response.mobileMessage = " Sorry! This Mobile Number alredy exists "
+                 response.mobileMessage = " Sorry! This Mobile Number already exists "
                  resolve(response)
              }
              else{
@@ -98,6 +104,7 @@ module.exports={
             })
     },
 
+    //function for user controller to check signup data and submit password
     doSignup:(userData)=>{
         return new Promise(async(resolve,reject)=>{
         try {
@@ -120,6 +127,7 @@ module.exports={
         })
     },
     
+    //function for user controller check user login data 
     doLogin:(userData)=>{
         return new Promise(async(resolve,reject)=>{
             try {
@@ -157,6 +165,8 @@ module.exports={
             }
         })
     },
+
+    //function for user controller submit logout
     getLogOut: (userId)=>{
         return new Promise(async(resolve,reject)=>{
             try {
@@ -168,6 +178,8 @@ module.exports={
         })
 
     },
+
+    //function for user controller check is user active 
     userActive: (userId)=>{
         return new Promise(async(resolve,reject)=>{
             try {
@@ -179,6 +191,8 @@ module.exports={
         })
 
     },
+
+    //function for user controller get mobile number for user forgot password
     forgotPassword:(userData)=>{
         return new Promise(async(resolve,reject)=>{
             try {
@@ -199,6 +213,8 @@ module.exports={
                 
             })
     },
+
+    //function for user controller submit change password
     changePassword:(userMobile,newPassword)=>{
         return new Promise(async(resolve,reject)=>{
             try {
@@ -215,6 +231,8 @@ module.exports={
             }
         })
     },
+
+    //function for user controller to get single product data
     viewOneProduct:(productId) =>{
         return new Promise(async(resolve,reject) =>{
            try {
@@ -225,6 +243,8 @@ module.exports={
            }
         })
     },
+
+    //function for user controller to add a product in cart
     addToCart:(proId,userId) =>{
         return new Promise (async(resolve,reject) =>{
             try {
@@ -250,8 +270,7 @@ module.exports={
                         db.get().collection(collection.CART_COLLECTION)
                         .updateOne({user:new ObjectId(userId)},
                             {
-                                    $push:{products : proObj}
-    
+                                    $push:{products : proObj}    
                             } 
                         ).then((response)=>{
                             resolve()
@@ -261,11 +280,9 @@ module.exports={
                 
                 }
                 else{
-                    console.log("new cart");
                     let cartObj ={
                         user:new ObjectId(userId),
                         products:[proObj]
-                        // products:[new ObjectId(proId)]
                     }
                     db.get().collection(collection.CART_COLLECTION).insertOne(cartObj).then((response)=>{
                         resolve()
@@ -276,6 +293,8 @@ module.exports={
             }
         })
     },
+
+    //function for user controller to get all product on cart
     getCartList:(userId) =>{
         return new Promise (async(resolve,reject) =>{
             try {
@@ -307,7 +326,6 @@ module.exports={
                         }
                     }
                 ]).toArray()
-                console.log("database");
                 if(cartItems.length!=0){
                     resolve(cartItems)
                 }
@@ -322,6 +340,7 @@ module.exports={
 
     },
     
+    //function for user controller to get data product with Id
     getProductWithID: (productID) =>{
         return new  Promise(async(resolve,reject) => {
             try {
@@ -332,8 +351,9 @@ module.exports={
             }
         })
     },
+
+    //function for user controller to change cart product quantity
     changeCartQuantity: async (cartData) =>{
-        
         return new Promise((resolve,reject) =>{
             try {
                 cartData.count = parseInt(cartData.count)
@@ -364,9 +384,9 @@ module.exports={
                 console.log(error)
             }
         })
-
-
     },
+
+    //function for user controller to remove one product from cart
     removeCart:(cartData) =>{
         return new Promise ((resolve,reject)=>{
             try {
@@ -383,6 +403,8 @@ module.exports={
             }
         })
     },
+
+    //function for user controller to get total amount of the cart
     getTotalAmount:(userId)=>{
         return new Promise(async (resolve,reject)=>{
             try {
@@ -433,6 +455,8 @@ module.exports={
             }
         })
     },
+
+    //function for user controller to get total product on cart
     getTotalProducts:(userId)=>{
         return new Promise(async (resolve,reject)=>{
             try {
@@ -484,6 +508,7 @@ module.exports={
         })
     },
     
+    //function for user controller to get cart product list
     getCartProductList: (userId)=>{
         return new Promise(async (resolve,reject)=>{
             try {
@@ -495,6 +520,8 @@ module.exports={
         })
 
     },
+
+    //function for user controller to submit palace order 
     placeOrder:(orderData,orderAddress,userId,products,total,totalPro)=>{
         return new Promise(async (resolve,reject)=>{
             try {
@@ -518,6 +545,7 @@ module.exports={
         })
     },
 
+    //function for user controller to remove cart after place order
     removeCartForOrder: (userId) =>{
         return new Promise((resolve, reject) => {
              try {
@@ -529,13 +557,11 @@ module.exports={
         })
     },
 
-    ///razorpay 
-
-
+    //function for user controller to create razor pay
     generateRazorpay:(orderId,total)=>{
         return new Promise((resolve, reject) => {
             var options = {
-                amount: total*100,  // amount in the smallest currency unit
+                amount: total*100,  
                 currency: "INR",
                 receipt: ''+orderId
               };
@@ -550,6 +576,8 @@ module.exports={
         })
 
     },
+
+    //function for user controller to verify razor payment
     verifyPayment:(paymentData)=>{
         return new Promise((resolve, reject) => {
             try {
@@ -570,10 +598,10 @@ module.exports={
         })
 
     },
+
+    //function for user controller to minimize product quantity after order success
     changeProductQuantity:(productData)=>{
         return new Promise(async (resolve, reject) => {
-            console.log('productData');
-            console.log(productData);
             for (let index = 0; index < productData.length; index++) {
                 let currentProductId = productData[index].item
                 let currentProductQuantity = - productData[index].quantity
@@ -583,6 +611,7 @@ module.exports={
         })
     },
 
+    //function for user controller to change order status pending to placed after order success
     changeOrderStatus:(orderId)=>{
         return new Promise(async (resolve, reject) => {
             try {
@@ -593,6 +622,8 @@ module.exports={
             }
         })
     },
+
+    //function for user controller to get order product
     getOrderProducts:async(orderId)=>{
         return new Promise(async (resolve,reject)=>{
           try {
@@ -630,6 +661,7 @@ module.exports={
         })
     },
 
+    //function for user controller to submit single cancel order
     cancelOrder:async(orderId)=>{
         return new Promise(async (resolve,reject)=>{
             try {
@@ -641,6 +673,7 @@ module.exports={
         })
     },
 
+    //function for user controller to submit order return
     returnOrder:async(orderId)=>{
         return new Promise(async (resolve,reject)=>{
             try {
@@ -652,18 +685,7 @@ module.exports={
         })
     },
 
-
-
-    getMyOrders:async(userId)=>{
-        return new Promise(async (resolve,reject)=>{
-            try {
-                let myOrders = await db.get().collection(collection.ORDER_COLLECTION).find({'orderObj.userId': new ObjectId(userId)}).toArray()
-                resolve()
-            } catch (error) {
-                console.log(error)
-            }
-        })
-    },
+    //function for user controller to get all orders of user
     myOrders:(userId)=>{
         return new Promise(async (resolve,reject)=>{
           try {
@@ -675,7 +697,7 @@ module.exports={
         })
     },
     
-    
+    //function for user controller to get dynamic category
     getDynamicCategory:async(category)=>{
         return new Promise(async (resolve,reject)=>{
             try {
@@ -686,19 +708,8 @@ module.exports={
             }
         })
     },
-    getAllProducts:async()=>{
-        return new Promise(async (resolve,reject)=>{
-           try {
-             let products = await db.get().collection(collection.PRODUCTS_COLLECTION).find({}).toArray()
-             resolve(products)
-           } catch (error) {
-            console.log(error)
-           }
-        })
-    },
-    
-    ////address
 
+    //function for user controller to get all user address
     getUserAddress:async(userId)=>{
         return new Promise(async (resolve,reject)=>{
              try {
@@ -709,6 +720,8 @@ module.exports={
              }
         })
     },
+
+    //function for user controller to insert a new address
     postAddAddress:async(userId,userAddress)=>{
         return new Promise(async (resolve,reject)=>{
                 try {
@@ -720,6 +733,8 @@ module.exports={
                
         })
     },
+
+    //function for user controller to get single address
     getSingleAddress:async(addressId)=>{
         return new Promise(async (resolve,reject)=>{
             try {
@@ -730,6 +745,8 @@ module.exports={
             }      
        })
     },
+
+    //function for user controller to update single address
     postEditAddress:async(addressId,updateData)=>{
         return new Promise(async (resolve,reject)=>{
            try {
@@ -741,7 +758,7 @@ module.exports={
        })
     },
 
-    ///coupon
+    //function for user controller to get all active coupons
     getActiveCoupons:()=>{
         return new Promise(async (resolve, reject) => {
             try {
@@ -755,11 +772,10 @@ module.exports={
             } catch (error) {
                 console.log(error)
             }
-            
-        
         })
     },
 
+    //function for user controller to check coupon code is active
     couponCode:async(couponCode)=>{
         return new Promise(async (resolve,reject)=>{
             try {
@@ -782,28 +798,23 @@ module.exports={
                             response.status = true
                             response.discountPrice = 1000
                             response.couponData = result
-                            console.log('coupon valid');
                             resolve( response)
                             
         
                         }else{
-                            console.log('not valid');
                             response.errorMessage = 'coupon Code Date is not valid'
                             response.status = false
                             resolve(response)
                         }
-    
                     }
-    
-                    
                 }
-            } catch (error) {
-                
+            } catch (error) { 
+
             }
-           
        })
     },
-    //wallet
+
+    //function for user controller to get user wallet
     getWallet: (userId)=>{
         return new Promise(async (resolve, reject) => {
             try {
@@ -815,7 +826,6 @@ module.exports={
                     walletTotal =wallet.walletAmount
                     resolve(walletTotal)
                 }
-    
             } catch (error) {
                 
             }
@@ -823,8 +833,7 @@ module.exports={
 
     },
 
-
-    //search
+    //function for user controller to get search
     getSearch: async(search,productCategory,sortBy,page,limit)=>{
         return new Promise(async (resolve, reject) => {
             try {

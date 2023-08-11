@@ -57,7 +57,7 @@
       <div class="container-fluid">
         <h5 class="userAddress mt-5">User Address</h5>
     <div class="newButton  mt-2 my-4 mr-3">
-      <a href="/add-address" class="btn btn-success"> Add new Address</a>
+      <a href="/add-address" class="aFormSubmitButton"> Add new Address</a>
     </div>
         <div class="row">
           {{#each userAddress}}
@@ -74,13 +74,15 @@
                   
                 </div>
               </div>
-              <p class="addressStyle ml-3">{{this.userAddress.userAddressPhone}}</p>
-              <p class="addressStyle ml-3">{{this.userAddress.userAddressHouseName}}</p>
-              <p class="addressStyle ml-3">{{this.userAddress.userAddressPlace}} , {{this.userAddress.userAddressCity}}
-              </p>
-              <p class="addressStyle ml-3">{{this.userAddress.userAddressDistrict}}</p>
-              <p class="addressStyle ml-3 mb-5">{{this.userAddress.userAddressState}} -
-                {{this.userAddress.userAddressPincode}}</p>
+                  <p class="addressStyle ml-3">{{this.userAddress.userAddressPhone}}</p>
+                  <p class="addressStyle ml-3">{{this.userAddress.userAddressHouseName}}</p>
+                  <p class="addressStyle ml-3">{{this.userAddress.userAddressPlace}} , {{this.userAddress.userAddressCity}}
+                  </p>
+                  <p class="addressStyle ml-3">{{this.userAddress.userAddressDistrict}}</p>
+                  <p class="addressStyle ml-3 ">{{this.userAddress.userAddressState}} -
+                    {{this.userAddress.userAddressPincode}}</p>
+                    <p>.</p>
+                
             </div>
           </div><br>
           {{/each}}

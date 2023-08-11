@@ -5,7 +5,10 @@
 </div>
 {{#if myOrders}}
 {{else}}
-<div style="text-align: center;"> Orders list is empty</div>
+<div class="mt-5 text-center"> Orders list is empty ! Continue Shopping</div>
+<div class="emptyCartButtonsDiv mb-3">
+  <button onclick="location.href='/'" class="shoppingButtons mt-5  mb-3">Continue Shopping</button>
+</div>
 {{/if}}
 
 <div class="mainlistbody ">
@@ -70,7 +73,7 @@
                   <p>Placed</p>
                   <hr>
                 </div>
-                
+
                 <div class="statusGroupDiv">
                   <p class="completedStatusDot mt-3 ">2</p>
                   <p>Approved</p>
@@ -98,7 +101,7 @@
                   <p class="completedStatusDot mt-3 ">2</p>
                   <p>Approved</p>
                 </div>
-                
+
                 <div class="statusGroupDiv">
                   <p class="statusGroupDiv mt-3">3</p>
                   <p>Shipping</p>
@@ -119,20 +122,24 @@
                 <p>Order Date :{{this.orderObj.data}}</p>
                 <div class="cancelDiv">
                   <button class="viewButton mb-3 ml-2" onclick="location.href='/view-orderProducts/{{this._id}}';">view
-                  Products</button>
-                {{#if this.currentOrderStatus.cancelled}}
-                {{else if this.currentOrderStatus.return}}
-                {{else if this.currentOrderStatus.delivered}}
-                <form action="/return-order/" method="post" id="returnOrder-{{this._id}}">
-                                <input type="text" value="{{this._id}}" name="returnOrderId" hidden>
-                                <button class="returnButton mb-3 ml-2" onclick="return showConfirmForm('Are you want to return this Order ?','returnOrder-{{this._id}}')" type="submit" >Return Order</button>
-                                </form> 
-                {{else }}
-                     <form action="/cancel-order/" method="post" id="cancelOrder-{{this._id}}">
-                                <input type="text" value="{{this._id}}" name="cancelOrderId" hidden>
-                                <button class="cancelButton mb-3 ml-2" onclick="return showConfirmForm('Are you want to cancel this Order ?','cancelOrder-{{this._id}}')" type="submit" >Cancel Order</button>
-                                </form> 
-                {{/if}}
+                    Products</button>
+                  {{#if this.currentOrderStatus.cancelled}}
+                  {{else if this.currentOrderStatus.return}}
+                  {{else if this.currentOrderStatus.delivered}}
+                  <form action="/return-order/" method="post" id="returnOrder-{{this._id}}">
+                    <input type="text" value="{{this._id}}" name="returnOrderId" hidden>
+                    <button class="returnButton mb-3 ml-2"
+                      onclick="return showConfirmForm('Are you want to return this Order ?','returnOrder-{{this._id}}')"
+                      type="submit">Return Order</button>
+                  </form>
+                  {{else }}
+                  <form action="/cancel-order/" method="post" id="cancelOrder-{{this._id}}">
+                    <input type="text" value="{{this._id}}" name="cancelOrderId" hidden>
+                    <button class="cancelButton mb-3 ml-2"
+                      onclick="return showConfirmForm('Are you want to cancel this Order ?','cancelOrder-{{this._id}}')"
+                      type="submit">Cancel Order</button>
+                  </form>
+                  {{/if}}
 
                 </div>
               </div>
@@ -141,7 +148,7 @@
 
         </div>
 
-        
+
         {{/each}}
         {{/if}}
       </div>

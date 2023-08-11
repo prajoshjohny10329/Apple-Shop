@@ -3,9 +3,9 @@
 
                 <div class="row mt-1" style="background-color: white;">
                     
-                    <h3 class="PageName mt-4 mb-2 ">All Coupons</h3>
+                    <h3 class="PageNameAdd mt-5 mb-4 ">All Coupons</h3>
                     <div class="newButton  mt-2 my-4 mr-3">
-                        <a onclick="return aTagClick('Are you want to create New Banner ?','/admin/add-coupon')" class="createNewButton mr-5"> Create new Coupon</a>
+                        <a onclick="return aTagClick('Are you want to create new Coupon ?','/admin/add-coupon')" class="aFormSubmitButton mr-5"> Create new Coupon</a>
                     </div>
                     <hr>
                     <div class="card mt-4 mb-4" >
@@ -27,7 +27,7 @@
                             <tr style="font-weight: 700;">
                                 <td scope="row">{{this.couponName}}</td>
                                 <td scope="row">{{this.couponCode}}</td>
-                                <td><img style="width: 50px;" src="{{this.couponBanner}}" alt="image"></td>
+                                <td><img style="width: 50px;" src="{{this.couponImageUrl}}" alt="image"></td>
                                 <td>₹ {{this.couponMaxPrice}}/-</td>
                                 <td style="color: green;">{{this.couponOffer}}%</td>
                                 <td>{{this.couponStartingDate}}</td>
@@ -46,6 +46,10 @@
                                 <button class="unBlockButton mb-3" onclick="return showConfirmForm('Are you want to Un block this Coupon ?','unBlockBanner-{{this._id}}')" type="submit">Un Block</button>
                                 </form>
                             {{/if}}
+                            <form action="/admin/delete-coupon" method="post" id="deleteCoupon-{{this._id}}">
+                                    <input type="text" value="{{this._id}}" name="deleteCouponID" hidden>
+                                    <button class="deleteButton " type="submit" onclick="return showConfirmForm('Are you want delete this coupon permanently ?','deleteCoupon-{{this._id}}')">Delete </button>
+                                    </form>
 
                                 </td>
 

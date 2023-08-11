@@ -46,8 +46,8 @@ module.exports={
                  if(currentCategory == 'AirPods'){
                      category.AirPods = true
                      resolve(category)
-                     
                  }
+                 resolve()
            } catch (error) {
             
            }
@@ -184,15 +184,16 @@ module.exports={
     },
     //coupon destructure
 
-    couponDataDestructure:(bodyData,couponBanner)=>{
+    couponDataDestructure:(bodyData,cloudResult)=>{
       return new Promise((resolve, reject) => {
        try {
          const couponData =bodyData
          couponData.couponOffer = parseInt(couponData.couponOffer)
          couponData.couponMaxPrice = parseInt(couponData.couponMaxPrice)
-         couponData.isCouponActive = true;
+         couponData.isCouponActive = true
          couponData.couponUsedUsers =[]
-         couponData.couponBanner = couponBanner
+         couponData.couponImageUrl = cloudResult.secure_url
+         couponData.couponImageId = cloudResult.public_id
          resolve(couponData)
        } catch (error) {
         
@@ -332,6 +333,31 @@ module.exports={
        } catch (error) {
         console.log(error);
        }
+      })
+    },
+    salesReportDestructure: (report)=>{
+      return new Promise((resolve, reject) => {
+       for (let index = 0; index < report.length; index++) {
+        let currentOrder = report[index]
+        let inputDate = currentOrder.orderObj.data
+        const formattedDate = inputDate.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+        currentOrder.orderObj.formattedDate = formattedDate
+      }
+      resolve(report);
+      })
+    },
+
+    formatChangeImagesPath:(images)=>{
+      return new Promise((resolve, reject) => {
+        let changeImagesPath = [] 
+        if (Array.isArray(images)) {
+          images.forEach(current => {
+            changeImagesPath.push(current.tempFilePath)
+          });
+        } else {
+          changeImagesPath.push(images.tempFilePath)
+        }
+      resolve(changeImagesPath);
       })
     },
 

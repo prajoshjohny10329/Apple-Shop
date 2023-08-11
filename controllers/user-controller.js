@@ -6,7 +6,6 @@ const zHelper = require("../helper/z-helper");
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
-
 const client = require("twilio")(accountSid, authToken);
 
 module.exports = {
@@ -523,7 +522,6 @@ module.exports = {
       total = total - discount;
       const cartCount = await userHelper.cartCount(user._id);
       const orderAddress = req.session.orderAddress;
-      console.log(orderAddress);
       res.render("user-placeOrder", {
         userLayout: true,
         loggedIn: true,
@@ -566,6 +564,7 @@ module.exports = {
           if (req.body["payment-method"] === "COD") {
             await userHelper.removeCartForOrder(user._id);
             await userHelper.changeProductQuantity(products);
+            req.session.couponDiscount = null
             res.json({ status: true });
           } else {
             userHelper
@@ -581,7 +580,7 @@ module.exports = {
     }
   },
 
-  //function for verify payment by online razorpay
+  //function for verify payment by online razor pay
   verifyPayment: async (req, res, next) => {
     try {
       console.log("this.verifyPayment");

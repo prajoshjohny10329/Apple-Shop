@@ -7,8 +7,8 @@ const middleware = require('../middlewares/middlewares');
 const adminController = require('../controllers/admin-controller');
 const cloudinary = require('../utils/cloudnary');
 
-//last
 
+// admin routes
 router.get('/',middleware.adminIsLogged,adminController.getAdminLandingPage)
 
 router.post('/admin-login',adminController.postAdminLogin)
@@ -29,6 +29,7 @@ router.get('/adminUsers',middleware.adminMiddleware,adminController.getAdminUser
 
 router.post('/adminSID_OTP',adminController.postAdminSidOTP)
 
+//admin forgot password routes
 router.get('/adminForgot',adminController.getAdminForgot)
 
 router.post('/adminForgot',adminController.postAdminForgot)
@@ -66,6 +67,8 @@ router.post('/coupon-block',middleware.adminMiddleware,adminController.getCoupon
 
 router.post('/coupon-unBlock',middleware.adminMiddleware,adminController.getCouponUnBlock)
 
+router.post('/delete-coupon',middleware.adminMiddleware,adminController.postDeleteCoupon)
+
 //admin product routes
 router.get('/add-new-product',middleware.adminMiddleware,adminController.getAddProduct)
 
@@ -73,15 +76,17 @@ router.post('/add-new-product',middleware.adminMiddleware,adminController.postAd
 
 router.get('/products',middleware.adminMiddleware,adminController.getAllProducts)
 
-router.get('/block-products/:id',middleware.adminMiddleware,adminController.getBlockProduct)
+router.post('/block-product',middleware.adminMiddleware,adminController.blockProduct)
 
-router.get('/unblock-product/:id',middleware.adminMiddleware,adminController.getUnBlockProducts)
+router.post('/unblock-product',middleware.adminMiddleware,adminController.unBlockProducts)
 
-router.get('/edit-product/:id',adminController.getProductForEdit)
+router.post('/edit-product',adminController.productForEdit)
 
-router.post('/edit-product/',adminController.postProductForEdit)
+router.post('/edit-product-submit',adminController.postProductForEdit)
 
-router.get('/view-single-product/:id',middleware.adminMiddleware,adminController.getProduct)
+router.post('/delete-product',middleware.adminMiddleware,adminController.postDeleteProduct)
+
+router.post('/view-single-product',middleware.adminMiddleware,adminController.getProduct)
 
 router.post('/stock-changer',middleware.adminMiddleware,adminController.postProductStock)
 

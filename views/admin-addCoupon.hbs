@@ -20,7 +20,7 @@
                 <div class="col-lg-6">
                     <label>Coupon Code</label>
                     <input id="couponCode" type="text" name="couponCode" placeholder="eg: 7MT3x7ev"
-                        class="form-control mt-2" onkeyup="couponCodeChecker()">
+                        class="form-control mt-2" onkeyup="couponCodeChecker()" readonly>
                     <span style="color: red;" id="couponCode_error"></span>
                 </div>
                 <div class="generatorButtonDiv mt-2 ">
@@ -67,7 +67,7 @@
                     <img src="" style="width: 80%;" id="couponImgView">
                 </div>
                 <div class="submitButton">
-                    <button type="submit" class="btn  btn-success mt-5 " onclick="return validateCouponSubmit()">Create
+                    <button type="submit" class="formSubmitButton mt-5 " onclick="return validateCouponSubmit()">Create
                         New Coupon</button>
                 </div>
                 <div style="color: red; text-align: center;" class="mt-3" id="submitError"></div>

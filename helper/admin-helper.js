@@ -134,7 +134,7 @@ module.exports = {
       }
     });
   },
-  creatNewAdmin: (adminData) => {
+  createNewAdmin: (adminData) => {
     return new Promise(async (resolve, reject) => {
       try {
         let response = {};
@@ -373,6 +373,21 @@ module.exports = {
     });
   },
 
+  updateEditProduct: (productId,productData) => {
+    return new Promise(async (res, rej) => {
+      try {
+        await db
+          .get()
+          .collection(collection.PRODUCTS_COLLECTION)
+          .updateOne({_id:new ObjectId(productId)},{$set : productData})
+          console.log('success');
+        res();
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
   getAllProducts: () => {
     return new Promise(async (res, rej) => {
       try {
@@ -427,6 +442,19 @@ module.exports = {
           .collection(collection.PRODUCTS_COLLECTION)
           .findOne({ _id: new ObjectId(productID) });
         res(product);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+  deleteProduct: (productId) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db
+          .get()
+          .collection(collection.PRODUCTS_COLLECTION)
+          .deleteOne({ _id: new ObjectId(productId) });
+        resolve();
       } catch (error) {
         console.log(error);
       }
@@ -517,7 +545,7 @@ module.exports = {
     });
   },
 
-  //
+  // function for admin to  unBlock a coupon 
   unBlockCoupon: (CouponID) => {
     return new Promise(async (res, rej) => {
       try {
@@ -536,6 +564,36 @@ module.exports = {
     });
   },
 
+  //function for show single/current coupon details
+  getSingleCouponData: (couponId) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const bannerData = await db
+          .get()
+          .collection(collection.COUPON_COLLECTION)
+          .findOne({ _id: new ObjectId(couponId) });
+        resolve(bannerData);
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
+  //function for admin to delete current coupon details
+  deleteCoupon: (couponId) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        await db
+          .get()
+          .collection(collection.COUPON_COLLECTION)
+          .deleteOne({ _id: new ObjectId(couponId) });
+        resolve();
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  },
+
   //function for get all orders to admin panel
   getAllOrders: () => {
     return new Promise(async (resolve, reject) => {
@@ -544,6 +602,7 @@ module.exports = {
           .get()
           .collection(collection.ORDER_COLLECTION)
           .find()
+          .sort({"orderObj.data":-1})
           .toArray();
         resolve(allOrders);
       } catch (error) {

@@ -88,13 +88,12 @@
                                             <option value="Shipping">Shipping</option>
                                             <option value="Delivery">Delivery</option>
                                             <option value="Delivered">Delivered</option>
-                                            <option value="Cancelled">Cancelled</option>
                                         </select>
                                 </div>
                             </div>
                             <br>
                             <div class="buydiv ">
-                                <button type="submit" class="buybutton mb-3" onclick="return showConfirmForm('Are you sure to change order sautes of this Order ?','changeStatus-{{orderData._id}}')">
+                                <button type="submit" class="formSubmitButton mb-3" onclick="return showConfirmForm('Are you sure to change order sautes of this Order ?','changeStatus-{{orderData._id}}')">
                                     <i class="fa fa-bolt" style="font-size:15px">
                                     </i>&nbsp;&nbsp; Submit Status</button>
                             </div>

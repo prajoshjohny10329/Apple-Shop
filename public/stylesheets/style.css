@@ -1,5 +1,5 @@
 
-/*   for  form pages------------------------------------------------------------------------------*/
+/* -------------------style sheet for all form pages ---------   */
 
 .loader{
   position: fixed;
@@ -79,7 +79,7 @@
     color: red;
 
 }
-.submiterr{
+.submitError{
   font-size: 14px;
   color: red;
   text-align: center;

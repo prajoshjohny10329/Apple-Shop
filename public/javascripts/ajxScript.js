@@ -1,11 +1,11 @@
+/* ------------------- scripts for AJAX ---------   */
 
-
+//function for user to add to cart
 function addToCart(proId) {
   $.ajax({
     url: "/add-to-cart/" + proId,
     method: "get",
     success: (response) => {
-      // alert(response);
       Swal.fire(
         'Good job!',
         'You Add this product to Cart!',
@@ -15,7 +15,7 @@ function addToCart(proId) {
   });
 }
 
-
+//function for user to change cart quantity
 function changeQuantity(cartId, proId, userId, count) {
   let quantity = parseInt(document.getElementById(proId).innerHTML);
   count = parseInt(count);
@@ -39,7 +39,7 @@ function changeQuantity(cartId, proId, userId, count) {
           text: 'You clicked the button!',
           icon: 'error'
         }).then(() => {
-          location.reload("/cart"); // Reload the page after the user clicks "OK"
+          location.reload("/cart"); 
         });
       }
       if (response.removeProduct) {
@@ -48,7 +48,7 @@ function changeQuantity(cartId, proId, userId, count) {
           text: 'You clicked the button!',
           icon: 'error'
         }).then(() => {
-          location.reload("/cart"); // Reload the page after the user clicks "OK"
+          location.reload("/cart"); 
         });
       } else {
         document.getElementById(proId).innerHTML = quantity + count;
@@ -59,7 +59,7 @@ function changeQuantity(cartId, proId, userId, count) {
   });
 }
 
-
+//function for user to remove product from cart
 function removeCartProduct(cartId, proId) {
   $.ajax({
     url: "/remove-cart-product",
@@ -80,8 +80,7 @@ function removeCartProduct(cartId, proId) {
   });
 }
 
-
-// place order
+//function for user to place order
 $("#checkout-form").submit((e) => {
   e.preventDefault();
   $.ajax({
@@ -99,7 +98,7 @@ $("#checkout-form").submit((e) => {
   });
 });
 
-// order verifyPayment
+//function for user to verify payment
 function verifyPayment(payment,order){
   $.ajax({
     url:'/verify-payment',
@@ -117,7 +116,7 @@ function verifyPayment(payment,order){
 
 }
 
-//coupon submit
+//function for user to submit coupon code
 $("#coupon-form").submit((e) => {
   e.preventDefault();
   $.ajax({
@@ -129,7 +128,7 @@ $("#coupon-form").submit((e) => {
         const total = document.getElementById("total").value;
         document.getElementById("discount").innerHTML = response.discount;
         document.getElementById("total").innerHTML = response.finalPrice;
-        document.getElementById('couponBannerId').src = response.couponData.couponBanner
+        document.getElementById('couponBannerId').src = response.couponData.couponImageUrl
         document.getElementById('couponResponseId').innerHTML = response.couponData.couponName+' Activated'
         document.getElementById('couponOffer').innerHTML = ' "Congratulations! You have unlocked a fantastic discount of '+response.discountPrice +' rupees!"' 
         const elements = document.getElementsByClassName('couponActivated');

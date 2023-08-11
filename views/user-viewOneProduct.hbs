@@ -8,13 +8,13 @@
           <div class="frst_part mt-4 mb-4">
             <a href="#" class="fa fa-heart whilist_logo" hidden></a>
             <div class="image_div">
-              <img id="singleImage" class="example" src="{{product.productFirstImage}}"  alt="">
+              <img id="singleImage" class="example" src="{{product.productFirstImage}}" alt="">
             </div>
             <div class="productImages">
               <img class="imageViewOne ml-3" src="{{product.productFirstImage}}"
                 onclick="changeImage('{{product.productFirstImage}}')" alt="">
               {{#each product.productImagesURL}}
-              <img class="imageViewOne ml-3" src="{{this}}" onclick="changeImage('{{this}}')" alt="">
+              <img class="imageViewOne mt-3 ml-3" src="{{this}}" onclick="changeImage('{{this}}')" alt="">
               {{/each}}
             </div>
             <hr>
@@ -47,7 +47,7 @@
             </div>
             <div class="productDetails mb-3">
               <div class="productDetailsPair mt-4 mb-3">
-                
+
               </div>
               {{#if product.productBrand}}
               <div class="productDetailsPair">
@@ -276,9 +276,6 @@
                 </div>
               </div>
               {{/if}}
-
-
-              
             </div>
             <hr>
 
@@ -291,24 +288,23 @@
               <P class="productDescription mb-3">{{ product.productDescription}}</P>
             </div>
             <hr>
-            
-             <div class="productDetails mb-5">
+
+            {{#if product.productAllAbout}}
+            <div class="productDetails mb-5">
               <div class="productDetailsPair mt-4 mb-2">
-                <p class="ProductDetailsHead">About this item</p>
+                <p class="ProductDetailsHead">About this Product</p>
               </div>
               {{#each product.productAllAbout}}
               <li class="keyStyle mb-3">{{this}}</li>
               {{/each}}
             </div>
             <hr>
-
+            {{/if}}
           </div>
         </div>
       </div>
     </div>
-
   </div>
-  
 </div>
 
 <script src="/javascripts/extm.js"></script>
